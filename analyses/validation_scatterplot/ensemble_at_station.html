@@ -1,0 +1,98 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Compare DWR and reanalysis ensemble at station locations &#8212; Improving reanalysis with offline assimilation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_small.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../improving_with_dwr.html">Improving the reanalyses with DWR</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/analyses/validation_scatterplot/ensemble_at_station.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="compare-dwr-and-reanalysis-ensemble-at-station-locations">
+<h1>Compare DWR and reanalysis ensemble at station locations<a class="headerlink" href="#compare-dwr-and-reanalysis-ensemble-at-station-locations" title="Permalink to this headline">¶</a></h1>
+<center>
+<table><tr><td><center>
+<a href="https://github.com/oldweather/DWR/raw/master/analyses/validation_scatterplot/DWR_v_20CR_1901012218.png"><img src="https://github.com/oldweather/DWR/raw/master/analyses/validation_scatterplot/DWR_v_20CR_1901012218.png" width=500></a></center></td></tr>
+<tr><td>MSLP as observed at each DWR station (red line), and
+as reconstructed by the 20CR2c ensemble at the station location (blue dots) for January 22nd, 1901 (at 6pm). (<a href='ensemble_at_station_20CR2c.html'>source</a>)</td></tr>
+</table>
+</center><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Ideally the reanalysis ensemble pressures would cluster closely around the observed pressure at every DWR station. In practice the reanalysis is poorly constrained (no nearby observations assimilated) at some station locations and the ensemble can be widely spread, but even in such cases the observation should be within the range of the ensemble. This plot shows where the reanalysis is doing well, where it is well calibrated but has a large spread (where more observations should improve it a lot), and where it is badly calibrated (observation outside ensemble range). Of course the observations can be wrong too (ob. for Haparanda is wrong in this case).</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ensemble_at_station_20CR2c.html">Compare DWR and 20CR2c reanalysis ensemble at station locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ensemble_at_station_CERA20C.html">Compare DWR and CERA20C reanalysis ensemble at station locations</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

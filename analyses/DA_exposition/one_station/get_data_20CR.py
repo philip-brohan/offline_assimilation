@@ -1,1 +1,0 @@
-../place_to_place/get_data_20CR.py
