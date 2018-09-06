@@ -81,7 +81,7 @@ mg.precipitation.plot_cmesh(ax,corrs,resolution=0.25,
                             cmap='coolwarm',
                             alpha=0.5,
                             sqrt=False,
-                            vmin=-0.5,vmax=1.0)
+                            vmin=-1.0,vmax=1.0)
 
 # Add an observation
 rp=ax.projection.transform_points(ccrs.PlateCarree(),

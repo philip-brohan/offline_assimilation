@@ -1,4 +1,6 @@
-# UK region 20CR2c spaghetti-contour prmsl map
+#!/usr/bin/env python
+
+# UK region 20CRv3 spaghetti-contour prmsl map
 # Show new station at Fort William
 
 import math
@@ -55,7 +57,7 @@ mg.background.add_grid(ax_20C)
 land_img_20C=ax_20C.background_img(name='GreyT', resolution='low')
 
 # Add the observations from 20CR
-obs=twcr.load_observations_fortime(dte,version='2c')
+obs=twcr.load_observations_fortime(dte,version='4.5.1')
 # Filter to those assimilated and near the UK
 obs_s=obs.loc[(obs['Assimilation.indicator']==1) &
               ((obs['Latitude']>0) & 
@@ -65,7 +67,7 @@ obs_s=obs.loc[(obs['Assimilation.indicator']==1) &
 mg.observations.plot(ax_20C,obs_s,radius=0.15)
 
 # load the pressures
-prmsl=twcr.load('prmsl',dte,version='2c')
+prmsl=twcr.load('prmsl',dte,version='4.5.1')
 
 # For each ensemble member, make a contour plot
 CS=mg.pressure.plot(ax_20C,prmsl,
