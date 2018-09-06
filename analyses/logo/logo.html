@@ -59,7 +59,7 @@
 <p>The sole purpose of this figure is to make a colourful and relevant image for use as the project logo.</p>
 <div class="figure align-center" id="id1" style="width: 75%">
 <a class="reference internal image-reference" href="../../_images/logo.png"><img alt="../../_images/logo.png" src="../../_images/logo.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">MSLP ensemble mean contours, and ensemble spread correlation with a hypothetical Fort William observation - from 20CRv2c.</span></p>
+<p class="caption"><span class="caption-text">MSLP ensemble mean contours, and ensemble spread correlation with a hypothetical Fort William observation - from 20CRv3.</span></p>
 </div>
 <p>The black lines are contours of the ensemble mean MSLP - at 1903:02:27:06, the time of the <a class="reference external" href="https://weatherrescue.wordpress.com/2017/10/12/february-1903-the-ulysses-storm/">Ulysses storm</a>. The yellow dot marks the location of a hypothetical new observation, the coloured shading marKs regions where the ensemble spread is correlated (red) or anti-correlated (blue) with the spread at the observation location (in other words - the regions where assimilating such an observation would have a substantial effect).</p>
 <div class="line-block">
@@ -68,7 +68,7 @@
 <p>Collect the reanalysis data (prmsl ensemble from 20CR2c for 1903):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="kn">as</span> <span class="nn">twcr</span>
-<span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">27</span><span class="p">),</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;2c&#39;</span><span class="p">)</span>
+<span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">27</span><span class="p">),</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Script to make the figure:</p>
@@ -133,8 +133,8 @@
 <span class="n">mg</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">add_grid</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">land_img</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">background_img</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;GreyT&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">)</span>
 
-<span class="c1"># load the 2c pressures</span>
-<span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;2c&#39;</span><span class="p">)</span>
+<span class="c1"># load the v3 pressures</span>
+<span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
 
 <span class="c1"># Pressure ensemble mean - with labels</span>
 <span class="n">prmsl_m</span><span class="o">=</span><span class="n">prmsl</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
@@ -151,19 +151,9 @@
 <span class="n">at_ob</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">at_ob</span><span class="p">)</span>
 <span class="n">corrs</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">prmsl</span><span class="p">,</span><span class="n">at_ob</span><span class="p">,</span><span class="n">corr_coords</span><span class="o">=</span><span class="s1">&#39;member&#39;</span><span class="p">)</span>
 
-<span class="c1"># Plot the correlation as a colour map</span>
-<span class="n">corr_cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="p">(</span><span class="s1">&#39;r_cmap&#39;</span><span class="p">,</span>
-                             <span class="p">{</span><span class="s1">&#39;red&#39;</span>  <span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> 
-                                        <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)),</span> 
-                              <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> 
-                                        <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)),</span> 
-                              <span class="s1">&#39;blue&#39;</span> <span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> 
-                                        <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)),</span> 
-                              <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span>
-                                        <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
-                                        <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span> <span class="p">})</span>
 <span class="n">mg</span><span class="o">.</span><span class="n">precipitation</span><span class="o">.</span><span class="n">plot_cmesh</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">corrs</span><span class="p">,</span><span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
-                            <span class="n">cmap</span><span class="o">=</span><span class="n">corr_cmap</span><span class="p">,</span>
+                            <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span>
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                             <span class="n">sqrt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                             <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 
