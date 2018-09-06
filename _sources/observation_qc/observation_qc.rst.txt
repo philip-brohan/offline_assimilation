@@ -1,0 +1,3 @@
+Dealing with bad observations
+=============================
+
