@@ -59,8 +59,8 @@ ax.background_patch.set_facecolor((0.88,0.88,0.88,1))
 mg.background.add_grid(ax)
 land_img=ax.background_img(name='GreyT', resolution='low')
 
-# load the 2c pressures
-prmsl=twcr.load('prmsl',dte,version='2c')
+# load the v3 pressures
+prmsl=twcr.load('prmsl',dte,version='4.5.1')
 
 # Pressure ensemble mean - with labels
 prmsl_m=prmsl.collapsed('member', iris.analysis.MEAN)
@@ -77,19 +77,9 @@ at_ob=prmsl.interpolate(observation_at,iris.analysis.Linear())
 at_ob=iris.util.squeeze(at_ob)
 corrs=iris.analysis.stats.pearsonr(prmsl,at_ob,corr_coords='member')
 
-# Plot the correlation as a colour map
-corr_cmap = matplotlib.colors.LinearSegmentedColormap('r_cmap',
-                             {'red'  : ((0.0, 0.0, 0.0), 
-                                        (1.0, 1.0, 1.0)), 
-                              'green': ((0.0, 0.0, 0.0), 
-                                        (1.0, 0.0, 0.0)), 
-                              'blue' : ((0.0, 1.0, 1.0), 
-                                        (1.0, 0.0, 0.0)), 
-                              'alpha': ((0.0, 0.8, 0.8),
-                                        (0.5, 0.0, 0.0),
-                                        (1.0, 0.8, 0.8)) })
 mg.precipitation.plot_cmesh(ax,corrs,resolution=0.25,
-                            cmap=corr_cmap,
+                            cmap='coolwarm',
+                            alpha=0.5,
                             sqrt=False,
                             vmin=-0.5,vmax=1.0)
 
