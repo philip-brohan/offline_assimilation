@@ -1,3 +1,1 @@
-import Meteorographica.data.twcr as twcr
-twcr.fetch('prmsl',1903,version='2c')
-twcr.fetch_observations(1903,version='2c')
+../place_to_place/get_data_20CR.py

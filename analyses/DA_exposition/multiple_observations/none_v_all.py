@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Compare assimilation of one station and three stations.
+# Assimilation of many stations.
 
 import math
 import datetime
@@ -69,9 +69,6 @@ land_img_three=ax_three.background_img(name='GreyT', resolution='low')
 obs=DWR.load_observations('prmsl',
                           dte-datetime.timedelta(hours=0.1),
                           dte+datetime.timedelta(hours=0.1))
-# Reduce to Fort William only
-obs_assimilate=obs[obs.name=='FORTWILLIAM']
-obs_assimilate.value=obs_assimilate.value*100 # to Pa
 
 # 20CRv3 data
 prmsl=twcr.load('prmsl',dte,version='4.5.1')
@@ -83,23 +80,11 @@ obs_s=obs_t.loc[((obs_t['Latitude']>0) &
               ((obs_t['Longitude']>240) | 
                  (obs_t['Longitude']<100))].copy()
 
-# Update mslp by assimilating Fort William ob.
-prmsl2=DIYA.constrain_cube(prmsl,prmsl,
-                           obs=obs_assimilate,
-                           obs_error=100,
-                           random_state=RANDOM_SEED,
-                           model=sklearn.linear_model.LinearRegression(),
-                           lat_range=(20,85),
-                           lon_range=(280,60))
 
 mg.observations.plot(ax_one,obs_s,radius=0.15)
-mg.observations.plot(ax_one,obs_assimilate,
-                     radius=0.15,facecolor='red',
-                     lat_label='latitude',
-                     lon_label='longitude')
 
 # For each ensemble member, make a contour plot
-mg.pressure.plot(ax_one,prmsl2,scale=0.01,type='spaghetti',
+mg.pressure.plot(ax_one,prmsl,scale=0.01,type='spaghetti',
                    resolution=0.25,
                    levels=numpy.arange(875,1050,10),
                    colors='blue',
@@ -107,8 +92,8 @@ mg.pressure.plot(ax_one,prmsl2,scale=0.01,type='spaghetti',
                    linewidths=0.1)
 
 # Add the ensemble mean - with labels
-prmsl_m=prmsl2.collapsed('member', iris.analysis.MEAN)
-prmsl_s=prmsl2.collapsed('member', iris.analysis.STD_DEV)
+prmsl_m=prmsl.collapsed('member', iris.analysis.MEAN)
+prmsl_s=prmsl.collapsed('member', iris.analysis.STD_DEV)
 prmsl_m.data[numpy.where(prmsl_s.data>300)]=numpy.nan
 mg.pressure.plot(ax_one,prmsl_m,scale=0.01,
                    resolution=0.25,
@@ -117,15 +102,13 @@ mg.pressure.plot(ax_one,prmsl_m,scale=0.01,
                    label=True,
                    linewidths=2)
 
-mg.utils.plot_label(ax_one,'One station',
+mg.utils.plot_label(ax_one,'20CRv3',
                      fontsize=16,
                      facecolor=fig.get_facecolor(),
                      x_fraction=0.02,
                      horizontalalignment='left')
 
-
-# Now use three stations
-obs_assimilate=obs[obs.name.isin(['FORTWILLIAM','LIVERPOOL','LONDON'])]
+obs_assimilate=obs
 obs_assimilate.value=obs_assimilate.value*100 # to Pa
 
 # Plot the selected stations
@@ -135,12 +118,12 @@ mg.observations.plot(ax_three,obs_assimilate,
                      lat_label='latitude',
                      lon_label='longitude')
 
-# Update mslp by assimilating three obs.
+# Update mslp by assimilating obs.
 prmsl2=DIYA.constrain_cube(prmsl,prmsl,
                            obs=obs_assimilate,
-                           obs_error=100,
+                           obs_error=10,
                            random_state=RANDOM_SEED,
-                           model=sklearn.linear_model.LinearRegression(),
+                           model=sklearn.linear_model.Lasso(),
                            lat_range=(20,85),
                            lon_range=(280,60))
 
@@ -163,7 +146,7 @@ mg.pressure.plot(ax_three,prmsl_m,scale=0.01,
                    label=True,
                    linewidths=2)
 
-mg.utils.plot_label(ax_three,'With Three observations',
+mg.utils.plot_label(ax_three,'With all DWR observations',
                      fontsize=16,
                      facecolor=fig.get_facecolor(),
                      x_fraction=0.02,
@@ -177,5 +160,5 @@ mg.utils.plot_label(ax_three,
               horizontalalignment='right')
 
 # Output as png
-fig.savefig('one+three_%04d%02d%02d%02d.png' % 
+fig.savefig('none+all_%04d%02d%02d%02d.png' % 
                                   (year,month,day,hour))

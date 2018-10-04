@@ -1,3 +1,5 @@
+#
+
 # Compare assimilation of one station and three stations.
 
 import math
@@ -29,7 +31,7 @@ RANDOM_SEED = 5
 year=1903
 month=10
 day=22
-hour=6
+hour=18
 dte=datetime.datetime(year,month,day,hour)
 
 # Landscape page
@@ -64,11 +66,10 @@ wm.add_grid(ax_three)
 land_img_one=ax_one.background_img(name='GreyT', resolution='low')
 land_img_three=ax_three.background_img(name='GreyT', resolution='low')
 
-# Get the DWR observations for that morning
-#  only those at 8 for simplicity
+# Get the DWR observations for that afternoon (at 18:00)
 obs=DWR.load_observations('prmsl',
-                          dte+datetime.timedelta(hours=1.9),
-                          dte+datetime.timedelta(hours=2.1))
+                          dte+datetime.timedelta(hours=0.1),
+                          dte+datetime.timedelta(hours=0.1))
 # sort them from north to south
 obs=obs.sort_values(by='latitude',ascending=True)
 # Get the list of stations - preserving order
@@ -79,15 +80,14 @@ to_assimilate=stations[::3]
 obs_assimilate=obs[obs.name.isin(to_assimilate)]
 obs_assimilate.value=obs_assimilate.value*100 # to Pa
 
-# 20CR2c data
+# 20CRv3 data
 prmsl=twcr.load('prmsl',year,month,day,hour,
-                             version='2c')
+                             version='4.5.1')
 # Get the observations used in 20CR2c
 obs_t=twcr.load_observations(dte-datetime.timedelta(hours=24),dte,
-                                                    version='2c')
+                                                    version='4.5.1')
 # Filter to those assimilated and near the UK
-obs_s=obs_t.loc[(obs_t['Assimilation.indicator']==1) &
-              ((obs_t['Latitude']>0) & 
+obs_s=obs_t.loc[((obs_t['Latitude']>0) & 
                  (obs_t['Latitude']<90)) &
               ((obs_t['Longitude']>240) | 
                  (obs_t['Longitude']<100))].copy()

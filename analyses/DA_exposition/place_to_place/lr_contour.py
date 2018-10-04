@@ -29,7 +29,7 @@ import DWR
 year=1903
 month=10
 day=22
-hour=6
+hour=18
 dte=datetime.datetime(year,month,day,hour)
 
 # Landscape page
@@ -74,17 +74,16 @@ mg.observations.plot(ax_map,obs,lat_label='latitude',
             lon_label='longitude',radius=0.15,facecolor='red')
 
 # Add the observations from 20CR
-obs_t=twcr.load_observations_fortime(dte,'2c')
-# Filter to those assimilated and near the UK
-obs_s=obs_t.loc[(obs_t['Assimilation.indicator']==1) &
-              ((obs_t['Latitude']>0) & 
+obs_t=twcr.load_observations_fortime(dte,'4.5.1')
+# Filter to those assimilated near the UK
+obs_s=obs_t.loc[((obs_t['Latitude']>0) & 
                    (obs_t['Latitude']<90)) &
               ((obs_t['Longitude']>240) | 
                    (obs_t['Longitude']<100))].copy()
 mg.observations.plot(ax_map,obs_s,radius=0.15)
 
 # load the pressures
-prmsl=twcr.load('prmsl',dte,version='2c')
+prmsl=twcr.load('prmsl',dte,version='4.5.1')
 
 # For each ensemble member, make a contour plot
 CS=mg.pressure.plot(ax_map,prmsl,
@@ -119,6 +118,9 @@ mg.utils.plot_label(ax_map,
 # Compare with Stornoway
 target_lat= 58.21
 target_lon= -6.38
+fw_extent=[984,1001]
+sw_extent=[984,1001]
+lon_extent=[988,1004]
 
 # Add this point to the map
 rp=ax_map.projection.transform_points(ccrs.PlateCarree(),
@@ -135,10 +137,10 @@ ax_scp=fig.add_axes([0.55,0.55,0.39,0.39])
 
 
 # x-axis
-ax_scp.set_xlim([992,1002])
+ax_scp.set_xlim(fw_extent)
 ax_scp.set_xlabel('MSLP at Fort William (hPa)')
 # y-axis
-ax_scp.set_ylim([990,1000])
+ax_scp.set_ylim(sw_extent)
 ax_scp.set_ylabel('MSLP at Stornoway (hPa)')
 
 # Ensemble values at Fort William
@@ -178,10 +180,10 @@ ax_map.add_patch(matplotlib.patches.Circle((rp[:,0],rp[:,1]),
 ax_scp2=fig.add_axes([0.55,0.05,0.39,0.39])
 
 # x-axis
-ax_scp2.set_xlim([992,1002])
+ax_scp2.set_xlim(fw_extent)
 ax_scp2.set_xlabel('MSLP at Fort William (hPa)')
 # y-axis
-ax_scp2.set_ylim([1002,1012])
+ax_scp2.set_ylim(lon_extent)
 ax_scp2.set_ylabel('MSLP at London (hPa)')
 
 # Ensemble values at London

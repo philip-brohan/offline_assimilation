@@ -30,7 +30,7 @@ RANDOM_SEED = 5
 year=1903
 month=10
 day=22
-hour=6
+hour=18
 dte=datetime.datetime(year,month,day,hour)
 
 # Landscape page
@@ -66,13 +66,12 @@ land_img_20C=ax_20C.background_img(name='GreyT', resolution='low')
 land_img_DWR=ax_wFW.background_img(name='GreyT', resolution='low')
 
 # 20CR2c data
-prmsl=twcr.load('prmsl',dte,version='2c')
+prmsl=twcr.load('prmsl',dte,version='4.5.1')
 
 # Get the observations used in 20CR2c
-obs=twcr.load_observations_fortime(dte,version='2c')
+obs=twcr.load_observations_fortime(dte,version='4.5.1')
 # Filter to those assimilated and near the UK
-obs_s=obs.loc[(obs['Assimilation.indicator']==1) &
-              ((obs['Latitude']>0) & 
+obs_s=obs.loc[((obs['Latitude']>0) & 
                  (obs['Latitude']<90)) &
               ((obs['Longitude']>240) | 
                  (obs['Longitude']<100))].copy()
@@ -101,7 +100,7 @@ CS=mg.pressure.plot(ax_20C,prmsl_m,
                    label=True,
                    linewidths=2)
 
-mg.utils.plot_label(ax_20C,'20CR2c',
+mg.utils.plot_label(ax_20C,'20CRv3',
                      fontsize=16,
                      facecolor=fig.get_facecolor(),
                      x_fraction=0.02,

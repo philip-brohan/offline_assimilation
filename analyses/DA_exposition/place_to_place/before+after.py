@@ -28,7 +28,7 @@ import sklearn.linear_model
 year=1903
 month=10
 day=22
-hour=6
+hour=18
 dte=datetime.datetime(year,month,day,hour)
 
 # Landscape page
@@ -55,21 +55,23 @@ obs=DWR.load_observations('prmsl',
 obs=obs[obs.name=='FORTWILLIAM']
 
 # load the pressures
-prmsl=twcr.load('prmsl',dte,version='2c')
+prmsl=twcr.load('prmsl',dte,version='4.5.1')
 
 # Compare with Stornoway
 target_lat= 58.21
 target_lon= -6.38
+fw_extent=[984,1001]
+sw_extent=[984,1001]
 
 # Before scatter plot
 
 ax_scp=fig.add_axes([0.05,0.07,0.43,0.89])
 
 # x-axis
-ax_scp.set_xlim([992,1002])
+ax_scp.set_xlim(fw_extent)
 ax_scp.set_xlabel('MSLP at Fort William (hPa)')
 # y-axis
-ax_scp.set_ylim([990,1000])
+ax_scp.set_ylim(sw_extent)
 ax_scp.set_ylabel('Original MSLP at Stornoway (hPa)')
 
 # Ensemble values at Fort William
@@ -93,29 +95,30 @@ ax_scp.scatter(ens_FW.data/100,ens_ST.data/100,
 
 # Plot the observed FW value
 fwi=DWR.at_station_and_time(obs,'FORTWILLIAM',dte)
-ax_scp.plot((fwi,fwi),[990,1000],color='red',lw=3)
+ax_scp.plot((fwi,fwi),sw_extent,color='red',lw=3)
 
 # Fit a linear model
 model=sklearn.linear_model.LinearRegression()
 model.fit(ens_FW.data.reshape(-1,1),ens_ST.data)
-pre=model.predict(numpy.array((992*100,1002*100)).reshape(-1,1))
-ax_scp.plot([992,1002],pre/100,color='black',lw=3)
+pre=model.predict(numpy.array((fw_extent[0]*100,
+                               fw_extent[1]*100)).reshape(-1,1))
+ax_scp.plot(fw_extent,pre/100,color='black',lw=3)
 
 ax_scp2=fig.add_axes([0.55,0.07,0.43,0.89])
 
 
 # x-axis
-ax_scp2.set_xlim([992,1002])
+ax_scp2.set_xlim(fw_extent)
 ax_scp2.set_xlabel('original MSLP at Fort William (hPa)')
 # y-axis
-ax_scp2.set_ylim([990,1000])
+ax_scp2.set_ylim(sw_extent)
 ax_scp2.set_ylabel('MSLP at Stornoway after assimilating Fort William observation (hPa)')
 
 # Adjust the mslp by assimilating the FW ob
 ST_adjusted=DIYA.constrain_point(ens_ST.data,ens_FW.data.reshape(-1,1),
                                    model=model,obs=fwi*100)
 
-ax_scp2.plot((fwi,fwi),[990,1000],color='red',lw=3)
+ax_scp2.plot((fwi,fwi),sw_extent,color='red',lw=3)
 ax_scp2.scatter(ens_FW.data/100,ST_adjusted/100,
             500, # Point size
             'blue', # Color

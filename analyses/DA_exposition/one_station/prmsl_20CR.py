@@ -27,7 +27,7 @@ import DWR
 year=1903
 month=10
 day=22
-hour=6
+hour=18
 dte=datetime.datetime(year,month,day,hour)
 
 # Landscape page
@@ -58,13 +58,7 @@ land_img_20C=ax_20C.background_img(name='GreyT', resolution='low')
 
 # Add the observations from 20CR
 obs=twcr.load_observations_fortime(dte,version='4.5.1')
-# Filter to those assimilated and near the UK
-obs_s=obs.loc[(obs['Assimilation.indicator']==1) &
-              ((obs['Latitude']>0) & 
-                  (obs['Latitude']<90)) &
-              ((obs['Longitude']>240) | 
-                  (obs['Longitude']<100))].copy()
-mg.observations.plot(ax_20C,obs_s,radius=0.15)
+mg.observations.plot(ax_20C,obs,radius=0.15)
 
 # load the pressures
 prmsl=twcr.load('prmsl',dte,version='4.5.1')
