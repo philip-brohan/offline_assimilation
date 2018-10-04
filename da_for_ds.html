@@ -79,9 +79,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="figure align-center" id="id1" style="width: 700px">
-<a class="reference internal image-reference" href="../DA_exposition/one_station/With_FW_1903102206.png"><img alt="../DA_exposition/one_station/With_FW_1903102206.png" src="../DA_exposition/one_station/With_FW_1903102206.png" style="width: 650px;" /></a>
-<p class="caption"><span class="caption-text">MSLP Contours for 20CR2c for October 22nd, 1903 (at 6am).</span></p>
+<div class="figure align-center" id="id1" style="width: 95%">
+<a class="reference internal image-reference" href="_images/With_FW_1903102218.png"><img alt="_images/With_FW_1903102218.png" src="_images/With_FW_1903102218.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">MSLP Contours for 20CR2c for October 22nd, 1903 (at 6pm).</span></p>
 <div class="legend">
 <span class="xref std std-doc">Spaghetti-contour plot</span> of mean-sea-level pressure, and the location of the Fort William station (red dot), where we have <span class="xref std std-doc">new observational data</span> (<span class="xref std std-doc">Figure source</span>)</div>
 </div>
@@ -92,25 +92,25 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="figure align-center" id="id2" style="width: 700px">
-<a class="reference internal image-reference" href="../DA_exposition/place_to_place/lr+contour_1903102206.png"><img alt="../DA_exposition/place_to_place/lr+contour_1903102206.png" src="../DA_exposition/place_to_place/lr+contour_1903102206.png" style="width: 650px;" /></a>
-<p class="caption"><span class="caption-text">MSLP at Fort William, Stornoway, and London (October 22nd, 1903 at 6am).</span></p>
+<div class="figure align-center" id="id2" style="width: 95%">
+<a class="reference internal image-reference" href="_images/lr+contour_1903102218.png"><img alt="_images/lr+contour_1903102218.png" src="_images/lr+contour_1903102218.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">MSLP at Fort William, Stornoway, and London (October 22nd, 1903 at 6pm).</span></p>
 <div class="legend">
-The red dot marks Fort William, the blue Stornoway, and the black London. Scatter plots show relationship between their mslp, in the 20CR2c ensemble for this particular point in time. (<span class="xref std std-doc">Figure source.</span>)</div>
+The red dot marks Fort William, the blue Stornoway, and the black London. Scatter plots show relationship between their mslp, in the 20CRv3 ensemble for this particular point in time. (<span class="xref std std-doc">Figure source.</span>)</div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>In the 20CR2c ensemble, at this point in time, the mslp at Stornoway is highly correlated with that at Fort William, so an observation at Fort William is telling us a lot about the mslp at Stornoway, and we should move the mslp estimates at Stornoway in response to the observation in much the same way as we move the estimates at Fort William. At London, on the other hand, the mslp is almost uncorrelated with that at Fort William, so an observation at Fort William is telling us little about the mslp at London, and we should leave the ensemble at London unchanged whatever the observation at Fort William is.</p>
-<p>We can formalise this by fitting a model (<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression" title="(in scikit-learn v0.19.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code></a>):</p>
+<p>In the 20CRv3 ensemble, at this point in time, the mslp at Stornoway is highly correlated with that at Fort William, so an observation at Fort William is telling us a lot about the mslp at Stornoway, and we should move the mslp estimates at Stornoway in response to the observation in much the same way as we move the estimates at Fort William. At London, on the other hand, the mslp is almost uncorrelated with that at Fort William, so an observation at Fort William is telling us little about the mslp at London, and we should leave the ensemble at London almost unchanged whatever the observation at Fort William is.</p>
+<p>We can formalise this by fitting a model (<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code></a>):</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="figure align-center" id="id3" style="width: 700px">
-<a class="reference internal image-reference" href="../DA_exposition/place_to_place/before+after_1903102206.png"><img alt="../DA_exposition/place_to_place/before+after_1903102206.png" src="../DA_exposition/place_to_place/before+after_1903102206.png" style="width: 650px;" /></a>
+<div class="figure align-center" id="id3" style="width: 95%">
+<a class="reference internal image-reference" href="_images/before+after_1903102218.png"><img alt="_images/before+after_1903102218.png" src="_images/before+after_1903102218.png" style="width: 95%;" /></a>
 <p class="caption"><span class="caption-text">MSLP at Stornoway, before and after assimilating the Fort William observation.</span></p>
 <div class="legend">
-Scatter plots of 20CR2c ensemble pressures at Stornoway at 6am on 22nd October 1903 against Fort William ensemble pressures. The Stornoway pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot). We can do <span class="xref std std-doc">the same for the London pressures</span>, but in that case the adjustment will make much less difference, as the fit line has a smaller slope. (<span class="xref std std-doc">Figure source.</span>)</div>
+Scatter plots of 20CRv3 ensemble pressures at Stornoway against ensemble pressures at Fort William, at 6pm on 22nd October 1903. The Stornoway pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot). We can do <span class="xref std std-doc">the same for the London pressures</span>, but in that case the adjustment will make much less difference, as the fit line has a smaller slope. (<span class="xref std std-doc">Figure source.</span>)</div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -119,9 +119,9 @@ Scatter plots of 20CR2c ensemble pressures at Stornoway at 6am on 22nd October 1
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="figure align-center" id="id4" style="width: 700px">
-<a class="reference internal image-reference" href="../DA_exposition/place_to_place/before+after_map_1903102206.png"><img alt="../DA_exposition/place_to_place/before+after_map_1903102206.png" src="../DA_exposition/place_to_place/before+after_map_1903102206.png" style="width: 650px;" /></a>
-<p class="caption"><span class="caption-text">Before (left) and after (right) assimilating Fort William observation (October 22nd, 1903 at 6am).</span></p>
+<div class="figure align-center" id="id4" style="width: 95%">
+<a class="reference internal image-reference" href="_images/before+after_map_1903102218.png"><img alt="_images/before+after_map_1903102218.png" src="_images/before+after_map_1903102218.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">Before (left) and after (right) assimilating Fort William observation (October 22nd, 1903 at 6pm).</span></p>
 <div class="legend">
 The observation has pulled nearby pressures towards its value, both changing the ensemble mean and reducing the spread, while having little effect further away. (<span class="xref std std-doc">Figure source.</span>)</div>
 </div>
