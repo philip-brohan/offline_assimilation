@@ -1,25 +1,27 @@
+Spaghetti contours
+==================
 
-Visualising uncertainty: spaghetti contours
-===========================================
+.. figure:: ../../../analyses/representing_uncertainty/spaghetti_contour/spaghetti_example_1903102218.png
+   :width: 95%
+   :align: center
+   :figwidth: 95%
 
-.. raw:: html
+   MSLP contours from 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated.
 
-    <center>
-    <table><tr><td>
-    <a href="https://github.com/oldweather/DWR/raw/master/analyses/spaghetti_contour/Compare_mslp_1903102218.png"><img src="https://github.com/oldweather/DWR/raw/master/analyses/spaghetti_contour/Compare_mslp_1903102218.png" width=795></a></td></tr>
-    <tr><td>MSLP Contours for 20CR2c (left), and CERA20C (right) for October 22nd, 1903 (at 6pm). Blue lines are contours from each of 10 ensemble members, black lines the contours of the ensemble mean (only shown where the ensemble spread is less than 3hPa). Yellow dots are observations asssimilated by 20CR, red dots are new observations now available from DWR (not assimilated in the reanalyses). (<a href='spaghetti_contour_20CRvCERA.html'>source</a>)</td></tr>
-    </table>
-    </center>
+This style of figure shows not only the best-estimate MSLP field (black contours), but also the uncertainty in that field. The blue lines are contours of MSLP for each of the 80 ensemble menbers in 20CRv3. Where the uncertainty is low these will cluster together (around the corresponding black contour) - where the blue contours diverge the uncertainty in the field is large.
+
+The yellow dots show the observations assimilated into this field. It's the observations density that controls the quality of the field - more observations mean a lower uncertainty. (Though note that observations from earlier times (not shown) also matter). 
 
 |
 
-Spaghetti-contour plots are a useful way to show both a weather variable (here mean-sea-level-pressure, MSLP) and the uncertainty in that field (the spread across an ensemble). In regions where the ensemble spread is small, the contours cluster together, in regions where the ensemble spread is large, the contours diverge.
+Code to make the figure
+-----------------------
 
-.. toctree::
-   :maxdepth: 2
+Collect the data (prmsl ensemble and observations from 20CR2c for 1903):
 
-   spaghetti_contour_20CR2c
-   spaghetti_contour_CERA20C
-   spaghetti_contour_20CRvCERA
-   spaghetti_contour_20CRvCERA_video
+.. literalinclude::  ../../../analyses/representing_uncertainty/spaghetti_contour/get_data.py
+
+Script to make the figure:
+
+.. literalinclude:: ../../../analyses/representing_uncertainty/spaghetti_contour/spv3.py
 

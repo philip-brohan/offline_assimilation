@@ -33,6 +33,11 @@ day=22
 hour=18
 dte=datetime.datetime(year,month,day,hour)
 
+# model to fit
+model=sklearn.linear_model.Lasso()
+# Assumed observation error (Pa)
+obs_error=5 
+
 # Landscape page
 fig=Figure(figsize=(22,22/math.sqrt(2)),  # Width, Height (inches)
            dpi=100,
@@ -69,6 +74,8 @@ land_img_three=ax_three.background_img(name='GreyT', resolution='low')
 obs=DWR.load_observations('prmsl',
                           dte-datetime.timedelta(hours=0.1),
                           dte+datetime.timedelta(hours=0.1))
+# Throw out the ones already used in 20CRv3
+obs=obs[~obs['name'].isin(['ABERDEEN','VALENCIA','JERSEY'])]
 
 # 20CRv3 data
 prmsl=twcr.load('prmsl',dte,version='4.5.1')
@@ -121,9 +128,9 @@ mg.observations.plot(ax_three,obs_assimilate,
 # Update mslp by assimilating obs.
 prmsl2=DIYA.constrain_cube(prmsl,prmsl,
                            obs=obs_assimilate,
-                           obs_error=10,
+                           obs_error=obs_error,
                            random_state=RANDOM_SEED,
-                           model=sklearn.linear_model.Lasso(),
+                           model=model,
                            lat_range=(20,85),
                            lon_range=(280,60))
 
