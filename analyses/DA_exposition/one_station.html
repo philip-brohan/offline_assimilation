@@ -1,0 +1,224 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>One station &#8212; Improving reanalysis with offline assimilation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_small.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../preface.html">What this is, and why</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../credits.html">Authors and acknowledgements</a></li>
+</ul>
+<h3><a href="https://github.com/philip-brohan/offline_assimilation">Get a copy</a></h3>
+
+<ul>
+<li><a href="https://github.com/philip-brohan/offline_assimilation"
+           rel="nofollow">Github repository</a></li>
+</ul>
+
+<h3>Found a bug, or have a suggestion?</h3>
+
+Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new">raise an issue</a>.
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="one-station">
+<h1>One station<a class="headerlink" href="#one-station" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center" id="id1" style="width: 95%">
+<a class="reference internal image-reference" href="../../_images/With_FW_1903102218.png"><img alt="../../_images/With_FW_1903102218.png" src="../../_images/With_FW_1903102218.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">MSLP contours from 20CRv3 for October 22nd, 1903 (at 6pm), observations assimilated, yellow dots, and the location of a newly-digitised observation at Fort William (red dot).</span></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="code-to-make-the-figure">
+<h2>Code to make the figure<a class="headerlink" href="#code-to-make-the-figure" title="Permalink to this headline">¶</a></h2>
+<p>Collect the data (prmsl ensemble and observations from 20CR2c for 1903):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">22</span><span class="p">)</span>
+<span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+<span class="n">twcr</span><span class="o">.</span><span class="n">fetch_observations</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Fort William location and data are in the <a class="reference external" href="https://oldweather.github.io/DWR">Daily Weather Reports dataset</a>.</p>
+<p>Script to make the figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># UK region 20CRv3 spaghetti-contour prmsl map</span>
+<span class="c1"># Show new station at Fort William</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">import</span> <span class="nn">iris.analysis</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_agg</span> <span class="k">import</span> \
+                <span class="n">FigureCanvasAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="k">import</span> <span class="n">Figure</span>
+
+<span class="kn">import</span> <span class="nn">cartopy</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+
+<span class="kn">import</span> <span class="nn">Meteorographica</span> <span class="k">as</span> <span class="nn">mg</span>
+<span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
+
+<span class="kn">import</span> <span class="nn">DWR</span>
+
+<span class="c1"># Date to show - low humidity at Fort William</span>
+<span class="n">year</span><span class="o">=</span><span class="mi">1903</span>
+<span class="n">month</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">day</span><span class="o">=</span><span class="mi">22</span>
+<span class="n">hour</span><span class="o">=</span><span class="mi">18</span>
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">)</span>
+
+<span class="c1"># Landscape page</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">Figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="mi">22</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>  <span class="c1"># Width, Height (inches)</span>
+           <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+           <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+           <span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+           <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+           <span class="n">subplotpars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">tight_layout</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">=</span><span class="n">FigureCanvas</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+<span class="c1"># UK-centred projection</span>
+<span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">RotatedPole</span><span class="p">(</span><span class="n">pole_longitude</span><span class="o">=</span><span class="mf">177.5</span><span class="p">,</span> <span class="n">pole_latitude</span><span class="o">=</span><span class="mf">35.5</span><span class="p">)</span>
+<span class="n">scale</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">scale</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="p">,</span><span class="n">scale</span><span class="p">]</span>
+
+<span class="c1"># Single plot filling the figure</span>
+<span class="n">ax_20C</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+<span class="n">ax_20C</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax_20C</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+
+<span class="c1"># Background, grid, and land</span>
+<span class="n">ax_20C</span><span class="o">.</span><span class="n">background_patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">((</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">add_grid</span><span class="p">(</span><span class="n">ax_20C</span><span class="p">)</span>
+<span class="n">land_img_20C</span><span class="o">=</span><span class="n">ax_20C</span><span class="o">.</span><span class="n">background_img</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;GreyT&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add the observations from 20CR</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load_observations_fortime</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_20C</span><span class="p">,</span><span class="n">obs</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="c1"># load the pressures</span>
+<span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+
+<span class="c1"># For each ensemble member, make a contour plot</span>
+<span class="n">CS</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_20C</span><span class="p">,</span><span class="n">prmsl</span><span class="p">,</span>
+                   <span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                   <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spaghetti&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                   <span class="n">levels</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">875</span><span class="p">,</span><span class="mi">1050</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                   <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># Add the ensemble mean - with labels</span>
+<span class="n">prmsl_m</span><span class="o">=</span><span class="n">prmsl</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
+<span class="n">prmsl_m</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="n">prmsl_m</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mi">100</span> <span class="c1"># To hPa</span>
+<span class="n">prmsl_s</span><span class="o">=</span><span class="n">prmsl</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">STD_DEV</span><span class="p">)</span>
+<span class="n">prmsl_s</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="n">prmsl_s</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mi">100</span>
+<span class="c1"># Mask out mean where uncertainties large</span>
+<span class="n">prmsl_m</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prmsl_s</span><span class="o">.</span><span class="n">data</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">)]</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">CS</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_20C</span><span class="p">,</span><span class="n">prmsl_m</span><span class="p">,</span>
+                   <span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                   <span class="n">levels</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">875</span><span class="p">,</span><span class="mi">1050</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                   <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Get the DWR observations within +- 2 hours</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
+                          <span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                          <span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># Discard everthing except Fort William</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="s1">&#39;FORTWILLIAM&#39;</span><span class="p">]</span>
+
+<span class="c1"># Plot the Fort William station location</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_20C</span><span class="p">,</span><span class="n">obs</span><span class="p">,</span><span class="n">lat_label</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+            <span class="n">lon_label</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="n">mg</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">ax_20C</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="si">%04d</span><span class="s1">-</span><span class="si">%02d</span><span class="s1">-</span><span class="si">%02d</span><span class="s1">:</span><span class="si">%02d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">),</span>
+              <span class="n">facecolor</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">get_facecolor</span><span class="p">())</span>
+<span class="c1"># Output as png</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;With_FW_</span><span class="si">%04d%02d%02d%02d</span><span class="s1">.png&#39;</span> <span class="o">%</span> 
+                               <span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,255 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Effect at London of assimilating observation at Fort William &#8212; Improving reanalysis with offline assimilation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_small.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../preface.html">What this is, and why</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../credits.html">Authors and acknowledgements</a></li>
+</ul>
+<h3><a href="https://github.com/philip-brohan/offline_assimilation">Get a copy</a></h3>
+
+<ul>
+<li><a href="https://github.com/philip-brohan/offline_assimilation"
+           rel="nofollow">Github repository</a></li>
+</ul>
+
+<h3>Found a bug, or have a suggestion?</h3>
+
+Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new">raise an issue</a>.
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="effect-at-london-of-assimilating-observation-at-fort-william">
+<h1>Effect at London of assimilating observation at Fort William<a class="headerlink" href="#effect-at-london-of-assimilating-observation-at-fort-william" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center" id="id1" style="width: 95%">
+<a class="reference internal image-reference" href="../../_images/before+after_london_1903102218.png"><img alt="../../_images/before+after_london_1903102218.png" src="../../_images/before+after_london_1903102218.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">MSLP at London, before and after assimilating the Fort William observation.</span></p>
+<div class="legend">
+<blockquote>
+<div>Scatter plots of 20CRv3 ensemble pressures at London against ensemble pressures at Fort William, at 6pm on 22nd October 1903. The London pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot).</div></blockquote>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="code-to-make-the-figure">
+<h2>Code to make the figure<a class="headerlink" href="#code-to-make-the-figure" title="Permalink to this headline">¶</a></h2>
+<p>Collect the data (prmsl ensemble and observations from 20CR2c for 1903):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">22</span><span class="p">)</span>
+<span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+<span class="n">twcr</span><span class="o">.</span><span class="n">fetch_observations</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Script to make the figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># UK region weather plot </span>
+<span class="c1"># Relationship between Fort William and London</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">import</span> <span class="nn">iris.analysis</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_agg</span> <span class="k">import</span> \
+                 <span class="n">FigureCanvasAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="k">import</span> <span class="n">Figure</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="k">import</span> <span class="n">Circle</span>
+
+<span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
+
+<span class="kn">import</span> <span class="nn">DWR</span>
+<span class="kn">import</span> <span class="nn">DIYA</span>
+
+<span class="kn">import</span> <span class="nn">sklearn.linear_model</span>
+
+<span class="c1"># Date to show </span>
+<span class="n">year</span><span class="o">=</span><span class="mi">1903</span>
+<span class="n">month</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">day</span><span class="o">=</span><span class="mi">22</span>
+<span class="n">hour</span><span class="o">=</span><span class="mi">18</span>
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">)</span>
+
+<span class="c1"># Landscape page</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">Figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span>  <span class="c1"># Width, Height (inches)</span>
+           <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+           <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+           <span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+           <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+           <span class="n">subplotpars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">tight_layout</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">=</span><span class="n">FigureCanvas</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;family&#39;</span> <span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sans-serif&#39;</span> <span class="p">:</span> <span class="s1">&#39;Arial&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;weight&#39;</span> <span class="p">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">16</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+
+<span class="c1"># Get the DWR observations within +- 2 hours</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
+                          <span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                          <span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># Discard everthing except Fort William</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="s1">&#39;FORTWILLIAM&#39;</span><span class="p">]</span>
+
+<span class="c1"># load the pressures</span>
+<span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+
+<span class="c1"># Compare with London</span>
+<span class="n">target_lat</span><span class="o">=</span> <span class="mf">51.51</span>
+<span class="n">target_lon</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.13</span>
+
+<span class="c1"># Before scatter plot</span>
+
+<span class="n">ax_scp</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.07</span><span class="p">,</span><span class="mf">0.43</span><span class="p">,</span><span class="mf">0.89</span><span class="p">])</span>
+
+<span class="c1"># pressure range</span>
+<span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">984</span><span class="p">,</span><span class="mi">1001</span><span class="p">]</span>
+<span class="n">extent_london</span><span class="o">=</span><span class="p">[</span><span class="mi">988</span><span class="p">,</span><span class="mi">1004</span><span class="p">]</span>
+
+<span class="c1"># x-axis</span>
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;MSLP at Fort William (hPa)&#39;</span><span class="p">)</span>
+<span class="c1"># y-axis</span>
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">extent_london</span><span class="p">)</span>
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Original MSLP at London (hPa)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Ensemble values at Fort William</span>
+<span class="n">interpolator</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span><span class="o">.</span><span class="n">interpolator</span><span class="p">(</span><span class="n">prmsl</span><span class="p">,</span> 
+                                   <span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+<span class="n">latlon</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">get_station_location</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span><span class="s1">&#39;FORTWILLIAM&#39;</span><span class="p">)</span>
+<span class="n">ens_FW</span><span class="o">=</span><span class="n">interpolator</span><span class="p">([</span><span class="n">latlon</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span>
+                     <span class="n">latlon</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]])</span>
+<span class="c1"># And at Stornoway</span>
+<span class="n">ens_ST</span><span class="o">=</span><span class="n">interpolator</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target_lat</span><span class="p">),</span>
+                     <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target_lon</span><span class="p">)])</span>
+
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ens_FW</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span><span class="n">ens_ST</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span>
+            <span class="mi">500</span><span class="p">,</span> <span class="c1"># Point size</span>
+            <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="c1"># Color</span>
+            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+            <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;face&#39;</span><span class="p">,</span>
+            <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Plot the observed FW value</span>
+<span class="n">fwi</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">at_station_and_time</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span><span class="s1">&#39;FORTWILLIAM&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">)</span>
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">fwi</span><span class="p">,</span><span class="n">fwi</span><span class="p">),</span><span class="n">extent_london</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Fit a linear model</span>
+<span class="n">model</span><span class="o">=</span><span class="n">sklearn</span><span class="o">.</span><span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ens_FW</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">ens_ST</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">pre</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">extent</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="n">extent</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax_scp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span><span class="n">pre</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ax_scp2</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.55</span><span class="p">,</span><span class="mf">0.07</span><span class="p">,</span><span class="mf">0.43</span><span class="p">,</span><span class="mf">0.89</span><span class="p">])</span>
+
+<span class="c1"># x-axis</span>
+<span class="n">ax_scp2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="n">ax_scp2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;original MSLP at Fort William (hPa)&#39;</span><span class="p">)</span>
+<span class="c1"># y-axis</span>
+<span class="n">ax_scp2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">extent_london</span><span class="p">)</span>
+<span class="n">ax_scp2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;MSLP at London after assimilating Fort William observation (hPa)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adjust the mslp by assimilating the FW ob</span>
+<span class="n">ST_adjusted</span><span class="o">=</span><span class="n">DIYA</span><span class="o">.</span><span class="n">constrain_point</span><span class="p">(</span><span class="n">ens_ST</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">ens_FW</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                                   <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span><span class="n">obs</span><span class="o">=</span><span class="n">fwi</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">ax_scp2</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">fwi</span><span class="p">,</span><span class="n">fwi</span><span class="p">),</span><span class="n">extent_london</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax_scp2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ens_FW</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span><span class="n">ST_adjusted</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span>
+            <span class="mi">500</span><span class="p">,</span> <span class="c1"># Point size</span>
+            <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="c1"># Color</span>
+            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+            <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;face&#39;</span><span class="p">,</span>
+            <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Output as png</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;before+after_london_</span><span class="si">%04d%02d%02d%02d</span><span class="s1">.png&#39;</span> <span class="o">%</span> 
+                                    <span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

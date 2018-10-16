@@ -1,24 +1,25 @@
-Visualising uncertainty: spaghetti contours & DWR data
-======================================================
+Scatter-contour plot
+====================
 
-.. raw:: html
+.. figure:: ../../../analyses/representing_uncertainty/scatter_contour/Scatter+contour_1903102218.png
+   :width: 95%
+   :align: center
+   :figwidth: 95%
 
-    <center>
-    <table><tr><td><center>
-    <a href="https://github.com/oldweather/DWR/raw/master/analyses/scatter%2Bcontour/Scatter%2Bcontour_1901012218.png"><img src="https://github.com/oldweather/DWR/raw/master/analyses/scatter%2Bcontour/Scatter%2Bcontour_1901012218.png" width=795></a></center></td></tr>
-    <tr><td>MSLP spaghetti-contour plot for 20CR2c (left), and comparison with DWR obs at the station locations (right) for January 22nd, 1901 (at 6pm). (<a href='scatter_and_contour_20CR2c.html'>source</a>)</td></tr>
-    </table>
-    </center>
+   On the left, a :doc:`spaghetti-contour plot <../spaghetti_contour/spaghetti_contour>` of 20CRv3 MSLP for October 22nd, 1903 (at 6pm). On the right, comparison of the ensemble values (blue dots), with independent observations from the `Daily Weather Reports <https://oldweather.github.io/DWR/>`_ (black lines).
+
+This style of figure validates the reanalysis ensemble by comparing ensemble values at the times and places where we have independent observations, with the independent observations. The reanalysis is well-calibrated if the observation values mostly lie within the cloud of ensemble values, and precise if the ensemble spread around the observation value is small.
 
 |
 
-This combines a `spaghetti-contour plot <../spaghetti_contour/spaghetti_contour.html>`_ and a `reanalysis-ensemble at station plot <../validation_scatterplot/ensemble_at_station.html>`_ into a single figure.
+Code to make the figure
+-----------------------
 
-.. toctree::
-   :maxdepth: 2
+Collect the data (prmsl ensemble and observations from 20CR2c for 1903):
 
-   scatter_and_contour_20CR2c
-   scatter_and_contour_CERA20C
-   scatter_and_contour_20CR2c_video
-   scatter_and_contour_CERA20C_video
+.. literalinclude::  ../../../analyses/representing_uncertainty/scatter_contour/get_data.py
+
+Script to make the figure:
+
+.. literalinclude:: ../../../analyses/representing_uncertainty/scatter_contour/scatter_contour.py
 

@@ -1,7 +1,10 @@
 Meteorological Data Assimilation for Data Scientists
 ====================================================
 
-Suppose we have an uncertain estimate of the weather (MSLP) at some point in the past, perhaps :doc:`from a reanalysis <reanalysis_and_uncertainty>`, and then we get some new information, in the form of a station observation from that date and time. How can we use that new station observation to improve the MSLP estimate?
+An ensemble and an observation
+------------------------------
+
+Suppose we have an :doc:`uncertain estimate <representing_uncertainty/representing_uncertainty>` of the weather (the mean-sea-level pressure (MSLP) field) at some point in the past, perhaps from a reanalysis, and then we get some new information, in the form of a station observation from that date and time. How can we use that new station observation to improve the MSLP estimate?
 
 |
 
@@ -12,9 +15,12 @@ Suppose we have an uncertain estimate of the weather (MSLP) at some point in the
 
    MSLP Contours for 20CR2c for October 22nd, 1903 (at 6pm).
 
-   :doc:`Spaghetti-contour plot <analyses/spaghetti_contour/spaghetti_contour.html>` of mean-sea-level pressure, and the location of the Fort William station (red dot), where we have :doc:`new observational data <data/data_from_weatherrescue>` (:doc:`Figure source <analyses/DA_exposition/one_station>`)
+   :doc:`Spaghetti-contour plot <analyses/spaghetti_contour/spaghetti_contour>` of mean-sea-level pressure, and the location of the Fort William station (red dot), where we have `new observational data <https://oldweather.github.io/DWR>`_ (:doc:`Figure source <analyses/DA_exposition/one_station>`).
 
 |
+
+The Ensemble Kalman Filter
+--------------------------
 
 We can edit the reanalysis ensemble at the location of the new observation - setting all ensemble members to the observed value, but we would like to do more than this, to use information from the observation at nearby locations as well. To decide how to modify the mslp at, say, Stornoway and London, in response to an observation at Fort William, we need to know mslp variability in those places relates to weather variability at the location of the observation. However, we can estimate this directly from the ensemble:
 
@@ -27,7 +33,7 @@ We can edit the reanalysis ensemble at the location of the new observation - set
 
    MSLP at Fort William, Stornoway, and London (October 22nd, 1903 at 6pm).
 
-   The red dot marks Fort William, the blue Stornoway, and the black London. Scatter plots show relationship between their mslp, in the 20CRv3 ensemble for this particular point in time. (:doc:`Figure source.<analyses/DA_exposition/lr_contour>`)
+   The red dot marks Fort William, the blue Stornoway, and the black London. Scatter plots show relationship between the mslp at the three locations, across the 20CRv3 ensemble, at this particular point in time. (:doc:`Figure source <analyses/DA_exposition/lr_contour>`).
 
 |
 
@@ -44,11 +50,11 @@ We can formalise this by fitting a model (:obj:`sklearn.linear_model.LinearRegre
 
    MSLP at Stornoway, before and after assimilating the Fort William observation.
 
-   Scatter plots of 20CRv3 ensemble pressures at Stornoway against ensemble pressures at Fort William, at 6pm on 22nd October 1903. The Stornoway pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot). We can do :doc:`the same for the London pressures<analyses/DA_exposition/before+after_london>`, but in that case the adjustment will make much less difference, as the fit line has a smaller slope. (:doc:`Figure source.<analyses/DA_exposition/before+after>`)
+   Scatter plots of 20CRv3 ensemble pressures at Stornoway against ensemble pressures at Fort William, at 6pm on 22nd October 1903. The Stornoway pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot). We can do :doc:`the same for the London pressures <analyses/DA_exposition/before+after_london>`, but in that case the adjustment will make much less difference, as the fit line has a smaller slope. (:doc:`Figure source <analyses/DA_exposition/before+after_stornoway>`).
 
 |
 
-To assimilate the Fort William observation, we apply the same process illustrated above for Stornoway to each grid-point in the reanalyis field:
+To fully assimilate the Fort William observation, we apply the same process illustrated above for Stornoway, to each grid-point in the reanalyis field:
 
 |
 
@@ -57,13 +63,43 @@ To assimilate the Fort William observation, we apply the same process illustrate
    :align: center
    :figwidth: 95%
 
-   Before (left) and after (right) assimilating Fort William observation (October 22nd, 1903 at 6pm). 
+   :doc:`Spaghetti-contour plots <analyses/spaghetti_contour/spaghetti_contour>` showing 20CRv3 MSLP fields before (left) and after (right) assimilating Fort William observation (October 22nd, 1903 at 6pm). 
 
-   The observation has pulled nearby pressures towards its value, both changing the ensemble mean and reducing the spread, while having little effect further away. (:doc:`Figure source.<analyses/DA_exposition/before+after_map>`)
+   The observation has pulled nearby pressures towards its value, both changing the ensemble mean and reducing the spread, while having little effect further away. (:doc:`Figure source <analyses/DA_exposition/before+after_map>`).
 
 |
+
+Validation
+----------
+
+If it has worked well this will have improved the accuracy of the reanalysis ensemble, as well as reducing its spread. To test this, we need more observations, and fortunately the `Daily Weather Reports dataset <https://oldweather.github.io/DWR/>`_ provides 22 other new obsrvations at this time, and we can compare them to the original 20CRv3 field, and to the field after assimilating the Fort William observation.
+
+.. figure:: ../analyses/DA_exposition/multiple_observations/Subset_FW_only_1903102218.png
+   :width: 95%
+   :align: center
+   :figwidth: 95%
+
+   On the left, a :doc:`Spaghetti-contour plot <analyses/spaghetti_contour/spaghetti_contour>` of 20CRv3 MSLP. Centre and right, :doc:`Scatter-contour plot <analyses/scatter+contour/scatter_and_contour>` comparing the same field, after assimilating the Fort William observation, with all the other (independent) observations in the  `Daily Weather Reports <https://oldweather.github.io/DWR/>`_. The centre panel shows the 20CRv3 ensemble after assimilating the Fort William observation (red dot) and the locations of all other new stations with observations at the same time (black dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating the Fort William observation. (:doc:`Figure source <analyses/DA_exposition/subset_FW>`).
+
+After assimilating the Fort William observation, the ensemble remains well calibrated to the new observations, and the ensemble spread is reduced for stations near to Fort William. So this is a success, assimilating the new observation has improved the ensemble.
 
 Assimilating more than one observation
 --------------------------------------
 
-We can extend this same method to assimilate multiple observations, by adding an extra variable into each linear regression for each new observation.; So if we have two observations, oner at Fort William and one at Manchester, we update the pressure at Stornoway by modelling the pressure at Stornoway as a multivariate linear regression on the Fort William and Manchester pressures.
+We can extend this same method to assimilate multiple observations, by adding an extra variable into each linear regression for each new observation.; So if we use three observations, at Fort William, Liverpool and London, we update the pressure at Stornoway by modelling the pressure at Stornoway as a multivariate linear regression on the Fort William, Liverpool and London pressures. (And validate against the remaining 20 stations):
+
+.. figure:: ../analyses/DA_exposition/multiple_observations/Subset_FWLL_1903102218.png
+   :width: 95%
+   :align: center
+   :figwidth: 95%
+
+   Same as the figure above, except observations from three stations (Fort William, Liverpool, and London) have been assimilated. (:doc:`Figure source <analyses/DA_exposition/subset_FWLL>`)
+
+To get the best MSLP field we should assimilate all the observations, but that would leave us with nothing to validate against. A good compromise is leave-one-out validation: we do 22 assimilations, in each case assimilating all but one of the stations, and using the one left out for validation:
+
+.. figure:: ../analyses/DA_exposition/multiple_observations/Jacknife_1903102218.png
+   :width: 95%
+   :align: center
+   :figwidth: 95%
+
+   Same as the figure above, except that the centre panel shows the effect of assimilating all 22 station observations, and the right panel shows the effect, at each station, of assimilating the other 21 stations. (:doc:`Figure source <analyses/DA_exposition/jacknife>`)
