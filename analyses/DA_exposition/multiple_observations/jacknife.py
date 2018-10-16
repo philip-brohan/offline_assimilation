@@ -307,7 +307,7 @@ for i in range(len(stations)):
             ydata=(p_left['y'],p_right['y']),
             linestyle='solid',
             linewidth=0.2,
-            color=(1,0,0,0.5),
+            color=(1,0,0,1.0),
             zorder=1))
 
 # Output as png

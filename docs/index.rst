@@ -11,9 +11,10 @@ Improving reanalysis with offline assimilation
    :titlesonly:
    :maxdepth: 3
 
-   representing_uncertainty/representing_uncertainty.rst
+   representing_uncertainty/representing_uncertainty
    da_for_ds
-   improving_with_dwr
+   modules/module_DIYA
+   DWR_data/DWR_data
    marine_data/marine_data
    more_than_mslp/more_than_mslp
    better_than_olr/better_than_olr

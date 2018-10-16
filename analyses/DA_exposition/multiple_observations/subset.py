@@ -31,7 +31,7 @@ RANDOM_SEED = 5
 obs_error=5 # Pa
 model=sklearn.linear_model.Lasso(normalize=True)
 
-stations_to_assimilate=['FORTWILLIAM']
+stations_to_assimilate=['FORTWILLIAM','LIVERPOOL','LONDON']
 
 # Date to show
 year=1903
@@ -305,9 +305,9 @@ for i in range(len(stations)):
             ydata=(p_left['y'],p_right['y']),
             linestyle='solid',
             linewidth=0.2,
-            color=(1,0,0,1),
+            color=(1,0,0,1.0),
             zorder=1))
 
 # Output as png
-fig.savefig('Subset_FW_only_%04d%02d%02d%02d.png' % 
+fig.savefig('Subset_FW+L+L_%04d%02d%02d%02d.png' % 
                                   (year,month,day,hour))
