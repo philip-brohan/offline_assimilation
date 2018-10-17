@@ -77,6 +77,23 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
             
   <div class="section" id="representing-uncertainty-in-weather-maps">
 <h1>Representing uncertainty in weather maps<a class="headerlink" href="#representing-uncertainty-in-weather-maps" title="Permalink to this headline">¶</a></h1>
+<p>A traditional <a class="reference external" href="https://en.wikipedia.org/wiki/Weather_map">weather map</a> shows the surface pressure field, and possibly symbols for highs and lows, fronts and featues, and sometimes observations. The long reanalyses, such as <a class="reference external" href="https://www.esrl.noaa.gov/psd/data/20thC_Rean/">20CR</a> let us make weather maps for any period in the past 100+ years:</p>
+<div class="figure align-center" id="id1" style="width: 95%">
+<a class="reference internal image-reference" href="../_images/simple_map_19031022181.png"><img alt="../_images/simple_map_19031022181.png" src="../_images/simple_map_19031022181.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">MSLP contours from the first ensemble member of 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated. (<a class="reference internal" href="../analyses/simple_map/simple_map.html"><span class="doc">Figure source</span></a>).</span></p>
+</div>
+<p>This map is a representation of the weather at this point in time, but it is not exactly correct, it is uncertain. And for times and places where there are few observations to constrain the reanalysis, the uncertainty is large.</p>
+<p>Because 20CR is an ensemble product it contains information about the uncertainty in the spread of its ensemble. So we can make a map that shows both the best-estimate MSLP, and the uncertainty in that estimate:</p>
+<div class="figure align-center" id="id2" style="width: 95%">
+<a class="reference internal image-reference" href="../_images/spaghetti_example_19031022181.png"><img alt="../_images/spaghetti_example_19031022181.png" src="../_images/spaghetti_example_19031022181.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">A spaghetti plot, of MSLP contours from 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated (yellow dots). The blue lines are contours of MSLP for each of the 80 ensemble menbers in 20CRv3. Where the uncertainty is low these will cluster together (around the corresponding black contour) - where the blue contours diverge the uncertainty in the field is large. (<a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Figure source</span></a>).</span></p>
+</div>
+<p>A <a class="reference external" href="https://oldweather.github.io/DWR/">recent digitisation project</a> has provided new observations - not assimilated by 20CR - which we can use to validate the reanalysis:</p>
+<div class="figure align-center" id="id3" style="width: 95%">
+<a class="reference internal image-reference" href="../_images/Scatter+contour_19031022181.png"><img alt="../_images/Scatter+contour_19031022181.png" src="../_images/Scatter+contour_19031022181.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">On the left, a spaghetti-contour plot as above, of 20CRv3 MSLP for October 22nd, 1903 (at 6pm). On the right, comparison of the ensemble values (blue dots), with independent observations from the Daily Weather Reports (black lines). (<a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Figure source</span></a>).</span></p>
+</div>
+<p>The observations are within the spread of the reanalysis, so the reanalysis at this time and place is accurate - but it isn’t very precise, the spread is substantial at the locations of the observations. We would like to use the observations to improve the reanalysis - to make a revised version with the same accuracy, but increased precision.</p>
 </div>
 
 
