@@ -1,3 +1,5 @@
+:orphan:
+
 Scatter-contour plot
 ====================
 

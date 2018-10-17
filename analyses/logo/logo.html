@@ -4,18 +4,27 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Making the logo - correlation map for a new observation &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-  </head><body>
+  </head>
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -71,21 +80,21 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <h1>Making the logo - correlation map for a new observation<a class="headerlink" href="#making-the-logo-correlation-map-for-a-new-observation" title="Permalink to this headline">¶</a></h1>
 <p>The sole purpose of this figure is to make a colourful and relevant image for use as the project logo.</p>
 <div class="figure align-center" id="id1" style="width: 75%">
-<a class="reference internal image-reference" href="../../_images/logo.png"><img alt="../../_images/logo.png" src="../../_images/logo.png" style="width: 75%;" /></a>
+<a class="reference internal image-reference" href="../../_images/logo_small.png"><img alt="../../_images/logo_small.png" src="../../_images/logo_small.png" style="width: 75%;" /></a>
 <p class="caption"><span class="caption-text">MSLP ensemble mean contours, and ensemble spread correlation with a hypothetical Fort William observation - from 20CRv3.</span></p>
 </div>
-<p>The black lines are contours of the ensemble mean MSLP - at 1903:02:27:06, the time of the <a class="reference external" href="https://weatherrescue.wordpress.com/2017/10/12/february-1903-the-ulysses-storm/">Ulysses storm</a>. The yellow dot marks the location of a hypothetical new observation, the coloured shading marKs regions where the ensemble spread is correlated (red) or anti-correlated (blue) with the spread at the observation location (in other words - the regions where assimilating such an observation would have a substantial effect).</p>
+<p>The black lines are contours of the ensemble mean MSLP - at 1903:02:27:06, the time of the <a class="reference external" href="https://weatherrescue.wordpress.com/2017/10/12/february-1903-the-ulysses-storm/">Ulysses storm</a>. The yellow dot marks the location of a hypothetical new observation, the coloured shading marks regions where the ensemble spread is correlated (red) or anti-correlated (blue) with the spread at the observation location (in other words - the regions where assimilating such an observation would have a substantial effect).</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Collect the reanalysis data (prmsl ensemble from 20CR2c for 1903):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<p>Collect the reanalysis data (prmsl ensemble from 20CRv3 for 1903):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="kn">as</span> <span class="nn">twcr</span>
 <span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">27</span><span class="p">),</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Script to make the figure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="c1"># UK region weather plot </span>
 <span class="c1"># Show pressures and covariances</span>
@@ -189,7 +198,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 </pre></div>
 </div>
 <p>Shrink the logo to a more convenient size</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>convert -geometry 350x424 logo.png logo_small.png
+<div class="highlight-bash"><div class="highlight"><pre><span></span>convert -geometry 350x424 logo.png logo_small.png
 </pre></div>
 </div>
 </div>
