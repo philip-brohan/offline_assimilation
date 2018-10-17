@@ -1,3 +1,5 @@
+:orphan:
+
 One station
 ===========
 
@@ -13,7 +15,7 @@ One station
 Code to make the figure
 -----------------------
 
-Collect the data (prmsl ensemble and observations from 20CR2c for 1903):
+Collect the data (prmsl ensemble and observations from 20CRv3 for October 1903):
 
 .. literalinclude::  ../../../analyses//DA_exposition/one_station/get_data_20CR.py
 

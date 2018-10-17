@@ -1,20 +1,22 @@
+:orphan:
+
 Making the logo - correlation map for a new observation
 =======================================================
 
 The sole purpose of this figure is to make a colourful and relevant image for use as the project logo.
 
-.. figure:: ../../logo/logo.png
+.. figure:: ../../logo/logo_small.png
    :width: 75%
    :align: center
    :figwidth: 75%
 
    MSLP ensemble mean contours, and ensemble spread correlation with a hypothetical Fort William observation - from 20CRv3.
 
-The black lines are contours of the ensemble mean MSLP - at 1903:02:27:06, the time of the `Ulysses storm <https://weatherrescue.wordpress.com/2017/10/12/february-1903-the-ulysses-storm/>`_. The yellow dot marks the location of a hypothetical new observation, the coloured shading marKs regions where the ensemble spread is correlated (red) or anti-correlated (blue) with the spread at the observation location (in other words - the regions where assimilating such an observation would have a substantial effect). 
+The black lines are contours of the ensemble mean MSLP - at 1903:02:27:06, the time of the `Ulysses storm <https://weatherrescue.wordpress.com/2017/10/12/february-1903-the-ulysses-storm/>`_. The yellow dot marks the location of a hypothetical new observation, the coloured shading marks regions where the ensemble spread is correlated (red) or anti-correlated (blue) with the spread at the observation location (in other words - the regions where assimilating such an observation would have a substantial effect). 
 
 |
 
-Collect the reanalysis data (prmsl ensemble from 20CR2c for 1903):
+Collect the reanalysis data (prmsl ensemble from 20CRv3 for 1903):
 
 .. code-block:: python
 

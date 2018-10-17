@@ -1,3 +1,5 @@
+:orphan:
+
 Effect at Stornoway of assimilating observation at Fort William
 ===============================================================
 

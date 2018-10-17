@@ -1,3 +1,5 @@
+:orphan:
+
 Effect at London of assimilating observation at Fort William
 ============================================================
 

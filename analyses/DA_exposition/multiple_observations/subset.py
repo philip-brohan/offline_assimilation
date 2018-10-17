@@ -309,5 +309,5 @@ for i in range(len(stations)):
             zorder=1))
 
 # Output as png
-fig.savefig('Subset_FW+L+L_%04d%02d%02d%02d.png' % 
+fig.savefig('Subset_FWLL_%04d%02d%02d%02d.png' % 
                                   (year,month,day,hour))
