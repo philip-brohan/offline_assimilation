@@ -35,18 +35,38 @@ def _build_X_matrix_from_cube(cube,latitudes,longitudes):
     result=numpy.diagonal(interpolated.data,axis1=1,axis2=2).copy()
     return result
 
-# Given a target cube, a constraints cube, and a set of 
+# If the obs are at different times, we can't just use one cube.
+# Need to load a cube at each obs time, and get the sub-matrix with obs at
+# that time from that, and then merge them
+# cube_function 
+def _build_X_matrix_from_obs(obs,cube_function):
+    # Find groups of obs made at the same time
+    bunch=([[y for y in range(len(obs.dtm.values)) if obs.dtm.values[y]==x] 
+                                                     for x in obs.dtm.values])
+    bunch=[ele for ind, ele in enumerate(bunch) if ele not in bunch[:ind]]
+    result=None # Don't know n.ensemble.members yet
+    # For each bunch of contemporary obs, make a sub-matrix
+    for subset in bunch:
+        field=cube_function(obs.dtm.values[subset[0]])
+        subX=_build_X_matrix_from_cube(field,obs.latitude.values[subset],
+                                             obs.longitude.values[subset])
+        if result is None:
+            result=numpy.ndarray((subX.shape[0],len(obs)))
+        result[:,subset]=subX
+    return result
+
+# Given a target cube, a function to load constraints, and a set of 
 #  observations, make a constrained cube.
-def constrain_cube(target,constraints,obs,obs_error=0.1,
+def constrain_cube(target,cube_function,obs,obs_error=0.1,
                    random_state=None,model=None,
                    lat_range=(-90,90),lon_range=(-180,360)):
     """Constrain the target at each gridpoint.
 
-    Generates the constraints at each observation location from the constraints cube, and then runs :func:`constrain_point` for each grid point in the target cube (inside the lat:lon ranges).
+    Generates the constraints at each observation location, and then runs :func:`constrain_point` for each grid point in the target cube (inside the lat:lon ranges).
 
     Args:
         target (:obj:`iris.cube.Cube`): Ensemble to be constrained, must have dimensions 'member','latitude', and 'longitude'".
-        constraints (:obj:`iris.cube.Cube`): Ensemble to constrain the target, must have dimensions ('member','latitude','longitude')".
+        cube_function (function taking a :obj:`numpy.datetime64` as argument, and returning an :obj:`iris.cube.Cube`): Resulting cube must have dimensions ('member','latitude','longitude')".
         obs (:obj:`pandas.DataFrame`): Observations. Dataframe must have columns 'latitude', 'longitude', and 'value', and value should have same units as constraints.
         obs_error (:obj:`float`): Uncertainty in each observation value (1 s.d.) . Units as obs.value.
         random_state (:obj:`int` | :obj:`numpy.random.RandomState`, optional): Set to produce exactly reproducible results.
@@ -59,8 +79,7 @@ def constrain_cube(target,constraints,obs,obs_error=0.1,
 
     |
     """
-    X=_build_X_matrix_from_cube(constraints,obs.latitude,
-                                            obs.longitude)
+    X=_build_X_matrix_from_obs(obs,cube_function)
     Y=IRData.utils.cube_order_dimensions(
                  target,('member','latitude','longitude'))
     # Make a different set of perturbed obs for each ensemble member
