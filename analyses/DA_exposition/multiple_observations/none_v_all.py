@@ -126,7 +126,8 @@ mg.observations.plot(ax_three,obs_assimilate,
                      lon_label='longitude')
 
 # Update mslp by assimilating obs.
-prmsl2=DIYA.constrain_cube(prmsl,prmsl,
+prmsl2=DIYA.constrain_cube(prmsl,
+                           lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
                            obs=obs_assimilate,
                            obs_error=obs_error,
                            random_state=RANDOM_SEED,

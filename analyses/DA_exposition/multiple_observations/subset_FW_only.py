@@ -136,7 +136,8 @@ obs.value=obs.value*100 # to Pa
 
 # Update mslp by assimilating selected obs.
 obs_assimilate=obs[obs['name'].isin(stations_to_assimilate)]
-prmsl2=DIYA.constrain_cube(prmsl,prmsl,
+prmsl2=DIYA.constrain_cube(prmsl,
+                           lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
                            obs=obs_assimilate,
                            obs_error=obs_error,
                            random_state=RANDOM_SEED,

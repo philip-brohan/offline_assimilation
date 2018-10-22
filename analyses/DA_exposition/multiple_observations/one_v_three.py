@@ -84,7 +84,8 @@ obs_s=obs_t.loc[((obs_t['Latitude']>0) &
                  (obs_t['Longitude']<100))].copy()
 
 # Update mslp by assimilating Fort William ob.
-prmsl2=DIYA.constrain_cube(prmsl,prmsl,
+prmsl2=DIYA.constrain_cube(prmsl,
+                           lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
                            obs=obs_assimilate,
                            obs_error=100,
                            random_state=RANDOM_SEED,
@@ -136,7 +137,8 @@ mg.observations.plot(ax_three,obs_assimilate,
                      lon_label='longitude')
 
 # Update mslp by assimilating three obs.
-prmsl2=DIYA.constrain_cube(prmsl,prmsl,
+prmsl2=DIYA.constrain_cube(prmsl,
+                           lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
                            obs=obs_assimilate,
                            obs_error=100,
                            random_state=RANDOM_SEED,

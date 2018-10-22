@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# Assimilation of many stations.
-# Validate at each station using the jacknife
+# Assimilation a whole day's worth of FW observations.
+# Validate at all the stations not assimilated.
 
 import math
 import datetime
@@ -128,14 +128,17 @@ obs=DWR.load_observations('prmsl',
                           dte-datetime.timedelta(hours=0.1),
                           dte+datetime.timedelta(hours=0.1))
 
-# Throw out the ones already used in 20CRv3
-obs=obs[~obs['name'].isin(['ABERDEEN','VALENCIA','JERSEY'])]
+# Throw out the ones already used
+obs=obs[~obs['name'].isin(['ABERDEEN','VALENCIA','JERSEY','FORTWILLIAM'])]
+obs.value=obs.value*100 # to Pa
 
-obs_assimilate=obs # Use deep copy instead?
-# Convert to normalised value same as reanalysis
-obs_assimilate.value=obs_assimilate.value*100
+# Update mslp by assimilating selected obs.
+obs_assimilate=DWR.load_observations('prmsl',
+                          dte-datetime.timedelta(hours=24),
+                          dte+datetime.timedelta(hours=24))
+obs_assimilate=obs_assimilate[obs_assimilate['name']=='FORTWILLIAM']
+obs_assimilate.value=obs_assimilate.value*100 # to Pa
 
-# Update mslp by assimilating all obs.
 prmsl2=DIYA.constrain_cube(prmsl,
                            lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
                            obs=obs_assimilate,
@@ -146,6 +149,10 @@ prmsl2=DIYA.constrain_cube(prmsl,
                            lon_range=(280,60))
 
 mg.observations.plot(ax_centre,obs_s,radius=0.15)
+mg.observations.plot(ax_centre,obs,
+                     radius=0.15,facecolor='black',
+                     lat_label='latitude',
+                     lon_label='longitude')
 mg.observations.plot(ax_centre,obs_assimilate,
                      radius=0.15,facecolor='red',
                      lat_label='latitude',
@@ -179,7 +186,8 @@ mg.utils.plot_label(ax_centre,
 
 
 # Validation scatterplot on the right
-stations=obs.name.values
+obs_validate=obs
+stations=obs_validate.name.values
 ax_right=fig.add_axes([0.73,0.05,0.265,0.94])
 # x-axis
 xrange=[975,1025]
@@ -239,22 +247,14 @@ for y in range(len(stations)):
                 alpha=1.0,
                 zorder=0.5)
 
-# For each station, assimilate all but that station, and plot the resulting ensemble
+# for each station, plot the post-assimilation ensemble at that station
+interpolator = iris.analysis.Linear().interpolator(prmsl2, 
+                                   ['latitude', 'longitude'])
 for y in range(len(stations)):
     station=stations[y]
-    obs_assimilate=obs[~obs['name'].isin([station])]
-    prmsl2=DIYA.constrain_cube(prmsl,
-                           lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
-                           obs=obs_assimilate,
-                           obs_error=obs_error,
-                           random_state=RANDOM_SEED,
-                           model=model,
-                           lat_range=(20,85),
-                           lon_range=(280,60))
-    interpolator = iris.analysis.Linear().interpolator(prmsl2, 
-                                   ['latitude', 'longitude'])
     ensemble=interpolator([latlon[station]['latitude'],
                            latlon[station]['longitude']])
+
     ax_right.scatter(ensemble.data/100.0,
                 numpy.linspace(y+1.1,y+1.5,
                               num=len(ensemble.data)),
@@ -313,5 +313,5 @@ for i in range(len(stations)):
             zorder=1))
 
 # Output as png
-fig.savefig('Jacknife_%04d%02d%02d%02d.png' % 
+fig.savefig('all_FW_pm24h_%04d%02d%02d%02d.png' % 
                                   (year,month,day,hour))

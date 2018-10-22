@@ -128,7 +128,9 @@ obs_assimilate=obs_assimilate.assign(dtm=pandas.to_datetime(
                                    'day','hour','minute']]))
 
 # Update mslp by assimilating Fort William ob.
-prmsl2=DIYA.constrain_cube(prmsl,prmsl,
+
+prmsl2=DIYA.constrain_cube(prmsl,
+                           lambda dte: twcr.load('prmsl',dte,version='4.5.1'),
                            obs=obs_assimilate,
                            obs_error=0.1,
                            random_state=RANDOM_SEED,

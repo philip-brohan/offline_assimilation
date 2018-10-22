@@ -18,6 +18,8 @@ import numpy
 import sklearn.linear_model
 import sklearn.utils
 import IRData.utils
+import datetime
+import pandas
 
 # X-matrix for the model is a numpy array of dimension
 #  (n.ensemble.members,n.stations)
@@ -47,7 +49,7 @@ def _build_X_matrix_from_obs(obs,cube_function):
     result=None # Don't know n.ensemble.members yet
     # For each bunch of contemporary obs, make a sub-matrix
     for subset in bunch:
-        field=cube_function(obs.dtm.values[subset[0]])
+        field=cube_function(pandas.to_datetime(obs.dtm.values[subset[0]]))
         subX=_build_X_matrix_from_cube(field,obs.latitude.values[subset],
                                              obs.longitude.values[subset])
         if result is None:
