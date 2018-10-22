@@ -111,7 +111,6 @@ mg.utils.plot_label(ax_left,
               x_fraction=0.98,
               horizontalalignment='right')
 
-
 # Validation scatterplot on the right
 stations=obs.name.values
 ax_right=fig.add_axes([0.62,0.05,0.36,0.94])

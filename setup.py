@@ -53,7 +53,7 @@ setup(
         'scipy>0.18',
         'pandas>0.20',
         'scikit-learn>0.19',
-        'matplotlib>1.5,<2.0',
+        'matplotlib>2.2.0',
     ],
 
 
