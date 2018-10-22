@@ -47,6 +47,8 @@ setup(
 
     # Other packages that your project depends on.
     install_requires=[
+        'scitools-iris>=2.2',
+        'cartopy>=0.16',
         'IRData>0.0',
         'Meteorographica>0.0',
         'numpy>1.13',
