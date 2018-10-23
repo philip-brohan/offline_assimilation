@@ -137,9 +137,6 @@ obs=DWR.load_observations('prmsl',
 obs=obs[~obs['name'].isin(['ABERDEEN','VALENCIA','JERSEY','STOCKHOLM',
                            'LISBON','THEHELDER','HAPARANDA','MUNICH',
                            'BODO','HERNOSAND','WISBY','FANO','BERLIN'])]
-# Throw out HORTA because of a data problem
-obs=obs[~obs['name'].isin(['HORTA'])]
-
 obs.value=obs.value*100
 
 # Load the all-stations-assimilated mslp
@@ -190,7 +187,7 @@ interpolate_obs=DWR.load_observations('prmsl',
 
 ax_right=fig.add_axes([0.74,0.05,0.255,0.94])
 # x-axis
-xrange=[945,1035]
+xrange=[940,1025]
 ax_right.set_xlim(xrange)
 ax_right.set_xlabel('')
 
@@ -220,7 +217,9 @@ for station in stations:
 # Plot the station pressures
 for y in range(0,len(stations)):
     station=stations[y]
-    mslp=DWR.at_station_and_time(interpolate_obs,station,dte)
+    try:
+        mslp=DWR.at_station_and_time(interpolate_obs,station,dte)
+    except StandardError: continue 
     if mslp is None: continue                              
     ax_right.add_line(matplotlib.lines.Line2D(
             xdata=(mslp,mslp), ydata=(y+1.1,y+1.9),
