@@ -20,6 +20,10 @@ import DIYA
 import sklearn
 RANDOM_SEED = 5
 
+# Try and get round thread errors on spice
+import dask
+dask.config.set(scheduler='single-threaded')
+
 obs_error=5 # Pa
 model=sklearn.linear_model.Lasso(normalize=True)
 
