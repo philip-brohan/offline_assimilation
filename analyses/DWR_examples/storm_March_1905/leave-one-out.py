@@ -32,8 +32,8 @@ if not os.path.isdir(opdir):
     os.makedirs(opdir)
 
 # Assimilate observations within this range of the field
-hours_before=6
-hours_after=6
+hours_before=8
+hours_after=8
 
 # Get the datetime, and station to omit, from commandline arguments
 import argparse

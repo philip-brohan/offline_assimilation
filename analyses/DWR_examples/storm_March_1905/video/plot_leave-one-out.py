@@ -40,8 +40,8 @@ full_obs=full_obs.sort_values(by='latitude',ascending=True)
 stations=list(OrderedDict.fromkeys(full_obs.name.values))
 
 # Assimilate observations within this range of the field
-hours_before=6
-hours_after=6
+hours_before=8
+hours_after=8
 
 # Where are the precalculated fields?
 ipdir="%s/images/DWR_jacknife" % os.getenv('SCRATCH')
@@ -234,7 +234,7 @@ mg.utils.plot_label(ax_centre,
 
 ax_right=fig.add_axes([0.74,0.05,0.255,0.94])
 # x-axis
-xrange=[940,1025]
+xrange=[940,1035]
 ax_right.set_xlim(xrange)
 ax_right.set_xlabel('')
 
@@ -265,10 +265,10 @@ for station in stations:
 for y in range(0,len(stations)):
     station=stations[y]
     try:
-        (mslp,dist)=DWR.at_station_and_time_with_distance(full_obs,station,dte)
+        (mslp,gap)=DWR.at_station_and_time_with_distance(full_obs,station,dte)
     except StandardError: continue 
     if mslp is None: continue
-    alpha=max(0,1-abs(dist)/3600.0)                             
+    alpha=max(0,1-abs(gap)/3600.0)                             
     ax_right.add_line(matplotlib.lines.Line2D(
             xdata=(mslp,mslp), ydata=(y+1.1,y+1.9),
             linestyle='solid',

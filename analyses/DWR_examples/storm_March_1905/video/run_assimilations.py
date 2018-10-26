@@ -12,8 +12,8 @@ import DWR
 max_jobs_in_queue=500
 
 # Assimilate observations within this range of the field
-hours_before=6
-hours_after=6
+hours_before=8
+hours_after=8
 
 # Where to put the output files
 opdir="%s/images/DWR_jacknife_png" % os.getenv('SCRATCH')

@@ -29,8 +29,8 @@ import IRData.twcr as twcr
 import DWR
 
 # Assimilate observations within this range of the field
-hours_before=6
-hours_after=6
+hours_before=8
+hours_after=8
 
 # Where are the precalculated fields?
 ipdir="%s/images/DWR_jacknife" % os.getenv('SCRATCH')

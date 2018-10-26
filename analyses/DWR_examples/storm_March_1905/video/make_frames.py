@@ -23,8 +23,8 @@ def is_done(dte):
         return True
     return False
 
-start_day=datetime.datetime(1905, 3, 15, 3)
-end_day  =datetime.datetime(1905, 3, 16, 21)
+start_day=datetime.datetime(1905, 3, 10,  3)
+end_day  =datetime.datetime(1905, 3, 20, 21)
 
 dte=start_day
 while dte<=end_day:
@@ -43,11 +43,12 @@ while dte<=end_day:
         f.write('#SBATCH --mem=40000\n')
         f.write('#SBATCH --time=10\n')
         jcount=0
-        for minutes in (0,7,15,23):
+        for minutes in (0,7,15,22):
             if is_done(dte+datetime.timedelta(minutes=minutes)):
                 continue
             cmd="./plot_leave-one-out.py --year=%d --month=%d --day=%d --hour=%f &\n" % (
-                   dte.year,dte.month,dte.day,dte.hour+minutes/60.0)
+                   dte.year,dte.month,dte.day,
+                   dte.hour+(dte.minute+minutes)/60.0)
             f.write(cmd)
             jcount=jcount+1
         f.write('wait\n')
