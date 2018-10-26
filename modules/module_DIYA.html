@@ -4,29 +4,21 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>DIYA: A module for do-it-yourself data assimilation &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Improving 20CR with observations from the Daily Weather Reports" href="../DWR_data/DWR_data.html" />
     <link rel="prev" title="Meteorological Data Assimilation for Data Scientists" href="../da_for_ds.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -89,7 +81,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <p>Suppose you have an ensemble reanalysis, like <a class="reference external" href="https://www.esrl.noaa.gov/psd/data/20thC_Rean/">20CR</a>. So you have 56 different estimates of the global mean-sea-level pressure field at a particular date (say, 1903-10-27:18). There is quite a lot of spread in this ensemble, the pressures are uncertain.</p>
 <p>But we’ve also found a previously-unused observation, a measurement of MSLP at that time a a weather station (say in Fort William). We can use that new observation to improve the reanalysis estimate, with the <a class="reference external" href="https://www.esrl.noaa.gov/psd/data/20thC_Rean/">Ensemble Kalman Filter</a> or something similar.</p>
 <p>This module does this. It takes reanalysis data and observations, and assimilates the observations into the reanalysis fields, making improved versions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">DIYA</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">DIYA</span>
 <span class="n">new_field</span><span class="o">=</span><span class="n">DIYA</span><span class="o">.</span><span class="n">constrain_cube</span><span class="p">(</span><span class="n">old_field</span><span class="p">,</span><span class="n">old_field</span><span class="p">,</span><span class="n">obs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -115,7 +107,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Mean difference ratio from assimilating each observation.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></code></a>)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>)</td>
 </tr>
 </tbody>
 </table>
@@ -126,29 +118,29 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <dl class="function">
 <dt id="DIYA.constrain_cube">
-<code class="descclassname">DIYA.</code><code class="descname">constrain_cube</code><span class="sig-paren">(</span><em>target</em>, <em>constraints</em>, <em>obs</em>, <em>obs_error=0.1</em>, <em>random_state=None</em>, <em>model=None</em>, <em>lat_range=(-90</em>, <em>90)</em>, <em>lon_range=(-180</em>, <em>360)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DIYA/assimilate.html#constrain_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DIYA.constrain_cube" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">DIYA.</code><code class="descname">constrain_cube</code><span class="sig-paren">(</span><em>target</em>, <em>cube_function</em>, <em>obs</em>, <em>obs_error=0.1</em>, <em>random_state=None</em>, <em>model=None</em>, <em>lat_range=(-90</em>, <em>90)</em>, <em>lon_range=(-180</em>, <em>360)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DIYA/assimilate.html#constrain_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DIYA.constrain_cube" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constrain the target at each gridpoint.</p>
-<p>Generates the constraints at each observation location from the constraints cube, and then runs <a class="reference internal" href="#DIYA.constrain_point" title="DIYA.constrain_point"><code class="xref py py-func docutils literal"><span class="pre">constrain_point()</span></code></a> for each grid point in the target cube (inside the lat:lon ranges).</p>
+<p>Generates the constraints at each observation location, and then runs <a class="reference internal" href="#DIYA.constrain_point" title="DIYA.constrain_point"><code class="xref py py-func docutils literal notranslate"><span class="pre">constrain_point()</span></code></a> for each grid point in the target cube (inside the lat:lon ranges).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>target</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><code class="xref py py-obj docutils literal"><span class="pre">iris.cube.Cube</span></code></a>) – Ensemble to be constrained, must have dimensions ‘member’,’latitude’, and ‘longitude’”.</li>
-<li><strong>constraints</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><code class="xref py py-obj docutils literal"><span class="pre">iris.cube.Cube</span></code></a>) – Ensemble to constrain the target, must have dimensions (‘member’,’latitude’,’longitude’)”.</li>
-<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, and ‘value’, and value should have same units as constraints.</li>
-<li><strong>obs_error</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – Uncertainty in each observation value (1 s.d.) . Units as obs.value.</li>
-<li><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.random.RandomState</span></code></a>, optional) – Set to produce exactly reproducible results.</li>
-<li><strong>model</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal"><span class="pre">sklearn.linear_model</span></code></a>, optional) – Model to use to relate target to constraints. Defaults to <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html#sklearn.linear_model.ElasticNet" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal"><span class="pre">sklearn.linear_model.ElasticNet</span></code></a> with default parameters.</li>
-<li><strong>lat_range</strong> (<code class="xref py py-obj docutils literal"><span class="pre">list</span></code>, optional) – Only do constraint in this range of latitudes.</li>
-<li><strong>lon_range</strong> (<code class="xref py py-obj docutils literal"><span class="pre">list</span></code>, optional) – Only do constraint in this range of longitudes.</li>
+<li><strong>target</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a>) – Ensemble to be constrained, must have dimensions ‘member’,’latitude’, and ‘longitude’”.</li>
+<li><strong>cube_function</strong> (function taking a <code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.datetime64</span></code> as argument, and returning an <a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a>) – Resulting cube must have dimensions (‘member’,’latitude’,’longitude’)”.</li>
+<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, and ‘value’, and value should have same units as constraints.</li>
+<li><strong>obs_error</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Uncertainty in each observation value (1 s.d.) . Units as obs.value.</li>
+<li><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random.RandomState</span></code></a>, optional) – Set to produce exactly reproducible results.</li>
+<li><strong>model</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code></a>, optional) – Model to use to relate target to constraints. Defaults to <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html#sklearn.linear_model.ElasticNet" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.ElasticNet</span></code></a> with default parameters.</li>
+<li><strong>lat_range</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – Only do constraint in this range of latitudes.</li>
+<li><strong>lon_range</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – Only do constraint in this range of longitudes.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">target, after applying constraints.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-obj docutils literal"><span class="pre">iris.cube.cube</span></code></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iris.cube.cube</span></code></p>
 </td>
 </tr>
 </tbody>
@@ -168,17 +160,17 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>target</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a>) – 1d array size nE - the target ensemble at the target point.</li>
-<li><strong>constraint</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a>) – 2d array size [nE,nP] - the constraint ensemble at each of the observation points.</li>
-<li><strong>model</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal"><span class="pre">sklearn.linear_model</span></code></a>) – Model to fit.</li>
-<li><strong>obs</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a>) – 1d array size nP - the observations.</li>
+<li><strong>target</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a>) – 1d array size nE - the target ensemble at the target point.</li>
+<li><strong>constraint</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a>) – 2d array size [nE,nP] - the constraint ensemble at each of the observation points.</li>
+<li><strong>model</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code></a>) – Model to fit.</li>
+<li><strong>obs</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a>) – 1d array size nP - the observations.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">1d array size nE - the constrained target ensemble.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -197,15 +189,15 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>origin</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – 1 row from an observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
-<li><strong>destination</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – 1 row from an observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
+<li><strong>origin</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – 1 row from an observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
+<li><strong>destination</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – 1 row from an observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Distance between origin and destination in km.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -224,16 +216,16 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>observations</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – Observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
-<li><strong>target</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – 1 row from an observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
-<li><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – Maximum distance (km).</li>
+<li><strong>observations</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
+<li><strong>target</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – 1 row from an observations dataframe. Must have columns ‘latitude’ and ‘longitude’.</li>
+<li><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Maximum distance (km).</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Observations dataframe. Same as ‘observations’ input except that it only contains rows less than ‘distance’ from ‘target’.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>)</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>)</p>
 </td>
 </tr>
 </tbody>
@@ -247,25 +239,25 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <dt id="DIYA.qc_at_station_and_time">
 <code class="descclassname">DIYA.</code><code class="descname">qc_at_station_and_time</code><span class="sig-paren">(</span><em>obs</em>, <em>station</em>, <em>dte</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DIYA/qc.html#qc_at_station_and_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DIYA.qc_at_station_and_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get, from these observations, the quality of value at the selected station and time.</p>
-<p>This is analagous to <code class="xref py py-func docutils literal"><span class="pre">DWR.at_station_and_time()</span></code> except it gets the QC status of the observation instead of its value. If the value is interpolated, it will fail QC if either of the values it’s interpolated from fails.</p>
+<p>This is analagous to <code class="xref py py-func docutils literal notranslate"><span class="pre">DWR.at_station_and_time()</span></code> except it gets the QC status of the observation instead of its value. If the value is interpolated, it will fail QC if either of the values it’s interpolated from fails.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – Batch of observations for the period around the desired time. Should have extra columns ‘plausible’ and ‘first_guess’, giving results of those QC checks.</li>
-<li><strong>station</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) – Name of station, as used in obs.name.</li>
-<li><strong>dte</strong> (<a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">datetime.datetime</span></code></a>) – Time of required observed value.</li>
+<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Batch of observations for the period around the desired time. Should have extra columns ‘plausible’ and ‘first_guess’, giving results of those QC checks.</li>
+<li><strong>station</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of station, as used in obs.name.</li>
+<li><strong>dte</strong> (<a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a>) – Time of required observed value.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if this selected data has passed QC checks.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">bool</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">StandardError</span></code> – obs does not contain at least two values for selected station, one before and one after specified time. So interpolation not possible.</p>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StandardError</span></code> – obs does not contain at least two values for selected station, one before and one after specified time. So interpolation not possible.</p>
 </td>
 </tr>
 </tbody>
@@ -284,9 +276,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, and ‘dtm’ - the last a datetime.datetime.</li>
-<li><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) – Which 20CR variable to compare to. Defaults to ‘prmsl’</li>
-<li><strong>version</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) – Which 20CR version to load data from. Defaults to ‘2c’</li>
+<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, and ‘dtm’ - the last a datetime.datetime.</li>
+<li><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Which 20CR variable to compare to. Defaults to ‘prmsl’</li>
+<li><strong>version</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Which 20CR version to load data from. Defaults to ‘2c’</li>
 </ul>
 </td>
 </tr>
@@ -294,7 +286,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 </table>
 <dl class="docutils">
 <dt>Returns</dt>
-<dd><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></code></a>: Reanalyis ensemble associated with each observation.</dd>
+<dd><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>: Reanalyis ensemble associated with each observation.</dd>
 </dl>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -310,12 +302,12 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, ‘value’, and ‘dtm’ - the last a datetime.datetime.</li>
-<li><strong>nsd</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – Number of standard deviations for rejection threshold. Defaults to 3.</li>
-<li><strong>osd</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – Observation standard deviation. Defaults to 2.</li>
-<li><strong>comparison</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></code></a>) – Reanalysis ensemble values at the time and place of each observation. Defaults to None - calculate them.</li>
-<li><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) – Which 20CR variable to compare to. Defaults to ‘prmsl’</li>
-<li><strong>version</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) – Which 20CR version to load data from. Defaults to ‘2c’</li>
+<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, ‘value’, and ‘dtm’ - the last a datetime.datetime.</li>
+<li><strong>nsd</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Number of standard deviations for rejection threshold. Defaults to 3.</li>
+<li><strong>osd</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Observation standard deviation. Defaults to 2.</li>
+<li><strong>comparison</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>) – Reanalysis ensemble values at the time and place of each observation. Defaults to None - calculate them.</li>
+<li><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Which 20CR variable to compare to. Defaults to ‘prmsl’</li>
+<li><strong>version</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Which 20CR version to load data from. Defaults to ‘2c’</li>
 </ul>
 </td>
 </tr>
@@ -328,7 +320,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True where ob-ensemble mean within expected difference from 20CR spread, False otherwise.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></code></a>)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>)</td>
 </tr>
 </tbody>
 </table>
@@ -346,16 +338,16 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have column ‘value’, and value should have same units as max and min.</li>
-<li><strong>min</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – Minimum plausible value, defaults to 880.</li>
-<li><strong>max</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – Maximum plausible value, defaults to 1060.</li>
+<li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have column ‘value’, and value should have same units as max and min.</li>
+<li><strong>min</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Minimum plausible value, defaults to 880.</li>
+<li><strong>max</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Maximum plausible value, defaults to 1060.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True where obs[‘value’ between min and max, False otherwise.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></code></a>)</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>)</p>
 </td>
 </tr>
 </tbody>
