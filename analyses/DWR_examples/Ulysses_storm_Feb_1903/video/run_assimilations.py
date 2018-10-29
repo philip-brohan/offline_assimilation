@@ -16,13 +16,13 @@ hours_before=8
 hours_after=8
 
 # Where to put the output files
-opdir="%s/images/DWR_jacknife_png" % os.getenv('SCRATCH')
+opdir="%s/images/DWR_jacknife" % os.getenv('SCRATCH')
 if not os.path.isdir(opdir):
     os.makedirs(opdir)
 
 # Function to check if the job is already done for this time+omitted station
 def is_done(dte,omit):
-    opfile="%s/%04d%02d%02d%02d.png" % (opdir,dte.year,dte.month,
+    opfile="%s/%04d%02d%02d%02d.pkl" % (opdir,dte.year,dte.month,
                                         dte.day,dte.hour)
     if omit is not None:
         opfile="%s/%04d%02d%02d%02d_%s.pkl" % (opdir,dte.year,dte.month,
@@ -34,7 +34,7 @@ def is_done(dte,omit):
 f=open("run.txt","w+")
 
 start_day=datetime.datetime(1903, 2, 25,  3)
-end_day  =datetime.datetime(1903, 2, 29, 21)
+end_day  =datetime.datetime(1903, 2, 28, 21)
 
 dte=start_day
 while dte<=end_day:
@@ -61,5 +61,5 @@ while dte<=end_day:
             cmd="%s --omit=%s" % (cmd,station)
         cmd="%s\n" % cmd
         f.write(cmd)
-    dte=dte+datetime.timedelta(hours=6)
+    dte=dte+datetime.timedelta(hours=3)
 f.close()

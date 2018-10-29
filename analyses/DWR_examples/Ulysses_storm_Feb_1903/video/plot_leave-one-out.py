@@ -31,7 +31,7 @@ import DWR
 # Need constant list of stations over a wide time range
 full_obs=DWR.load_observations('prmsl',
                           datetime.datetime(1903,2,24, 0),
-                          datetime.datetime(1903,2,29,23))
+                          datetime.datetime(1903,3, 1,23))
 # Throw out the ones already used in 20CRv3
 full_obs=full_obs[~full_obs['name'].isin(['ABERDEEN','VALENCIA','JERSEY','STOCKHOLM',
                                           'LISBON','THEHELDER','HAPARANDA','MUNICH',
