@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 import datetime
+import time
 
 import argparse
 parser = argparse.ArgumentParser()
@@ -61,4 +62,4 @@ while i<len(jobs):
         rc=subprocess.call('sbatch run.slm',shell=True)
         os.unlink('run.slm')
     if max_new_jobs>0: i = i+max_new_jobs
-    if i<len(jobs): sleep(30)
+    if i<len(jobs): time.sleep(30)

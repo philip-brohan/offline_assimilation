@@ -30,7 +30,7 @@ while dte<=end_day:
     for minutes in (0,7,15,22):
         if is_done(dte+datetime.timedelta(minutes=minutes)):
             continue
-        cmd="./plot_leave-one-out.py --year=%d --month=%d --day=%d --hour=%f &\n" % (
+        cmd="./plot_leave-one-out.py --year=%d --month=%d --day=%d --hour=%f \n" % (
                dte.year,dte.month,dte.day,
                dte.hour+(dte.minute+minutes)/60.0)
         f.write(cmd)
