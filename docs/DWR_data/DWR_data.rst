@@ -22,3 +22,14 @@ We can do the same thing for a range of times around the storm and see the chang
     <tr><td><center>Same figure as above, but time-varying.</td></tr>
     </table>
     </center>
+
+|
+
+Other case studies
+------------------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   ../analyses/DWR_examples/Ulysses_storm_February_1903/index.rst
