@@ -1,0 +1,120 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>What if: assimilating observations that don’t yet exist &#8212; Improving reanalysis with offline assimilation</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Improving 20CR with ship observations" href="../marine_data/marine_data.html" />
+    <link rel="prev" title="DWR assimilation: Ulysses Storm of February 1903" href="../analyses/DWR_examples/Ulysses_storm_February_1903/index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../marine_data/marine_data.html" title="Improving 20CR with ship observations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../analyses/DWR_examples/Ulysses_storm_February_1903/index.html" title="DWR assimilation: Ulysses Storm of February 1903"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_small.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">What this is, and why</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What if: assimilating observations that don’t yet exist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Authors and acknowledgements</a></li>
+</ul>
+<h3><a href="https://github.com/philip-brohan/offline_assimilation">Get a copy</a></h3>
+
+<ul>
+<li><a href="https://github.com/philip-brohan/offline_assimilation"
+           rel="nofollow">Github repository</a></li>
+</ul>
+
+<h3>Found a bug, or have a suggestion?</h3>
+
+Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new">raise an issue</a>.
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="what-if-assimilating-observations-that-don-t-yet-exist">
+<h1>What if: assimilating observations that don’t yet exist<a class="headerlink" href="#what-if-assimilating-observations-that-don-t-yet-exist" title="Permalink to this headline">¶</a></h1>
+<p>20CRv3 provides a useful, but very uncertain, reconstruction of <a class="reference external" href="https://oldweather.github.io/20CRv3-diagnostics/european_windstorms/1811_Xmas_storm.html">the Christmas storm of 1811</a>. It is uncertain mostly because it has observations from only nine European stations back in 1811.</p>
+<p>There were many more than nine European locations making barometric pressure observations, even in 1811. The <a class="reference external" href="http://ensembles-eu.metoffice.com/C3S-DR/index_C3SDR.html">Copernicus Climate Change Service Data Rescue Service</a> have found records from 43 additional locations containing barometer observations. We’d like to rescue, and assimilate, the observations from these locations, but data rescue is time consuming and expensive, it would be useful to demonstrate the value of this work, before doing it - how much of an improvement would we expect, if we did the data rescue.</p>
+<p>To demonstrate this, we can generate some plausible, but fake, observations from the potential locations, and assimilate those instead:</p>
+<div class="figure align-center" id="id1" style="width: 95%">
+<a class="reference internal image-reference" href="../_images/Leave_one_out_18111223121.png"><img alt="../_images/Leave_one_out_18111223121.png" src="../_images/Leave_one_out_18111223121.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at noon on December 23rd 1811. Centre and right, <a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating 44 fake observations at that date. The centre panel shows the 20CRv3 ensemble after assimilating all 44 fake observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location. (<a class="reference internal" href="../analyses/what_if/storm_xmas_1811/index.html"><span class="doc">Figure source</span></a>).</span></p>
+</div>
+<p>To make the fake observations, we took the mslp from ensemble member 1 of 20CRv3 at the location of each station, at the time of the field, and added a bit of noise. Because the fake observations were all taken from the same ensemble member, they are mutually consistent, and can be collectively assimilated. But the resulting post-assimilation ensemble will be clustered around the ensemble member used, rather than the (unknown) real weather. This weather map should give a reasonable estimate of the quality of reconstruction we could get if observations were rescued for all the potential stations, but it’s not an accurate map of the actual weather at the time.</p>
+<p>If we did the data rescue, our reconstructions of the weather of the early nineteenth century would improve dramatically. Comparing this map with the effects of the <a class="reference internal" href="../DWR_data/DWR_data.html"><span class="doc">Daily Weather Report stations</span></a> (nearly a century later) shows that the 1811 ensemble of opportunity does not produce as good results as the carefully-sited DWR stations, but the observations are well worth rescuing even so.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../marine_data/marine_data.html" title="Improving 20CR with ship observations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../analyses/DWR_examples/Ulysses_storm_February_1903/index.html" title="DWR assimilation: Ulysses Storm of February 1903"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

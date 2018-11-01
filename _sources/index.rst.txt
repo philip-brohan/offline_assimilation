@@ -1,6 +1,10 @@
 Improving reanalysis with offline assimilation
 ==============================================
 
+.. warning::
+
+   This document is only half finished.
+
 .. toctree::
    :titlesonly:
    :maxdepth: 1
@@ -15,6 +19,7 @@ Improving reanalysis with offline assimilation
    da_for_ds
    modules/module_DIYA
    DWR_data/DWR_data
+   what_if/what_if
    marine_data/marine_data
    more_than_mslp/more_than_mslp
    better_than_olr/better_than_olr
