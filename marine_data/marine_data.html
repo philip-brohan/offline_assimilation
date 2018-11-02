@@ -16,8 +16,8 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="More than just MSLP" href="../more_than_mslp/more_than_mslp.html" />
-    <link rel="prev" title="Improving 20CR with observations from the Daily Weather Reports" href="../DWR_data/DWR_data.html" /> 
+    <link rel="next" title="Authors and acknowledgements" href="../credits.html" />
+    <link rel="prev" title="What if: assimilating observations that don’t yet exist" href="../what_if/what_if.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -29,10 +29,10 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../more_than_mslp/more_than_mslp.html" title="More than just MSLP"
+          <a href="../credits.html" title="Authors and acknowledgements"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../DWR_data/DWR_data.html" title="Improving 20CR with observations from the Daily Weather Reports"
+          <a href="../what_if/what_if.html" title="What if: assimilating observations that don’t yet exist"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
       </ul>
@@ -51,9 +51,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_if/what_if.html">What if: assimilating observations that don’t yet exist</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Improving 20CR with ship observations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Authors and acknowledgements</a></li>
@@ -78,6 +77,12 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
             
   <div class="section" id="improving-20cr-with-ship-observations">
 <h1>Improving 20CR with ship observations<a class="headerlink" href="#improving-20cr-with-ship-observations" title="Permalink to this headline">¶</a></h1>
+<p>We can assimilate ship observations in exactly the same way as station observations. We expect ship records to be in <a class="reference external" href="http://brohan.org/pyIMMA/">IMMA</a> format.</p>
+<p>I don’t have a cluster of ship observations which are not already in 20CRv3 to provide validation for each other as we did with the <a class="reference internal" href="../DWR_data/DWR_data.html"><span class="doc">DWR observations</span></a>. So instead the example is a single ship leaving Germany in January 1906 - <a class="reference external" href="https://oldweather.github.io/Expeditions/ToDo/voyages/Planet_1906-7/Planet.html">SMS Planet</a>. We can assimilate the observations from the ship, and validate them against <a class="reference internal" href="../DWR_data/DWR_data.html"><span class="doc">DWR observations</span></a> for the same date.</p>
+<div class="figure align-center" style="width: 95%">
+<a class="reference internal image-reference" href="../_images/Planet_19060124091.png"><img alt="../_images/Planet_19060124091.png" src="../_images/Planet_19060124091.png" style="width: 95%;" /></a>
+</div>
+<p>On the left, a <a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at 9 a.m. on January 24th 1906. Centre and right, <a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating the <a class="reference external" href="https://oldweather.github.io/Expeditions/ToDo/voyages/Planet_1906-7/Planet.html">SMS Planet</a> observations within 4 hours of that date. The centre panel shows the 20CRv3 ensemble after assimilating the ship observations (red dots), and also <a class="reference external" href="https://oldweather.github.io/DWR/">DWR stations</a> for the same date (here used for validation and not assimilated). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures at the validation stations, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating the ship observations. (<a class="reference internal" href="../analyses/ship_examples/SMS_Planet_January_1906/index.html"><span class="doc">Figure source</span></a>).</p>
 </div>
 
 
@@ -96,10 +101,10 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../more_than_mslp/more_than_mslp.html" title="More than just MSLP"
+          <a href="../credits.html" title="Authors and acknowledgements"
              >next</a> |</li>
         <li class="right" >
-          <a href="../DWR_data/DWR_data.html" title="Improving 20CR with observations from the Daily Weather Reports"
+          <a href="../what_if/what_if.html" title="What if: assimilating observations that don’t yet exist"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
       </ul>

@@ -1,0 +1,463 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ship observation assimilation: SMS Planet in January 1906 &#8212; Improving reanalysis with offline assimilation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo_small.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../preface.html">What this is, and why</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../what_if/what_if.html">What if: assimilating observations that don’t yet exist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Authors and acknowledgements</a></li>
+</ul>
+<h3><a href="https://github.com/philip-brohan/offline_assimilation">Get a copy</a></h3>
+
+<ul>
+<li><a href="https://github.com/philip-brohan/offline_assimilation"
+           rel="nofollow">Github repository</a></li>
+</ul>
+
+<h3>Found a bug, or have a suggestion?</h3>
+
+Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new">raise an issue</a>.
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ship-observation-assimilation-sms-planet-in-january-1906">
+<h1>Ship observation assimilation: SMS Planet in January 1906<a class="headerlink" href="#ship-observation-assimilation-sms-planet-in-january-1906" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center" id="id1" style="width: 95%">
+<a class="reference internal image-reference" href="../../../_images/Planet_1906012409.png"><img alt="../../../_images/Planet_1906012409.png" src="../../../_images/Planet_1906012409.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="../../spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at 9 a.m. on January 24th 1906. Centre and right, <a class="reference internal" href="../../scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating the <a class="reference external" href="https://oldweather.github.io/Expeditions/ToDo/voyages/Planet_1906-7/Planet.html">SMS Planet</a> observations  within 4 hours of that date. The centre panel shows the 20CRv3 ensemble after assimilating the ship observations (red dots), and also <a class="reference external" href="https://oldweather.github.io/DWR/">DWR stations</a> for the same date (here used for validation and not assimilated). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures at the validation stations, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating the ship observations.</span></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="code-to-make-the-figure">
+<h2>Code to make the figure<a class="headerlink" href="#code-to-make-the-figure" title="Permalink to this headline">¶</a></h2>
+<p>Collect the reanalysis data (prmsl ensemble and observations from 20CRv3 for 1906):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1906</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="p">([</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">]):</span>
+    <span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">twcr</span><span class="o">.</span><span class="n">fetch_observations</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>Plot the figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># Assimilation observations from SMS Planet</span>
+<span class="c1"># Validate against DWR observations for the same time</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">import</span> <span class="nn">iris.analysis</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_agg</span> <span class="k">import</span> \
+             <span class="n">FigureCanvasAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="k">import</span> <span class="n">Figure</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="k">import</span> <span class="n">Circle</span>
+
+<span class="kn">import</span> <span class="nn">cartopy</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+
+<span class="kn">import</span> <span class="nn">Meteorographica</span> <span class="k">as</span> <span class="nn">mg</span>
+<span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
+
+<span class="kn">import</span> <span class="nn">DWR</span>
+<span class="kn">import</span> <span class="nn">IMMA</span>
+<span class="kn">import</span> <span class="nn">DIYA</span>
+<span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="n">RANDOM_SEED</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+<span class="n">obs_error</span><span class="o">=</span><span class="mi">5</span> <span class="c1"># Pa</span>
+<span class="n">model</span><span class="o">=</span><span class="n">sklearn</span><span class="o">.</span><span class="n">linear_model</span><span class="o">.</span><span class="n">Lasso</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Date to show</span>
+<span class="n">year</span><span class="o">=</span><span class="mi">1906</span>
+<span class="n">month</span><span class="o">=</span><span class="mi">01</span>
+<span class="n">day</span><span class="o">=</span><span class="mi">24</span>
+<span class="n">hour</span><span class="o">=</span><span class="mi">9</span>
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">)</span>
+
+<span class="c1"># Landscape page</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">Figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="o">*</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">22</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>  <span class="c1"># Width, Height (inches)</span>
+           <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+           <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+           <span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+           <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+           <span class="n">subplotpars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">tight_layout</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">=</span><span class="n">FigureCanvas</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;family&#39;</span> <span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sans-serif&#39;</span> <span class="p">:</span> <span class="s1">&#39;Arial&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;weight&#39;</span> <span class="p">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">16</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+
+<span class="c1"># UK-centred projection</span>
+<span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">RotatedPole</span><span class="p">(</span><span class="n">pole_longitude</span><span class="o">=</span><span class="mf">177.5</span><span class="p">,</span> <span class="n">pole_latitude</span><span class="o">=</span><span class="mf">35.5</span><span class="p">)</span>
+<span class="n">scale</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="p">,</span><span class="n">scale</span><span class="p">,</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">scale</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+
+<span class="c1"># On the left - spaghetti-contour plot of original 20CRv3</span>
+<span class="n">ax_left</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.005</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.323</span><span class="p">,</span><span class="mf">0.98</span><span class="p">],</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+<span class="n">ax_left</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax_left</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+<span class="n">ax_left</span><span class="o">.</span><span class="n">background_patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">((</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">add_grid</span><span class="p">(</span><span class="n">ax_left</span><span class="p">)</span>
+<span class="n">land_img_left</span><span class="o">=</span><span class="n">ax_left</span><span class="o">.</span><span class="n">background_img</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;GreyT&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">)</span>
+
+<span class="c1"># 20CRv3 data</span>
+<span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+
+<span class="c1"># 20CRv3 data</span>
+<span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+<span class="n">obs_t</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load_observations_fortime</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
+<span class="c1"># Filter to those assimilated and near the UK</span>
+<span class="n">obs_s</span><span class="o">=</span><span class="n">obs_t</span><span class="o">.</span><span class="n">loc</span><span class="p">[((</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+                 <span class="p">(</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">90</span><span class="p">))</span> <span class="o">&amp;</span>
+              <span class="p">((</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">240</span><span class="p">)</span> <span class="o">|</span> 
+                 <span class="p">(</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">))]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Plot the observations</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span><span class="n">obs_s</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="c1"># PRMSL spaghetti plot</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span><span class="n">prmsl</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spaghetti&#39;</span><span class="p">,</span>
+                   <span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                   <span class="n">levels</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">875</span><span class="p">,</span><span class="mi">1050</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                   <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Add the ensemble mean - with labels</span>
+<span class="n">prmsl_m</span><span class="o">=</span><span class="n">prmsl</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
+<span class="n">prmsl_s</span><span class="o">=</span><span class="n">prmsl</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">STD_DEV</span><span class="p">)</span>
+<span class="n">prmsl_m</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prmsl_s</span><span class="o">.</span><span class="n">data</span><span class="o">&gt;</span><span class="mi">300</span><span class="p">)]</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span><span class="n">prmsl_m</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                   <span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                   <span class="n">levels</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">875</span><span class="p">,</span><span class="mi">1050</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                   <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">mg</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span>
+              <span class="s1">&#39;20CRv3&#39;</span><span class="p">,</span>
+              <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+              <span class="n">facecolor</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">get_facecolor</span><span class="p">(),</span>
+              <span class="n">x_fraction</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+              <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+
+<span class="n">mg</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="si">%04d</span><span class="s1">-</span><span class="si">%02d</span><span class="s1">-</span><span class="si">%02d</span><span class="s1">:</span><span class="si">%02d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">),</span>
+              <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+              <span class="n">facecolor</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">get_facecolor</span><span class="p">(),</span>
+              <span class="n">x_fraction</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span>
+              <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="c1"># In the centre - spaghetti-contour plot of 20CRv3 with DWR assimilated</span>
+<span class="n">ax_centre</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.335</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.323</span><span class="p">,</span><span class="mf">0.98</span><span class="p">],</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+<span class="n">ax_centre</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax_centre</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+<span class="n">ax_centre</span><span class="o">.</span><span class="n">background_patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">((</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mf">0.88</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">add_grid</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">)</span>
+<span class="n">land_img_centre</span><span class="o">=</span><span class="n">ax_centre</span><span class="o">.</span><span class="n">background_img</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;GreyT&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get the DWR observations for that afternoon</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
+                          <span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">13</span><span class="p">),</span>
+                          <span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">13</span><span class="p">))</span>
+
+<span class="c1"># Throw out the ones already used in 20CRv3</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;ABERDEEN&#39;</span><span class="p">,</span><span class="s1">&#39;VALENCIA&#39;</span><span class="p">,</span><span class="s1">&#39;JERSEY&#39;</span><span class="p">,</span><span class="s1">&#39;STOCKHOLM&#39;</span><span class="p">,</span><span class="s1">&#39;BODO&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;HAPARANDA&#39;</span><span class="p">,</span><span class="s1">&#39;CHRISTIANSUND&#39;</span><span class="p">,</span><span class="s1">&#39;HERNOSAND&#39;</span><span class="p">,</span><span class="s1">&#39;WISBY&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;FANO&#39;</span><span class="p">,</span><span class="s1">&#39;BERLIN&#39;</span><span class="p">,</span><span class="s1">&#39;THEHELDER&#39;</span><span class="p">,</span><span class="s1">&#39;BREST&#39;</span><span class="p">,</span><span class="s1">&#39;MUNICH&#39;</span><span class="p">,</span><span class="s1">&#39;FRANKFURT&#39;</span><span class="p">])]</span>
+<span class="n">obs</span><span class="o">.</span><span class="n">value</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">value</span><span class="o">*</span><span class="mi">100</span> <span class="c1"># to Pa</span>
+
+<span class="c1"># Get the SMS Planet obs close to this time</span>
+<span class="n">ship_obs</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">ship_source</span><span class="o">=</span><span class="n">IMMA</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Planet_1906-7.head_100.imma&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">ship_source</span><span class="p">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;YR&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+          <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;MO&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+          <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;DY&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+          <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;HR&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+          <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;LAT&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+          <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;LON&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+          <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;SLP&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> <span class="k">continue</span>
+      <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;YR&#39;</span><span class="p">],</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;MO&#39;</span><span class="p">],</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;DY&#39;</span><span class="p">],</span>
+                                  <span class="nb">int</span><span class="p">(</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;HR&#39;</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;HR&#39;</span><span class="p">]</span><span class="o">%</span><span class="mi">1</span><span class="p">))</span>
+      <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">dte</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">3600</span><span class="o">*</span><span class="mi">4</span><span class="p">):</span> <span class="k">continue</span>
+      <span class="n">ship_obs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ob</span><span class="p">)</span>
+<span class="c1"># Convert the ship obs into a pandas dataframe</span>
+<span class="n">ship_obs</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">ship_obs</span><span class="p">],</span>
+            <span class="s1">&#39;latitude&#39;</span><span class="p">:</span>  <span class="p">[</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;LAT&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">ship_obs</span><span class="p">],</span>
+            <span class="s1">&#39;longitude&#39;</span><span class="p">:</span>  <span class="p">[</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;LON&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">ship_obs</span><span class="p">],</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span>  <span class="p">[</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;SLP&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">ship_obs</span><span class="p">],</span>
+            <span class="s1">&#39;dtm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">ob</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">ship_obs</span><span class="p">]</span> <span class="p">})</span>
+
+<span class="c1"># Update mslp by assimilating ship obs.</span>
+<span class="n">prmsl2</span><span class="o">=</span><span class="n">DIYA</span><span class="o">.</span><span class="n">constrain_cube</span><span class="p">(</span><span class="n">prmsl</span><span class="p">,</span>
+                           <span class="k">lambda</span> <span class="n">dte</span><span class="p">:</span> <span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">),</span>
+                           <span class="n">obs</span><span class="o">=</span><span class="n">ship_obs</span><span class="p">,</span>
+                           <span class="n">obs_error</span><span class="o">=</span><span class="n">obs_error</span><span class="p">,</span>
+                           <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">,</span>
+                           <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                           <span class="n">lat_range</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">85</span><span class="p">),</span>
+                           <span class="n">lon_range</span><span class="o">=</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span><span class="mi">60</span><span class="p">))</span>
+
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">obs_s</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">obs</span><span class="p">,</span>
+                     <span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                     <span class="n">lat_label</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+                     <span class="n">lon_label</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">ship_obs</span><span class="p">,</span>
+                     <span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                     <span class="n">lat_label</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+                     <span class="n">lon_label</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
+
+<span class="c1"># PRMSL spaghetti plot</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">prmsl2</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spaghetti&#39;</span><span class="p">,</span>
+                   <span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                   <span class="n">levels</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">875</span><span class="p">,</span><span class="mi">1050</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                   <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Add the ensemble mean - with labels</span>
+<span class="n">prmsl_m</span><span class="o">=</span><span class="n">prmsl2</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
+<span class="n">prmsl_s</span><span class="o">=</span><span class="n">prmsl2</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">STD_DEV</span><span class="p">)</span>
+<span class="n">prmsl_m</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prmsl_s</span><span class="o">.</span><span class="n">data</span><span class="o">&gt;</span><span class="mi">300</span><span class="p">)]</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">prmsl_m</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                   <span class="n">resolution</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                   <span class="n">levels</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">875</span><span class="p">,</span><span class="mi">1050</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                   <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">mg</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_label</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span>
+              <span class="s1">&#39;+SMS Planet obs&#39;</span><span class="p">,</span>
+              <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+              <span class="n">facecolor</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">get_facecolor</span><span class="p">(),</span>
+              <span class="n">x_fraction</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+              <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Validation scatterplot on the right</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">stations</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="n">ax_right</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.73</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.265</span><span class="p">,</span><span class="mf">0.94</span><span class="p">])</span>
+<span class="c1"># x-axis</span>
+<span class="n">xrange</span><span class="o">=</span><span class="p">[</span><span class="mi">975</span><span class="p">,</span><span class="mi">1045</span><span class="p">]</span>
+<span class="n">ax_right</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xrange</span><span class="p">)</span>
+<span class="n">ax_right</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># y-axis</span>
+<span class="n">ax_right</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">y_locations</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mf">0.5</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">ax_right</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span>
+              <span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">y_locations</span><span class="p">))</span>
+<span class="n">ax_right</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span>
+              <span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FixedFormatter</span><span class="p">(</span>
+                  <span class="p">[</span><span class="n">DWR</span><span class="o">.</span><span class="n">pretty_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">]))</span>
+
+<span class="c1"># Custom grid spacing</span>
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span>
+            <span class="n">xdata</span><span class="o">=</span><span class="n">xrange</span><span class="p">,</span>
+            <span class="n">ydata</span><span class="o">=</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">latlon</span><span class="o">=</span><span class="p">{}</span>
+<span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">:</span>
+   <span class="n">latlon</span><span class="p">[</span><span class="n">station</span><span class="p">]</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">get_station_location</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span><span class="n">station</span><span class="p">)</span>
+
+<span class="c1"># Plot the station pressures</span>
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
+    <span class="n">station</span><span class="o">=</span><span class="n">stations</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">mslp</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="n">station</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mf">100.0</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span>
+            <span class="n">xdata</span><span class="o">=</span><span class="p">(</span><span class="n">mslp</span><span class="p">,</span><span class="n">mslp</span><span class="p">),</span> <span class="n">ydata</span><span class="o">=</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mf">1.1</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mf">1.9</span><span class="p">),</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># for each station, plot the reanalysis ensemble at that station</span>
+<span class="n">interpolator</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span><span class="o">.</span><span class="n">interpolator</span><span class="p">(</span><span class="n">prmsl</span><span class="p">,</span> 
+                                   <span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
+    <span class="n">station</span><span class="o">=</span><span class="n">stations</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">ensemble</span><span class="o">=</span><span class="n">interpolator</span><span class="p">([</span><span class="n">latlon</span><span class="p">[</span><span class="n">station</span><span class="p">][</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span>
+                           <span class="n">latlon</span><span class="p">[</span><span class="n">station</span><span class="p">][</span><span class="s1">&#39;longitude&#39;</span><span class="p">]])</span>
+
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mf">100.0</span><span class="p">,</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mf">1.5</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mf">1.9</span><span class="p">,</span>
+                              <span class="n">num</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">data</span><span class="p">)),</span>
+                <span class="mi">20</span><span class="p">,</span>
+                <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="c1"># Color</span>
+                <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+                <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;face&#39;</span><span class="p">,</span>
+                <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># for each station, plot the post-assimilation ensemble at that station</span>
+<span class="n">interpolator</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span><span class="o">.</span><span class="n">interpolator</span><span class="p">(</span><span class="n">prmsl2</span><span class="p">,</span> 
+                                   <span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
+    <span class="n">station</span><span class="o">=</span><span class="n">stations</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">ensemble</span><span class="o">=</span><span class="n">interpolator</span><span class="p">([</span><span class="n">latlon</span><span class="p">[</span><span class="n">station</span><span class="p">][</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span>
+                           <span class="n">latlon</span><span class="p">[</span><span class="n">station</span><span class="p">][</span><span class="s1">&#39;longitude&#39;</span><span class="p">]])</span>
+
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="mf">100.0</span><span class="p">,</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mf">1.1</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mf">1.5</span><span class="p">,</span>
+                              <span class="n">num</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">data</span><span class="p">)),</span>
+                <span class="mi">20</span><span class="p">,</span>
+                <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="c1"># Color</span>
+                <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+                <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;face&#39;</span><span class="p">,</span>
+                <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Join each station name to its location on the map</span>
+<span class="c1"># Need another axes, filling the whole fig</span>
+<span class="n">ax_full</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax_full</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># Transparent background</span>
+
+<span class="k">def</span> <span class="nf">pos_left</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="n">station</span><span class="o">=</span><span class="n">stations</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">ll</span><span class="o">=</span><span class="n">latlon</span><span class="p">[</span><span class="n">station</span><span class="p">]</span>
+    <span class="n">rp</span><span class="o">=</span><span class="n">ax_centre</span><span class="o">.</span><span class="n">projection</span><span class="o">.</span><span class="n">transform_points</span><span class="p">(</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span>
+                              <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ll</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]),</span>
+                              <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ll</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]))</span>
+    <span class="n">new_lon</span><span class="o">=</span><span class="n">rp</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">new_lat</span><span class="o">=</span><span class="n">rp</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">result</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.335</span><span class="o">+</span><span class="mf">0.323</span><span class="o">*</span><span class="p">((</span><span class="n">new_lon</span><span class="o">-</span><span class="p">(</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">scale</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.01</span><span class="o">+</span><span class="mf">0.98</span><span class="o">*</span><span class="p">((</span><span class="n">new_lat</span><span class="o">-</span><span class="p">(</span><span class="n">scale</span><span class="o">*</span><span class="n">aspect</span><span class="o">*-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span>
+                                       <span class="p">(</span><span class="n">scale</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">aspect</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># Label location of a station in ax_full coordinates</span>
+<span class="k">def</span> <span class="nf">pos_right</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="n">result</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.675</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.05</span><span class="o">+</span><span class="p">(</span><span class="mf">0.94</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
+    <span class="n">p_left</span><span class="o">=</span><span class="n">pos_left</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">p_right</span><span class="o">=</span><span class="n">pos_right</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p_left</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mf">0.335</span> <span class="ow">or</span> <span class="n">p_left</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="p">(</span><span class="mf">0.335</span><span class="o">+</span><span class="mf">0.323</span><span class="p">):</span> <span class="k">continue</span>
+    <span class="k">if</span> <span class="n">p_left</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mf">0.005</span> <span class="ow">or</span> <span class="n">p_left</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="p">(</span><span class="mf">0.005</span><span class="o">+</span><span class="mf">0.94</span><span class="p">):</span> <span class="k">continue</span>
+    <span class="n">ax_full</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Circle</span><span class="p">((</span><span class="n">p_right</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                              <span class="n">p_right</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]),</span>
+                             <span class="n">radius</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+                             <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">edgecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                             <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax_full</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span>
+            <span class="n">xdata</span><span class="o">=</span><span class="p">(</span><span class="n">p_left</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">p_right</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]),</span>
+            <span class="n">ydata</span><span class="o">=</span><span class="p">(</span><span class="n">p_left</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span><span class="n">p_right</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]),</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Output as png</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Planet_</span><span class="si">%04d%02d%02d%02d</span><span class="s1">.png&#39;</span> <span class="o">%</span> 
+                                  <span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Offline assimilation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>
