@@ -79,6 +79,8 @@ mg.observations.plot(ax_left,obs_s,radius=0.15)
 obs=DWR.load_observations('prmsl',
                           dte-datetime.timedelta(hours=0.1),
                           dte+datetime.timedelta(hours=0.1))
+# Throw out the ones already used in 20CRv3
+obs=obs[~obs['name'].isin(['ABERDEEN','VALENCIA','JERSEY'])]
 
 mg.observations.plot(ax_left,obs,
                      radius=0.15,facecolor='black',
