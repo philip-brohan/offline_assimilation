@@ -5,6 +5,10 @@ Improving reanalysis with offline assimilation
 
    This document is still under construction.
 
+This is a modernised version of a scientific paper: It shows how to visualise weather reconstructions from the Twentieth Century Reanalysis (version3, 20CRv3), how to validate the reconstructions by comparison with newly-available observations, and how to use the new observations to improve the reanalysis, using an offline version of the ensemble Kalman Filter.
+
+It differs from a standard paper by including video figures, by including many more figures and examples than would be possible in a paper document, and by including all the code and data needed to reproduce or extend it.
+
 .. toctree::
    :titlesonly:
    :maxdepth: 1
