@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>What this is, and why &#8212; Improving reanalysis with offline assimilation</title>
+    <title>How to replicate or extend this &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -44,16 +44,15 @@
             </a></p>
 <h3><a href="index.html">Table Of Contents</a></h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">What this is, and why</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to replicate or extend this</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_if/what_if.html">What if: assimilating observations that don’t yet exist</a></li>
 <li class="toctree-l1"><a class="reference internal" href="marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Authors and acknowledgements</a></li>
@@ -76,23 +75,24 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="what-this-is-and-why">
-<h1>What this is, and why<a class="headerlink" href="#what-this-is-and-why" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-replicate-or-extend-this">
+<h1>How to replicate or extend this<a class="headerlink" href="#how-to-replicate-or-extend-this" title="Permalink to this headline">¶</a></h1>
 <p>This document is kept under version control in a <a class="reference external" href="https://en.wikipedia.org/wiki/Git">git repository</a>. The repository is hosted on <a class="reference external" href="https://github.com/">GitHub</a> (and the documentation made with <a class="reference external" href="https://pages.github.com/">GitHub Pages</a>). The repository is <a class="reference external" href="https://github.com/philip-brohan/offline_assimilation">https://github.com/philip-brohan/offline_assimilation</a>. This repository contains everything you need to reproduce or extend this work, but note that the 20CRv3 data is still preliminary, and access to it is currently restricted.</p>
 <p>If you are familiar with GitHub, you already know <a class="reference external" href="https://github.com/philip-brohan/offline_assimilation">what to do</a>: If you’d prefer not to bother with that, you can download the whole dataset as <a class="reference external" href="https://github.com/philip-brohan/offline_assimilation/archive/master.zip">a zip file</a>.</p>
-<p>To re-run the scripts included, first install three packages this depends on:</p>
+<p>All the code included is writen in Python (version 2.7). I strongly recommend running it in a <a class="reference external" href="https://conda.io/docs/">conda environment</a> - which greatly simplifies getting the necessary dependencies. The code is known to work on Linux and OSX, I’ve not tried it on anything else.</p>
+<p>To re-run the scripts included, first install four packages this depends on:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://brohan.org/IRData/">IRData</a> which provides access to the reanalysis data used,</li>
 <li><a class="reference external" href="https://brohan.org/Meteorographica/">Meteographica</a> for plotting weather maps,</li>
+<li><a class="reference external" href="http://brohan.org/pyIMMA/">The Python IMMA library</a> for access to marine observations.</li>
 <li><a class="reference external" href="https://oldweather.github.io/DWR/">The DWR dataset</a> containing the newly-digitised British Isles observations.</li>
 </ul>
 <p>Then install the libraries included in this package:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python setup.py install --user
 </pre></div>
 </div>
-<p>Each diagnostic contains code to download the reanalysis data required. For 20CR2c and CERA-20C data this process is straighforward, but for the preliminary 20CRv3 data it is more complicated. Please read carefully the <span class="xref std std-doc">instructions on access to 20CRv3 data</span> and the <a class="reference external" href="http://brohan.org/IRData/subdata/data_20CR.html#pre-release-version-3">instructions on using the IRData module with 20CRv3</a>.</p>
+<p>Each diagnostic contains code to download the reanalysis data required. While 20CRv3 data is still preliminary, this process is complicated. Please read carefully the <a class="reference external" href="https://oldweather.github.io/20CRv3-diagnostics/extract_data/extract_data.html">instructions on access to 20CRv3 data</a> and the <a class="reference external" href="http://brohan.org/IRData/subdata/data_20CR.html#pre-release-version-3">instructions on using the IRData module with 20CRv3</a>.</p>
 <p>If you reuse this, please let me know, by <a class="reference external" href="https://github.com/philip-brohan/offline_assimilation/issues/new">raising an issue</a>. You are not obliged to do this, but it would help.</p>
-<p>~</p>
 </div>
 
 
