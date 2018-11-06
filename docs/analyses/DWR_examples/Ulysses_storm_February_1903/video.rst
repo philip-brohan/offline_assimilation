@@ -7,12 +7,12 @@ DWR assimilation: Ulysses Storm of February 1903 video
 
     <center>
     <table><tr><td><center>
-    <iframe src="https://player.vimeo.com/video/297343397?title=0&byline=0&portrait=0" width="795" height="448" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center></td></tr>
-    <tr><td><center>Two reconstructions of the UK storm of March 1905: mean-sea-level pressure (mslp) contours from the Twentieth Century Reanalysis version 3 (left), and after assimilating additional observations from the UK Daily Weather Reports (centre).</td></tr>
+    <iframe src="https://player.vimeo.com/video/297919245?title=0&byline=0&portrait=0" width="795" height="448" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center></td></tr>
+    <tr><td><center>Two reconstructions of the Ulysses storm of February 1903: mean-sea-level pressure (mslp) contours from the Twentieth Century Reanalysis version 3 (left), and after assimilating additional observations from the UK Daily Weather Reports (centre).</td></tr>
     </table>
     </center>
 
-On the left, a :doc:`Spaghetti-contour plot <../../spaghetti_contour/spaghetti_contour>` of 20CRv3 MSLP. Centre and right, :doc:`Scatter-contour plot <../../scatter+contour/scatter_and_contour>` comparing the same field, after assimilating all 43 `DWR <https://oldweather.github.io/DWR/>`_ observations for that date. The centre panel shows the 20CRv3 ensemble after assimilating all 43 station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.
+On the left, a :doc:`Spaghetti-contour plot <../../spaghetti_contour/spaghetti_contour>` of 20CRv3 MSLP. Centre and right, :doc:`Scatter-contour plot <../../scatter+contour/scatter_and_contour>` comparing the same field, after assimilating all 44 `DWR <https://oldweather.github.io/DWR/>`_ observations for that date. The centre panel shows the 20CRv3 ensemble after assimilating all 44 station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.
 
 |
 
