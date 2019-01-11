@@ -1,7 +1,7 @@
 DWR assimilation: Argentine cold surge of August 1902
 =====================================================
 
-This case-study shows the effect of using `observations from the Argentine Daily Weather Reports <http://brohan.org/station-data/sources/Argentine_DWR/index.html>`_, newy digitised through the `Copernicus C3S Data Rescue Service <https://climate.copernicus.eu/data-rescue-service>`_, to improve the reconstruction of the 1902 cold-surge which badly damaged the South American Coffee plantations.
+This case-study shows the effect of using `observations from the Argentine Daily Weather Reports <http://brohan.org/station-data/sources/Argentine_DWR/index.html>`_, newly digitised through the `Copernicus C3S Data Rescue Service <https://climate.copernicus.eu/data-rescue-service>`_, to improve the reconstruction of the 1902 cold-surge which badly damaged the South American Coffee plantations.
 
 .. seealso:: :doc:`Video version <video>`
 
