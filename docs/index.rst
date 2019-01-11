@@ -23,6 +23,7 @@ It differs from a standard paper by including video figures, by including many m
    da_for_ds
    modules/module_DIYA
    DWR_data/DWR_data
+   case_studies/case_studies
    what_if/what_if
    marine_data/marine_data
 

@@ -1,0 +1,52 @@
+:orphan:
+
+DWR assimilation: Argentine cold surge of August 1902 video
+===========================================================
+
+
+This case-study shows the effect of using `observations from the Argentine Daily Weather Reports <http://brohan.org/station-data/sources/Argentine_DWR/index.html>`_, newly digitised through the `Copernicus C3S Data Rescue Service <https://climate.copernicus.eu/data-rescue-service>`_, to improve the reconstruction of the 1902 cold-surge which badly damaged the South American Coffee plantations.
+
+.. raw:: html
+
+    <center>
+    <table><tr><td><center>
+    <iframe src="https://player.vimeo.com/video/310774653?title=0&byline=0&portrait=0" width="795" height="448" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center></td></tr>
+    <tr><td><center>Two reconstructions of the Argentine cold surge of August 1902: mean-sea-level pressure (mslp) contours from the Twentieth Century Reanalysis version 3 (left), and after assimilating additional observations from the Argentine Daily Weather Reports (centre).</td></tr>
+    </table>
+    </center>
+
+On the left, a :doc:`Spaghetti-contour plot <../../spaghetti_contour/spaghetti_contour>` of 20CRv3 MSLP. Centre and right, :doc:`Scatter-contour plot <../../scatter+contour/scatter_and_contour>` comparing the same field, after assimilating all the `Argentine DWR station pressure observations <http://brohan.org/station-data/sources/Argentine_DWR/index.html>`_  within 12 hours of that date. The centre panel shows the 20CRv3 ensemble after assimilating all new station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.
+
+|
+
+Code to make the figure
+-----------------------
+
+Collect the reanalysis data (prmsl ensemble and observations from 20CRv3 for February 1903):
+
+.. literalinclude::  ../../../../analyses/other_examples/Argentina_1902/mslp_ensemble/get_data.py
+
+Script to calculate a leave-one-out assimilation for one station:
+
+.. literalinclude:: ../../../../analyses/other_examples/Argentina_1902/mslp_ensemble/video/leave-one-out.py
+
+Calculate the leave-one-out assimilations for all the stations. (This script produces a list of calculations which can be done :doc:`in parallel <../../../tools/parallel>`):
+
+.. literalinclude:: ../../../../analyses/other_examples/Argentina_1902/mslp_ensemble/video/run_assimilations.py
+
+Plot a single frame:
+
+.. literalinclude:: ../../../../analyses/other_examples/Argentina_1902/mslp_ensemble/video/plot_leave-one-out.py
+
+To make the video, it is necessary to run the script above hundreds of times - giving an image for every 7-minute period. (This script produces a list of calculations which can be done :doc:`in parallel <../../../tools/parallel>`)
+
+.. literalinclude:: ../../../../analyses/other_examples/Argentina_1902/mslp_ensemble/video/make_frames.py
+
+To turn the thousands of images into a movie, use `ffmpeg <http://www.ffmpeg.org>`_
+
+.. code-block:: shell
+
+    ffmpeg -r 24 -pattern_type glob -i ADWR_jacknife_png/\*.png \
+           -c:v libx264 -threads 16 -preset slow -tune animation \
+           -profile:v high -level 4.2 -pix_fmt yuv420p -crf 25 \
+           -c:a copy ADWR_assimilate.mp4
