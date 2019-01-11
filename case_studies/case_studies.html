@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Running many calculations at once &#8212; Improving reanalysis with offline assimilation</title>
+    <title>Other case studies &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DWR assimilation: Argentine cold surge of August 1902" href="../analyses/other_examples/Argentina_1902/index.html" />
+    <link rel="prev" title="DWR assimilation: Ulysses Storm of February 1903" href="../analyses/DWR_examples/Ulysses_storm_February_1903/index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -25,6 +27,12 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="../analyses/other_examples/Argentina_1902/index.html" title="DWR assimilation: Argentine cold surge of August 1902"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../analyses/DWR_examples/Ulysses_storm_February_1903/index.html" title="DWR assimilation: Ulysses Storm of February 1903"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
       </ul>
     </div>
@@ -37,12 +45,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">How to replicate or extend this</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/module_DIYA.html">DIYA: A module for do-it-yourself data assimilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../case_studies/case_studies.html">Other case studies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Other case studies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../what_if/what_if.html">What if: assimilating observations that don’t yet exist</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
 </ul>
@@ -67,17 +75,12 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="running-many-calculations-at-once">
-<h1>Running many calculations at once<a class="headerlink" href="#running-many-calculations-at-once" title="Permalink to this headline">¶</a></h1>
-<p>As there are lots of observations to use, it’s often necessary to do a lot of calculation. To do this fast, we need to parallelise it - to do more than one thing at a time.</p>
-<p>My preferred way to do this is to divide the calculational task into many small independent tasks, and then process this list of tasks as fast as possible by running many of them at once. The best way to do this is system dependent.</p>
-<div class="section" id="laptop-approach-gnu-parallel">
-<h2>Laptop approach - GNU parallel<a class="headerlink" href="#laptop-approach-gnu-parallel" title="Permalink to this headline">¶</a></h2>
-<p>A simple tool to process task queues is <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU parallel</a>. This will use all the cores of a single computer, so if your machine has 4 cores it will run the tasks 4 at a time. If the tasks each use a lot of memory it may be desirable to tell it to run fewer at once.</p>
-</div>
-<div class="section" id="met-office-approach-spice-cluster">
-<h2>Met Office approach - SPICE cluster<a class="headerlink" href="#met-office-approach-spice-cluster" title="Permalink to this headline">¶</a></h2>
-<p>At the Met Office, the Scientific Processing and Intensive Compute Environment (SPICE) can be used to run many tasks in parallel. SPICE is a cluster managed by the <a class="reference external" href="https://slurm.schedmd.com/">slurm workload manager</a>, so to use it each task in the job list needs to be converted into a slurm job and submitted to the cluster. The script to do this is <a class="reference internal" href="spice_parallel.html"><span class="doc">spice_parallel</span></a>.</p>
+  <div class="section" id="other-case-studies">
+<h1>Other case studies<a class="headerlink" href="#other-case-studies" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../analyses/other_examples/Argentina_1902/index.html">DWR assimilation: Argentine cold surge of August 1902</a></li>
+</ul>
 </div>
 </div>
 
@@ -96,6 +99,12 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="../analyses/other_examples/Argentina_1902/index.html" title="DWR assimilation: Argentine cold surge of August 1902"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../analyses/DWR_examples/Ulysses_storm_February_1903/index.html" title="DWR assimilation: Ulysses Storm of February 1903"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
       </ul>
     </div>

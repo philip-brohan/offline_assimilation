@@ -13,7 +13,6 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Improving 20CR with observations from the Daily Weather Reports" href="../DWR_data/DWR_data.html" />
@@ -44,16 +43,16 @@
             </a></p>
 <h3><a href="../index.html">Table Of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../preface.html">What this is, and why</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">How to replicate or extend this</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../representing_uncertainty/representing_uncertainty.html">Representing uncertainty in weather maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../da_for_ds.html">Meteorological Data Assimilation for Data Scientists</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">DIYA: A module for do-it-yourself data assimilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DWR_data/DWR_data.html">Improving 20CR with observations from the Daily Weather Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../case_studies/case_studies.html">Other case studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_if/what_if.html">What if: assimilating observations that don’t yet exist</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../marine_data/marine_data.html">Improving 20CR with ship observations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../more_than_mslp/more_than_mslp.html">More than just MSLP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../better_than_olr/better_than_olr.html">More than just linear regression?</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Authors and acknowledgements</a></li>
@@ -131,7 +130,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <li><strong>obs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – Observations. Dataframe must have columns ‘latitude’, ‘longitude’, and ‘value’, and value should have same units as constraints.</li>
 <li><strong>obs_error</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Uncertainty in each observation value (1 s.d.) . Units as obs.value.</li>
 <li><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random.RandomState</span></code></a>, optional) – Set to produce exactly reproducible results.</li>
-<li><strong>model</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code></a>, optional) – Model to use to relate target to constraints. Defaults to <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html#sklearn.linear_model.ElasticNet" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.ElasticNet</span></code></a> with default parameters.</li>
+<li><strong>model</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code></a>, optional) – Model to use to relate target to constraints. Defaults to <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html#sklearn.linear_model.ElasticNet" title="(in scikit-learn v0.20.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.ElasticNet</span></code></a> with default parameters.</li>
 <li><strong>lat_range</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – Only do constraint in this range of latitudes.</li>
 <li><strong>lon_range</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – Only do constraint in this range of longitudes.</li>
 </ul>
@@ -162,7 +161,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>target</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a>) – 1d array size nE - the target ensemble at the target point.</li>
 <li><strong>constraint</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a>) – 2d array size [nE,nP] - the constraint ensemble at each of the observation points.</li>
-<li><strong>model</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code></a>) – Model to fit.</li>
+<li><strong>model</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model" title="(in scikit-learn v0.20.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code></a>) – Model to fit.</li>
 <li><strong>obs</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a>) – 1d array size nP - the observations.</li>
 </ul>
 </td>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DWR assimilation: Ulysses Storm of February 1903 video &#8212; Improving reanalysis with offline assimilation</title>
+    <title>DWR assimilation: Argentine cold surge of August 1902 video &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -67,14 +67,15 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="dwr-assimilation-ulysses-storm-of-february-1903-video">
-<h1>DWR assimilation: Ulysses Storm of February 1903 video<a class="headerlink" href="#dwr-assimilation-ulysses-storm-of-february-1903-video" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dwr-assimilation-argentine-cold-surge-of-august-1902-video">
+<h1>DWR assimilation: Argentine cold surge of August 1902 video<a class="headerlink" href="#dwr-assimilation-argentine-cold-surge-of-august-1902-video" title="Permalink to this headline">¶</a></h1>
+<p>This case-study shows the effect of using <a class="reference external" href="http://brohan.org/station-data/sources/Argentine_DWR/index.html">observations from the Argentine Daily Weather Reports</a>, newly digitised through the <a class="reference external" href="https://climate.copernicus.eu/data-rescue-service">Copernicus C3S Data Rescue Service</a>, to improve the reconstruction of the 1902 cold-surge which badly damaged the South American Coffee plantations.</p>
 <center>
 <table><tr><td><center>
-<iframe src="https://player.vimeo.com/video/297919245?title=0&byline=0&portrait=0" width="795" height="448" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center></td></tr>
-<tr><td><center>Two reconstructions of the Ulysses storm of February 1903: mean-sea-level pressure (mslp) contours from the Twentieth Century Reanalysis version 3 (left), and after assimilating additional observations from the UK Daily Weather Reports (centre).</td></tr>
+<iframe src="https://player.vimeo.com/video/310774653?title=0&byline=0&portrait=0" width="795" height="448" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center></td></tr>
+<tr><td><center>Two reconstructions of the Argentine cold surge of August 1902: mean-sea-level pressure (mslp) contours from the Twentieth Century Reanalysis version 3 (left), and after assimilating additional observations from the Argentine Daily Weather Reports (centre).</td></tr>
 </table>
-</center><p>On the left, a <a class="reference internal" href="../../spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP. Centre and right, <a class="reference internal" href="../../scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating all 44 <a class="reference external" href="https://oldweather.github.io/DWR/">DWR</a> observations for that date. The centre panel shows the 20CRv3 ensemble after assimilating all 44 station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.</p>
+</center><p>On the left, a <a class="reference internal" href="../../spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP. Centre and right, <a class="reference internal" href="../../scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating all the <a class="reference external" href="http://brohan.org/station-data/sources/Argentine_DWR/index.html">Argentine DWR station pressure observations</a>  within 12 hours of that date. The centre panel shows the 20CRv3 ensemble after assimilating all new station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -86,9 +87,11 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
-<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="p">([</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">]):</span>
     <span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;air.2m&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">twcr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;tmp&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="mi">925</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
     <span class="n">twcr</span><span class="o">.</span><span class="n">fetch_observations</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
 
 </pre></div>
@@ -111,7 +114,8 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
 
-<span class="kn">import</span> <span class="nn">DWR</span>
+<span class="kn">import</span> <span class="nn">SEF</span>
+<span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">DIYA</span>
 <span class="kn">import</span> <span class="nn">sklearn</span>
 <span class="n">RANDOM_SEED</span> <span class="o">=</span> <span class="mi">5</span>
@@ -122,14 +126,18 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <span class="n">obs_error</span><span class="o">=</span><span class="mi">5</span> <span class="c1"># Pa</span>
 <span class="n">model</span><span class="o">=</span><span class="n">sklearn</span><span class="o">.</span><span class="n">linear_model</span><span class="o">.</span><span class="n">Lasso</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">skip_stations</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DWR_Roca_Rio_N.&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Sierra_Grnde&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;DWR_Villa_Maria&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Santo_Tome&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Corrientes-C&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;DWR_Santa_Fa-Cp&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_San_Lorenzo&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Carcarana&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;DWR_Estc_Pereyra&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Puerto_Mili.&#39;</span><span class="p">]</span>
 
-<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/DWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
+<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/ADWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">opdir</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">opdir</span><span class="p">)</span>
 
 <span class="c1"># Assimilate observations within this range of the field</span>
-<span class="n">hours_before</span><span class="o">=</span><span class="mi">8</span>
-<span class="n">hours_after</span><span class="o">=</span><span class="mi">8</span>
+<span class="n">hours_before</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">hours_after</span><span class="o">=</span><span class="mi">12</span>
 
 <span class="c1"># Get the datetime, and station to omit, from commandline arguments</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -153,16 +161,32 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="c1"># 20CRv3 data</span>
 <span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
 
-<span class="c1"># Get the DWR observations for that afternoon</span>
-<span class="n">obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
-                          <span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_before</span><span class="p">),</span>
-                          <span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_after</span><span class="p">))</span>
+<span class="c1"># Get the DWR observations close to the selected time</span>
+<span class="n">ob_start</span><span class="o">=</span><span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_before</span><span class="p">)</span>
+<span class="n">ob_end</span><span class="o">=</span><span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_after</span><span class="p">)</span>
+<span class="n">adf</span><span class="o">=</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../../../../../../station-data/ToDo/sef/Argentinian_DWR/1902/DWR_*_MSLP.tsv&#39;</span><span class="p">)</span>
+<span class="n">obs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;value&#39;</span> <span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;dtm&#39;</span> <span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">adf</span><span class="p">:</span>
+   <span class="n">stobs</span><span class="o">=</span><span class="n">SEF</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">]</span>
+   <span class="c1"># Add the datetime</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hour</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;HHMM&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Minute</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;HHMM&#39;</span><span class="p">]</span><span class="o">%</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">dtm</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span><span class="s1">&#39;Month&#39;</span><span class="p">,</span><span class="s1">&#39;Day&#39;</span><span class="p">,</span><span class="s1">&#39;Hour&#39;</span><span class="p">,</span><span class="s1">&#39;Minute&#39;</span><span class="p">]]))</span>
+   <span class="c1"># Select the subset close to the selected time</span>
+   <span class="n">mslp</span><span class="o">=</span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">dtm</span><span class="o">&gt;=</span><span class="n">ob_start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtm</span><span class="o">&lt;</span><span class="n">ob_end</span><span class="p">)]</span>
+   <span class="k">if</span> <span class="n">mslp</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span> <span class="k">continue</span>
+   <span class="k">if</span> <span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lon&#39;</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
 
-<span class="c1"># Throw out the ones already used in 20CRv3</span>
-<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;ABERDEEN&#39;</span><span class="p">,</span><span class="s1">&#39;VALENCIA&#39;</span><span class="p">,</span><span class="s1">&#39;JERSEY&#39;</span><span class="p">,</span><span class="s1">&#39;STOCKHOLM&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;LISBON&#39;</span><span class="p">,</span><span class="s1">&#39;THEHELDER&#39;</span><span class="p">,</span><span class="s1">&#39;HAPARANDA&#39;</span><span class="p">,</span><span class="s1">&#39;MUNICH&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;BODO&#39;</span><span class="p">,</span><span class="s1">&#39;HERNOSAND&#39;</span><span class="p">,</span><span class="s1">&#39;WISBY&#39;</span><span class="p">,</span><span class="s1">&#39;FANO&#39;</span><span class="p">,</span><span class="s1">&#39;BERLIN&#39;</span><span class="p">])]</span>
-<span class="c1"># Also throw out the specified station</span>
+<span class="c1"># Throw out the suspected duds</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">skip_stations</span><span class="p">)]</span>
+<span class="c1"># Throw out the specified station</span>
 <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">omit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
    <span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">args</span><span class="o">.</span><span class="n">omit</span><span class="p">])]</span>
 
@@ -176,8 +200,8 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
                            <span class="n">obs_error</span><span class="o">=</span><span class="n">obs_error</span><span class="p">,</span>
                            <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">,</span>
                            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-                           <span class="n">lat_range</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">85</span><span class="p">),</span>
-                           <span class="n">lon_range</span><span class="o">=</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span><span class="mi">60</span><span class="p">))</span>
+                           <span class="n">lat_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                           <span class="n">lon_range</span><span class="o">=</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">350</span><span class="p">))</span>
 
 <span class="n">dumpfile</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%04d%02d%02d%02d</span><span class="s2">.pkl&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">opdir</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">year</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
                                       <span class="n">args</span><span class="o">.</span><span class="n">day</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span>
@@ -199,15 +223,18 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">DWR</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">SEF</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 
 <span class="c1"># Assimilate observations within this range of the field</span>
-<span class="n">hours_before</span><span class="o">=</span><span class="mi">8</span>
-<span class="n">hours_after</span><span class="o">=</span><span class="mi">8</span>
+<span class="n">hours_before</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">hours_after</span><span class="o">=</span><span class="mi">12</span>
 
 <span class="c1"># Where to put the output files</span>
-<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/DWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
+<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/ADWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">opdir</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">opdir</span><span class="p">)</span>
 
@@ -224,22 +251,32 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;run.txt&quot;</span><span class="p">,</span><span class="s2">&quot;w+&quot;</span><span class="p">)</span>
 
-<span class="n">start_day</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span>  <span class="mi">3</span><span class="p">)</span>
-<span class="n">end_day</span>  <span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="n">start_day</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="n">end_day</span>  <span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
 
 <span class="n">dte</span><span class="o">=</span><span class="n">start_day</span>
 <span class="k">while</span> <span class="n">dte</span><span class="o">&lt;=</span><span class="n">end_day</span><span class="p">:</span>
 
     <span class="c1"># What stations do we need to do at this point in time?</span>
-    <span class="n">obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
-                          <span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_before</span><span class="p">),</span>
-                          <span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_after</span><span class="p">))</span>
-    <span class="c1"># Throw out the ones already used in 20CRv3</span>
-    <span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;ABERDEEN&#39;</span><span class="p">,</span><span class="s1">&#39;VALENCIA&#39;</span><span class="p">,</span><span class="s1">&#39;JERSEY&#39;</span><span class="p">,</span><span class="s1">&#39;STOCKHOLM&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;LISBON&#39;</span><span class="p">,</span><span class="s1">&#39;THEHELDER&#39;</span><span class="p">,</span><span class="s1">&#39;HAPARANDA&#39;</span><span class="p">,</span><span class="s1">&#39;MUNICH&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;BODO&#39;</span><span class="p">,</span><span class="s1">&#39;HERNOSAND&#39;</span><span class="p">,</span><span class="s1">&#39;WISBY&#39;</span><span class="p">,</span><span class="s1">&#39;FANO&#39;</span><span class="p">,</span><span class="s1">&#39;BERLIN&#39;</span><span class="p">])]</span>
-    <span class="n">stations</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="n">stations</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+    <span class="c1"># Load all the Argentine DWR pressures at this time</span>
+    <span class="n">adf</span><span class="o">=</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../../../../../../station-data/ToDo/sef/Argentinian_DWR/1902/DWR_*_MSLP.tsv&#39;</span><span class="p">)</span>
+    <span class="n">obs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Latitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Longitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;mslp&#39;</span> <span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">adf</span><span class="p">:</span>
+       <span class="n">stobs</span><span class="o">=</span><span class="n">SEF</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+       <span class="n">df</span><span class="o">=</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">]</span>
+       <span class="c1">#hhmm=int(&quot;%2d%02d&quot; % (dte.hour,17))</span>
+       <span class="n">mslp</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dte</span><span class="o">.</span><span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span> 
+                   <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Month&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dte</span><span class="o">.</span><span class="n">month</span><span class="p">)</span> <span class="o">&amp;</span>
+                   <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Day&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dte</span><span class="o">.</span><span class="n">day</span><span class="p">)]</span>
+       <span class="k">if</span> <span class="n">mslp</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span> <span class="k">continue</span>
+       <span class="k">if</span> <span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+           <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">])</span>
+           <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">])</span>
+           <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lon&#39;</span><span class="p">])</span>
+           <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;mslp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">obs</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+    <span class="n">stations</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">Name</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">stations</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">Name</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
     <span class="n">stations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="c1"># Also do case with all stations</span>
 
     <span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">:</span>
@@ -252,7 +289,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
             <span class="n">cmd</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> --omit=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cmd</span><span class="p">,</span><span class="n">station</span><span class="p">)</span>
         <span class="n">cmd</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cmd</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
     <span class="n">dte</span><span class="o">=</span><span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -285,27 +324,64 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="kn">import</span> <span class="nn">Meteorographica</span> <span class="k">as</span> <span class="nn">mg</span>
 <span class="kn">import</span> <span class="nn">IRData.twcr</span> <span class="k">as</span> <span class="nn">twcr</span>
 
+<span class="kn">import</span> <span class="nn">SEF</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">DIYA</span>
+<span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="n">RANDOM_SEED</span> <span class="o">=</span> <span class="mi">5</span>
+
 <span class="kn">import</span> <span class="nn">DWR</span>
 
-<span class="c1"># Need constant list of stations over a wide time range</span>
-<span class="n">full_obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
-                          <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-                          <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">23</span><span class="p">))</span>
-<span class="c1"># Throw out the ones already used in 20CRv3</span>
-<span class="n">full_obs</span><span class="o">=</span><span class="n">full_obs</span><span class="p">[</span><span class="o">~</span><span class="n">full_obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;ABERDEEN&#39;</span><span class="p">,</span><span class="s1">&#39;VALENCIA&#39;</span><span class="p">,</span><span class="s1">&#39;JERSEY&#39;</span><span class="p">,</span><span class="s1">&#39;STOCKHOLM&#39;</span><span class="p">,</span>
-                                          <span class="s1">&#39;LISBON&#39;</span><span class="p">,</span><span class="s1">&#39;THEHELDER&#39;</span><span class="p">,</span><span class="s1">&#39;HAPARANDA&#39;</span><span class="p">,</span><span class="s1">&#39;MUNICH&#39;</span><span class="p">,</span>
-                                          <span class="s1">&#39;BODO&#39;</span><span class="p">,</span><span class="s1">&#39;HERNOSAND&#39;</span><span class="p">,</span><span class="s1">&#39;WISBY&#39;</span><span class="p">,</span><span class="s1">&#39;FANO&#39;</span><span class="p">,</span><span class="s1">&#39;BERLIN&#39;</span><span class="p">])]</span>
-<span class="n">full_obs</span><span class="o">=</span><span class="n">full_obs</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">stations</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">full_obs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="c1"># Try and get round thread errors on spice</span>
+<span class="kn">import</span> <span class="nn">dask</span>
+<span class="n">dask</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">scheduler</span><span class="o">=</span><span class="s1">&#39;single-threaded&#39;</span><span class="p">)</span>
+
+<span class="n">obs_error</span><span class="o">=</span><span class="mi">5</span> <span class="c1"># Pa</span>
+<span class="n">model</span><span class="o">=</span><span class="n">sklearn</span><span class="o">.</span><span class="n">linear_model</span><span class="o">.</span><span class="n">Lasso</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Colocated stations</span>
+<span class="n">skip_stations</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DWR_Roca_Rio_N.&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Puerto_Mili.&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Corrientes-C&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;DWR_Estc_Pereyra&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_San_Lorenzo&#39;</span><span class="p">,</span><span class="s1">&#39;DWR_Carcarana&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;DWR_Santo_Tome&#39;</span><span class="p">]</span>
+
+<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/ADWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">opdir</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">opdir</span><span class="p">)</span>
 
 <span class="c1"># Assimilate observations within this range of the field</span>
-<span class="n">hours_before</span><span class="o">=</span><span class="mi">8</span>
-<span class="n">hours_after</span><span class="o">=</span><span class="mi">8</span>
+<span class="n">hours_before</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">hours_after</span><span class="o">=</span><span class="mi">12</span>
+
+<span class="c1"># Get the DWR observations in the whole range of time</span>
+<span class="n">ob_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ob_end</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">23</span><span class="p">)</span>
+<span class="n">adf</span><span class="o">=</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../../../../../../station-data/ToDo/sef/Argentinian_DWR/1902/DWR_*_MSLP.tsv&#39;</span><span class="p">)</span>
+<span class="n">obs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;value&#39;</span> <span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;dtm&#39;</span> <span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">adf</span><span class="p">:</span>
+   <span class="n">stobs</span><span class="o">=</span><span class="n">SEF</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">]</span>
+   <span class="c1"># Add the datetime</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hour</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;HHMM&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Minute</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;HHMM&#39;</span><span class="p">]</span><span class="o">%</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">dtm</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span><span class="s1">&#39;Month&#39;</span><span class="p">,</span><span class="s1">&#39;Day&#39;</span><span class="p">,</span><span class="s1">&#39;Hour&#39;</span><span class="p">,</span><span class="s1">&#39;Minute&#39;</span><span class="p">]]))</span>
+   <span class="c1"># Select the subset close to the selected time</span>
+   <span class="n">mslp</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Value</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtm</span><span class="o">&gt;=</span><span class="n">ob_start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtm</span><span class="o">&lt;</span><span class="n">ob_end</span><span class="p">)]</span>
+   <span class="k">if</span> <span class="n">mslp</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span> <span class="k">continue</span>
+   <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">mslp</span><span class="p">))</span>
+   <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">mslp</span><span class="p">))</span>
+   <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lon&#39;</span><span class="p">]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">mslp</span><span class="p">))</span>
+   <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+   <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">full_obs</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+<span class="n">full_obs</span><span class="o">=</span><span class="n">full_obs</span><span class="p">[</span><span class="o">~</span><span class="n">full_obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">skip_stations</span><span class="p">)]</span>
+
+<span class="n">full_obs</span><span class="o">=</span><span class="n">full_obs</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">stations</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">full_obs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+
 
 <span class="c1"># Where are the precalculated fields?</span>
-<span class="n">ipdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/DWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
+<span class="n">ipdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/ADWR_jacknife&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
 <span class="c1"># Where to put the plots?</span>
-<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/DWR_jacknife_png&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
+<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/ADWR_jacknife_png&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">opdir</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">opdir</span><span class="p">)</span>
 
@@ -366,9 +442,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
 <span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
 
-<span class="c1"># UK-centred projection</span>
-<span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">RotatedPole</span><span class="p">(</span><span class="n">pole_longitude</span><span class="o">=</span><span class="mf">177.5</span><span class="p">,</span> <span class="n">pole_latitude</span><span class="o">=</span><span class="mf">35.5</span><span class="p">)</span>
-<span class="n">scale</span><span class="o">=</span><span class="mi">15</span>
+<span class="c1"># South America centred projection</span>
+<span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">RotatedPole</span><span class="p">(</span><span class="n">pole_longitude</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">pole_latitude</span><span class="o">=</span><span class="mi">125</span><span class="p">)</span>
+<span class="n">scale</span><span class="o">=</span><span class="mi">25</span>
 <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="o">*</span><span class="n">aspect</span><span class="o">/</span><span class="mf">3.0</span><span class="p">,</span><span class="n">scale</span><span class="o">*</span><span class="n">aspect</span><span class="o">/</span><span class="mf">3.0</span><span class="p">,</span><span class="n">scale</span><span class="o">*-</span><span class="mi">1</span><span class="p">,</span><span class="n">scale</span><span class="p">]</span>
 
 <span class="c1"># On the left - spaghetti-contour plot of original 20CRv3</span>
@@ -385,14 +461,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="c1"># 20CRv3 data</span>
 <span class="n">prmsl</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
 <span class="n">obs_t</span><span class="o">=</span><span class="n">twcr</span><span class="o">.</span><span class="n">load_observations_fortime</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;4.5.1&#39;</span><span class="p">)</span>
-<span class="c1"># Filter to those assimilated and near the UK</span>
-<span class="n">obs_s</span><span class="o">=</span><span class="n">obs_t</span><span class="o">.</span><span class="n">loc</span><span class="p">[((</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
-                 <span class="p">(</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">90</span><span class="p">))</span> <span class="o">&amp;</span>
-              <span class="p">((</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">240</span><span class="p">)</span> <span class="o">|</span> 
-                 <span class="p">(</span><span class="n">obs_t</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">))]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="c1"># Plot the observations</span>
-<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span><span class="n">obs_s</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span><span class="n">obs_t</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
 
 <span class="c1"># PRMSL spaghetti plot</span>
 <span class="n">mg</span><span class="o">.</span><span class="n">pressure</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_left</span><span class="p">,</span><span class="n">prmsl</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spaghetti&#39;</span><span class="p">,</span>
@@ -435,25 +506,39 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="n">mg</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">add_grid</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">)</span>
 <span class="n">land_img_centre</span><span class="o">=</span><span class="n">ax_centre</span><span class="o">.</span><span class="n">background_img</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;GreyT&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">)</span>
 
-<span class="c1"># Get the DWR observations for that afternoon</span>
-<span class="n">obs</span><span class="o">=</span><span class="n">DWR</span><span class="o">.</span><span class="n">load_observations</span><span class="p">(</span><span class="s1">&#39;prmsl&#39;</span><span class="p">,</span>
-                          <span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_before</span><span class="p">),</span>
-                          <span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_after</span><span class="p">))</span>
-
-<span class="c1"># Throw out the ones already used in 20CRv3</span>
-<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;ABERDEEN&#39;</span><span class="p">,</span><span class="s1">&#39;VALENCIA&#39;</span><span class="p">,</span><span class="s1">&#39;JERSEY&#39;</span><span class="p">,</span><span class="s1">&#39;STOCKHOLM&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;LISBON&#39;</span><span class="p">,</span><span class="s1">&#39;THEHELDER&#39;</span><span class="p">,</span><span class="s1">&#39;HAPARANDA&#39;</span><span class="p">,</span><span class="s1">&#39;MUNICH&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;BODO&#39;</span><span class="p">,</span><span class="s1">&#39;HERNOSAND&#39;</span><span class="p">,</span><span class="s1">&#39;WISBY&#39;</span><span class="p">,</span><span class="s1">&#39;FANO&#39;</span><span class="p">,</span><span class="s1">&#39;BERLIN&#39;</span><span class="p">])]</span>
-<span class="n">obs</span><span class="o">.</span><span class="n">value</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">value</span><span class="o">*</span><span class="mi">100</span>
-
 <span class="c1"># Load the all-stations-assimilated mslp</span>
 <span class="n">prmsl2</span><span class="o">=</span><span class="n">load_interpolated</span><span class="p">(</span><span class="n">dte</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="c1"># Plot the obs used in 20CRv3</span>
-<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">obs_s</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">obs_t</span><span class="p">,</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="c1"># Get the obs assimilated into this field</span>
+<span class="n">ob_start</span><span class="o">=</span><span class="n">dte</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_before</span><span class="p">)</span>
+<span class="n">ob_end</span><span class="o">=</span><span class="n">dte</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">hours_after</span><span class="p">)</span>
+<span class="n">adf</span><span class="o">=</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../../../../../../station-data/ToDo/sef/Argentinian_DWR/1902/DWR_*_MSLP.tsv&#39;</span><span class="p">)</span>
+<span class="n">obs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;value&#39;</span> <span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;dtm&#39;</span> <span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">adf</span><span class="p">:</span>
+   <span class="n">stobs</span><span class="o">=</span><span class="n">SEF</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">]</span>
+   <span class="c1"># Add the datetime</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hour</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;HHMM&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Minute</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;HHMM&#39;</span><span class="p">]</span><span class="o">%</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+   <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">dtm</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span><span class="s1">&#39;Month&#39;</span><span class="p">,</span><span class="s1">&#39;Day&#39;</span><span class="p">,</span><span class="s1">&#39;Hour&#39;</span><span class="p">,</span><span class="s1">&#39;Minute&#39;</span><span class="p">]]))</span>
+   <span class="c1"># Select the subset close to the selected time</span>
+   <span class="n">mslp</span><span class="o">=</span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">dtm</span><span class="o">&gt;=</span><span class="n">ob_start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtm</span><span class="o">&lt;</span><span class="n">ob_end</span><span class="p">)]</span>
+   <span class="k">if</span> <span class="n">mslp</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span> <span class="k">continue</span>
+   <span class="k">if</span> <span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stobs</span><span class="p">[</span><span class="s1">&#39;Lon&#39;</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+       <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mslp</span><span class="p">[</span><span class="s1">&#39;dtm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+<span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="o">~</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">skip_stations</span><span class="p">)]</span>
+
 <span class="c1"># Plot the obs assimilated</span>
 <span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">obs</span><span class="p">,</span>
-                     <span class="n">radius</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                     <span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
                      <span class="n">lat_label</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
                      <span class="n">lon_label</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
 <span class="c1"># Mark the stations available for the period, but with no obs close</span>
@@ -461,7 +546,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="n">missing_obs</span><span class="o">=</span><span class="n">full_obs</span><span class="p">[</span><span class="o">~</span><span class="n">full_obs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">missing_obs</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
     <span class="n">mg</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax_centre</span><span class="p">,</span><span class="n">missing_obs</span><span class="p">,</span>
-                         <span class="n">radius</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                         <span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
                          <span class="n">lat_label</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
                          <span class="n">lon_label</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
 
@@ -493,7 +578,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <span class="n">ax_right</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.74</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.255</span><span class="p">,</span><span class="mf">0.94</span><span class="p">])</span>
 <span class="c1"># x-axis</span>
-<span class="n">xrange</span><span class="o">=</span><span class="p">[</span><span class="mi">940</span><span class="p">,</span><span class="mi">1035</span><span class="p">]</span>
+<span class="n">xrange</span><span class="o">=</span><span class="p">[</span><span class="mi">970</span><span class="p">,</span><span class="mi">1045</span><span class="p">]</span>
 <span class="n">ax_right</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xrange</span><span class="p">)</span>
 <span class="n">ax_right</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
@@ -504,7 +589,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
               <span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">y_locations</span><span class="p">))</span>
 <span class="n">ax_right</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span>
               <span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FixedFormatter</span><span class="p">(</span>
-                  <span class="p">[</span><span class="n">DWR</span><span class="o">.</span><span class="n">pretty_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">]))</span>
+                  <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">]))</span>
 
 <span class="c1"># Custom grid spacing</span>
 <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
@@ -635,7 +720,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="kn">import</span> <span class="nn">datetime</span>
 
 <span class="c1"># Where to put the output files</span>
-<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/DWR_jacknife_png&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
+<span class="n">opdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/images/ADWR_jacknife_png&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SCRATCH&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">opdir</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">opdir</span><span class="p">)</span>
 
@@ -649,8 +734,8 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;run.txt&quot;</span><span class="p">,</span><span class="s2">&quot;w+&quot;</span><span class="p">)</span>
 
-<span class="n">start_day</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span>  <span class="mi">3</span><span class="p">)</span>
-<span class="n">end_day</span>  <span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1903</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="n">start_day</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="n">end_day</span>  <span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1902</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
 
 <span class="n">dte</span><span class="o">=</span><span class="n">start_day</span>
 <span class="k">while</span> <span class="n">dte</span><span class="o">&lt;=</span><span class="n">end_day</span><span class="p">:</span>
@@ -666,10 +751,10 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 </pre></div>
 </div>
 <p>To turn the thousands of images into a movie, use <a class="reference external" href="http://www.ffmpeg.org">ffmpeg</a></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ffmpeg -r <span class="m">24</span> -pattern_type glob -i DWR_jacknife_png/<span class="se">\*</span>.png <span class="se">\</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ffmpeg -r <span class="m">24</span> -pattern_type glob -i ADWR_jacknife_png/<span class="se">\*</span>.png <span class="se">\</span>
        -c:v libx264 -threads <span class="m">16</span> -preset slow -tune animation <span class="se">\</span>
        -profile:v high -level <span class="m">4</span>.2 -pix_fmt yuv420p -crf <span class="m">25</span> <span class="se">\</span>
-       -c:a copy DWR_assimilate.mp4
+       -c:a copy ADWR_assimilate.mp4
 </pre></div>
 </div>
 </div>
