@@ -233,7 +233,7 @@ for y in range(0,len(stations)):
     station=stations[y]
     try:
         mslp=obs[obs.Name==station].mslp.values[0]
-    except StandardError: continue 
+    except Exception: continue 
     if mslp is None: continue  
     if station in skip_stations:                         
         ax_right.add_line(matplotlib.lines.Line2D(

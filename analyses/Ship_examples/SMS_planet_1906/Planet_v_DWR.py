@@ -35,7 +35,7 @@ model=sklearn.linear_model.Lasso(normalize=True)
 
 # Date to show
 year=1906
-month=01
+month=0o1
 day=24
 hour=9
 dte=datetime.datetime(year,month,day,hour)

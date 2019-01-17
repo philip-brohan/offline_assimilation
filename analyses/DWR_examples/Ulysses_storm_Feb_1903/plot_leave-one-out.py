@@ -219,7 +219,7 @@ for y in range(0,len(stations)):
     station=stations[y]
     try:
         mslp=DWR.at_station_and_time(interpolate_obs,station,dte)
-    except StandardError: continue 
+    except Exception: continue 
     if mslp is None: continue                              
     ax_right.add_line(matplotlib.lines.Line2D(
             xdata=(mslp,mslp), ydata=(y+1.1,y+1.9),

@@ -26,7 +26,7 @@ obs=DWR.load_observations('prmsl',dte,
 # sort them from north to south
 obs=obs.sort_values(by='latitude',ascending=True)
 # Get the list of stations - preserving order
-stations=collections.OrderedDict.fromkeys(obs.loc[:,'name']).keys()
+stations=list(collections.OrderedDict.fromkeys(obs.loc[:,'name']).keys())
 
 # Add quality control flags
 obs['plausible']=DIYA.qc_plausible_range(obs,min=880,max=1060)

@@ -130,7 +130,7 @@ def qc_at_station_and_time(obs,station,dte):
     quality=True
     at_station=obs.loc[obs['name']==station]
     if at_station.empty:
-        raise StandardError('No data for station %s' % station)
+        raise Exception('No data for station %s' % station)
     at_station=at_station.sort_values(by='dtm',ascending=True)
     hit=at_station.loc[at_station['dtm']==dte]
     if not hit.empty:
@@ -142,7 +142,7 @@ def qc_at_station_and_time(obs,station,dte):
         return quality
     before=at_station.loc[at_station['dtm']<dte]
     if before.empty:
-        raise StandardError('No data for station %s before %s' % (station,
+        raise Exception('No data for station %s before %s' % (station,
                      dte.strftime("%Y-%m-%d:%H:%M")))
     before=before.iloc[-1] # last row
     if 'plausible' in before: 
@@ -151,7 +151,7 @@ def qc_at_station_and_time(obs,station,dte):
         quality=quality & before['first_guess']
     after=at_station.loc[at_station['dtm']>dte]
     if after.empty:
-        raise StandardError('No data for station %s after %s' % (station,
+        raise Exception('No data for station %s after %s' % (station,
                      dte.strftime("%Y-%m-%d:%H:%M")))
     after=after.iloc[0] # first row
     if 'plausible' in after: 

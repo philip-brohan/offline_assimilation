@@ -312,7 +312,7 @@ for y in range(0,len(stations)):
     station=stations[y]
     try:
         (mslp,gap)=DWR.at_station_and_time_with_distance(full_obs,station,dte)
-    except StandardError: continue 
+    except Exception: continue 
     if mslp is None: continue
     alpha=max(0,1-abs(gap)/3600.0)                             
     ax_right.add_line(matplotlib.lines.Line2D(

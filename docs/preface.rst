@@ -5,7 +5,7 @@ This document is kept under version control in a `git repository <https://en.wik
 
 If you are familiar with GitHub, you already know `what to do <https://github.com/philip-brohan/offline_assimilation>`_: If you'd prefer not to bother with that, you can download the whole dataset as `a zip file <https://github.com/philip-brohan/offline_assimilation/archive/master.zip>`_.
 
-All the code included is writen in Python (version 2.7). I strongly recommend running it in a `conda environment <https://conda.io/docs/>`_ - which greatly simplifies getting the necessary dependencies. The code is known to work on Linux and OSX, I've not tried it on anything else.
+All the code included is writen in Python (version 3.6). I strongly recommend running it in a `conda environment <https://conda.io/docs/>`_ - which greatly simplifies getting the necessary dependencies. The code is known to work on Linux and OSX, I've not tried it on anything else.
 
 To re-run the scripts included, first install four packages this depends on:
 
