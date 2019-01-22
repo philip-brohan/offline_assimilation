@@ -541,7 +541,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
     <span class="n">station</span><span class="o">=</span><span class="n">stations</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">mslp</span><span class="o">=</span><span class="n">obs</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">Name</span><span class="o">==</span><span class="n">station</span><span class="p">]</span><span class="o">.</span><span class="n">mslp</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">except</span> <span class="n">StandardError</span><span class="p">:</span> <span class="k">continue</span> 
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="k">continue</span> 
     <span class="k">if</span> <span class="n">mslp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">continue</span>  
     <span class="k">if</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">skip_stations</span><span class="p">:</span>                         
         <span class="n">ax_right</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span>
