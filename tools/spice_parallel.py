@@ -45,7 +45,8 @@ jobs = sys.stdin.readlines()
 i=0
 while i<len(jobs):
     queued_jobs=subprocess.check_output('squeue --user hadpb',
-                                         shell=True).count('\n')
+                                         shell=True,
+                                         universal_newlines=True).count('\n')
     max_new_jobs=args.maxjobs-queued_jobs
     for j in range(i,min(len(jobs),i+max_new_jobs)):
         f=open("run.slm","w+")
