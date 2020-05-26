@@ -20,6 +20,9 @@ parser.add_argument("--output", help="Sub-directory for slurm output",
 parser.add_argument("--qos", help="Quality-of-service (high, normal, low)",
                     default='normal',
                     type=str,required=False)
+parser.add_argument("--batch", help="No. of commands to put into a single job",
+                    default=None,
+                    type=int,required=False)
 parser.add_argument("--ntasks", help="Number of cores to assign",
                     default=1,
                     type=int,required=False)
@@ -42,6 +45,13 @@ if not os.path.isdir(slopdir):
 
 jobs = sys.stdin.readlines()
 
+if args.batch is not None:
+    j2 = []
+    for idx in range(0,len(jobs),args.batch):
+        tj=min(idx+args.batch,len(jobs))
+        j2.append(jobs[idx:tj])
+    jobs=j2
+
 i=0
 while i<len(jobs):
     queued_jobs=subprocess.check_output('squeue --user hadpb',
@@ -58,7 +68,11 @@ while i<len(jobs):
         f.write('#SBATCH --ntasks-per-core=1\n')
         f.write('#SBATCH --mem=%d\n' % args.mem)
         f.write('#SBATCH --time=%d\n' % args.time)
-        f.write(jobs[j])
+        if args.batch is not None:
+            for job in jobs[j]:
+                f.write(job)
+        else:
+            f.write(jobs[j])
         f.close()
         rc=subprocess.call('sbatch run.slm',shell=True)
         os.unlink('run.slm')
