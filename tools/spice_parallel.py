@@ -31,6 +31,9 @@ parser.add_argument("--mem", help="RAM required (Mb)",
                     type=int,required=False)
 parser.add_argument("--time", help="Max time per job (minutes)",
                     type=int,required=True)
+parser.add_argument("--env", help="Conda environment to use",
+                    default=None,
+                    type=str,required=False)
 args = parser.parse_args()
 
 if args.qos not in ('high','normal','low'):
@@ -68,6 +71,8 @@ while i<len(jobs):
         f.write('#SBATCH --ntasks-per-core=1\n')
         f.write('#SBATCH --mem=%d\n' % args.mem)
         f.write('#SBATCH --time=%d\n' % args.time)
+        if args.env is not None:
+            f.write("conda activate %s\n" % args.env)
         if args.batch is not None:
             for job in jobs[j]:
                 f.write(job)
