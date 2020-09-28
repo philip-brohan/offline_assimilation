@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>What if: assimilating observations that don’t yet exist &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Improving 20CR with ship observations" href="../marine_data/marine_data.html" />
@@ -25,9 +23,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="../marine_data/marine_data.html" title="Improving 20CR with ship observations"
              accesskey="N">next</a> |</li>
@@ -83,7 +78,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <p>To demonstrate this, we can generate some plausible, but fake, observations from the potential locations, and assimilate those instead:</p>
 <div class="figure align-center" id="id1" style="width: 95%">
 <a class="reference internal image-reference" href="../_images/Leave_one_out_18111223121.png"><img alt="../_images/Leave_one_out_18111223121.png" src="../_images/Leave_one_out_18111223121.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at noon on December 23rd 1811. Centre and right, <a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating 44 fake observations at that date. The centre panel shows the 20CRv3 ensemble after assimilating all 44 fake observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location. (<a class="reference internal" href="../analyses/what_if/storm_xmas_1811/index.html"><span class="doc">Figure source</span></a>).</span></p>
+<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at noon on December 23rd 1811. Centre and right, <a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating 44 fake observations at that date. The centre panel shows the 20CRv3 ensemble after assimilating all 44 fake observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location. (<a class="reference internal" href="../analyses/what_if/storm_xmas_1811/index.html"><span class="doc">Figure source</span></a>).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <p>To make the fake observations, we took the mslp from ensemble member 1 of 20CRv3 at the location of each station, at the time of the field, and added a bit of noise. Because the fake observations were all taken from the same ensemble member, they are mutually consistent, and can be collectively assimilated. But the resulting post-assimilation ensemble will be clustered around the ensemble member used, rather than the (unknown) real weather. This weather map should give a reasonable estimate of the quality of reconstruction we could get if observations were rescued for all the potential stations, but it’s not an accurate map of the actual weather at the time.</p>
 <p>If we did the data rescue, our reconstructions of the weather of the early nineteenth century would improve dramatically. Comparing this map with the effects of the <a class="reference internal" href="../DWR_data/DWR_data.html"><span class="doc">Daily Weather Report stations</span></a> (nearly a century later) shows that the 1811 ensemble of opportunity does not produce as good results as the carefully-sited DWR stations, but the observations are well worth rescuing even so.</p>
@@ -101,9 +96,6 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="../marine_data/marine_data.html" title="Improving 20CR with ship observations"
              >next</a> |</li>

@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>DWR assimilation: Argentine cold surge of August 1902 &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="What if: assimilating observations that don’t yet exist" href="../../../what_if/what_if.html" />
@@ -25,9 +23,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="../../../what_if/what_if.html" title="What if: assimilating observations that don’t yet exist"
              accesskey="N">next</a> |</li>
@@ -81,12 +76,12 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <h1>DWR assimilation: Argentine cold surge of August 1902<a class="headerlink" href="#dwr-assimilation-argentine-cold-surge-of-august-1902" title="Permalink to this headline">¶</a></h1>
 <p>This case-study shows the effect of using <a class="reference external" href="http://brohan.org/station-data/sources/Argentine_DWR/index.html">observations from the Argentine Daily Weather Reports</a>, newly digitised through the <a class="reference external" href="https://climate.copernicus.eu/data-rescue-service">Copernicus C3S Data Rescue Service</a>, to improve the reconstruction of the 1902 cold-surge which badly damaged the South American Coffee plantations.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="video.html"><span class="doc">Video version</span></a></p>
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="video.html"><span class="doc">Video version</span></a></p>
 </div>
 <div class="figure align-center" id="id1" style="width: 95%">
 <a class="reference internal image-reference" href="../../../_images/Leave_one_out_190208171800.png"><img alt="../../../_images/Leave_one_out_190208171800.png" src="../../../_images/Leave_one_out_190208171800.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="../../spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at 6 p.m. on August 17th 1902. Centre and right, <a class="reference internal" href="../../scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating all the <a class="reference external" href="http://brohan.org/station-data/sources/Argentine_DWR/index.html">Argentine DWR station pressure observations</a>  within 1 hour of that date. The centre panel shows the 20CRv3 ensemble after assimilating all the station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.</span></p>
+<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="../../spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP at 6 p.m. on August 17th 1902. Centre and right, <a class="reference internal" href="../../scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating all the <a class="reference external" href="http://brohan.org/station-data/sources/Argentine_DWR/index.html">Argentine DWR station pressure observations</a>  within 1 hour of that date. The centre panel shows the 20CRv3 ensemble after assimilating all the station observations (red dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating all the observations except the observation at that location.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -239,7 +234,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="kn">import</span> <span class="nn">SEF</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 
 <span class="c1"># Assimilate observations within this range of the field</span>
 <span class="n">hours_before</span><span class="o">=</span><span class="mi">12</span>
@@ -317,16 +312,16 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">import</span> <span class="nn">iris.analysis</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_agg</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_agg</span> <span class="kn">import</span> \
              <span class="n">FigureCanvasAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span>
-<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="k">import</span> <span class="n">Figure</span>
-<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="k">import</span> <span class="n">Circle</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Circle</span>
 
 <span class="kn">import</span> <span class="nn">cartopy</span>
 <span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
@@ -664,9 +659,6 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="../../../what_if/what_if.html" title="What if: assimilating observations that don’t yet exist"
              >next</a> |</li>

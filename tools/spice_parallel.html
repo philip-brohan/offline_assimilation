@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>spice_parallel: submitting a task queue to SPICE &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
   </head><body>
@@ -23,9 +21,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
       </ul>
     </div>
@@ -76,11 +71,11 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 </div>
 <p>Options:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">--time</span></code> - CPU time required for a single task - required.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--output</span></code> - task output files will be put in <code class="docutils literal notranslate"><span class="pre">$SCRATCH/slurm_output</span></code>. If this option is set, the value given will be used as a subdirectory name. So <code class="docutils literal notranslate"><span class="pre">--output=test</span></code> will leave the output files in <code class="docutils literal notranslate"><span class="pre">$SCRATCH/slurm_output/test</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--qos</span></code> - Quality-of-service queue to submit to. Can be <code class="docutils literal notranslate"><span class="pre">high</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, or <code class="docutils literal notranslate"><span class="pre">low</span></code>. Leave at the default of <code class="docutils literal notranslate"><span class="pre">normal</span></code> unless you are sure you know better.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--ntasks</span></code> Number of CPUs needed by each task. Defaults to 1.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--mem</span></code> RAM requirement for each task (Mb). Defaults to 10,000.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--time</span></code> - CPU time required for a single task - required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--output</span></code> - task output files will be put in <code class="docutils literal notranslate"><span class="pre">$SCRATCH/slurm_output</span></code>. If this option is set, the value given will be used as a subdirectory name. So <code class="docutils literal notranslate"><span class="pre">--output=test</span></code> will leave the output files in <code class="docutils literal notranslate"><span class="pre">$SCRATCH/slurm_output/test</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--qos</span></code> - Quality-of-service queue to submit to. Can be <code class="docutils literal notranslate"><span class="pre">high</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, or <code class="docutils literal notranslate"><span class="pre">low</span></code>. Leave at the default of <code class="docutils literal notranslate"><span class="pre">normal</span></code> unless you are sure you know better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ntasks</span></code> Number of CPUs needed by each task. Defaults to 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mem</span></code> RAM requirement for each task (Mb). Defaults to 10,000.</p></li>
 </ul>
 <div class="section" id="source">
 <h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
@@ -106,6 +101,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--qos&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Quality-of-service (high, normal, low)&quot;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
                     <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--batch&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;No. of commands to put into a single job&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ntasks&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of cores to assign&quot;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                     <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -114,6 +112,9 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
                     <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--time&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Max time per job (minutes)&quot;</span><span class="p">,</span>
                     <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--env&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Conda environment to use&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
 <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">qos</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;high&#39;</span><span class="p">,</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span><span class="s1">&#39;low&#39;</span><span class="p">):</span>
@@ -128,6 +129,13 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 
 <span class="n">jobs</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">j2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">),</span><span class="n">args</span><span class="o">.</span><span class="n">batch</span><span class="p">):</span>
+        <span class="n">tj</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="n">args</span><span class="o">.</span><span class="n">batch</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">))</span>
+        <span class="n">j2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jobs</span><span class="p">[</span><span class="n">idx</span><span class="p">:</span><span class="n">tj</span><span class="p">])</span>
+    <span class="n">jobs</span><span class="o">=</span><span class="n">j2</span>
+
 <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
 <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
     <span class="n">queued_jobs</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s1">&#39;squeue --user hadpb&#39;</span><span class="p">,</span>
@@ -136,7 +144,7 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
     <span class="n">max_new_jobs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">maxjobs</span><span class="o">-</span><span class="n">queued_jobs</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">),</span><span class="n">i</span><span class="o">+</span><span class="n">max_new_jobs</span><span class="p">)):</span>
         <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;run.slm&quot;</span><span class="p">,</span><span class="s2">&quot;w+&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#!/bin/ksh -l</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#!/bin/bash -l</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#SBATCH --output=</span><span class="si">%s</span><span class="s1">/</span><span class="si">%d</span><span class="s1">.out</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> 
                                          <span class="p">(</span><span class="n">slopdir</span><span class="p">,</span><span class="n">j</span><span class="p">))</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#SBATCH --qos=</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">qos</span><span class="p">)</span>
@@ -144,7 +152,13 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#SBATCH --ntasks-per-core=1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#SBATCH --mem=</span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">mem</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#SBATCH --time=</span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jobs</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">env</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;conda activate </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jobs</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">rc</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;sbatch run.slm&#39;</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="s1">&#39;run.slm&#39;</span><span class="p">)</span>
@@ -167,9 +181,6 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Offline assimilation</a> &#187;</li> 
       </ul>
     </div>

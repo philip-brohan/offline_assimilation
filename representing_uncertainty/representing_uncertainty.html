@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Representing uncertainty in weather maps &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Meteorological Data Assimilation for Data Scientists" href="../da_for_ds.html" />
@@ -25,9 +23,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="../da_for_ds.html" title="Meteorological Data Assimilation for Data Scientists"
              accesskey="N">next</a> |</li>
@@ -81,18 +76,18 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 <p>A traditional <a class="reference external" href="https://en.wikipedia.org/wiki/Weather_map">weather map</a> shows the surface pressure field, and possibly symbols for highs and lows, fronts and featues, and sometimes observations. The long reanalyses, such as <a class="reference external" href="https://www.esrl.noaa.gov/psd/data/20thC_Rean/">20CR</a> let us make weather maps for any period in the past 100+ years:</p>
 <div class="figure align-center" id="id1" style="width: 95%">
 <a class="reference internal image-reference" href="../_images/simple_map_19031022181.png"><img alt="../_images/simple_map_19031022181.png" src="../_images/simple_map_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">MSLP contours from the first ensemble member of 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated. (<a class="reference internal" href="../analyses/simple_map/simple_map.html"><span class="doc">Figure source</span></a>).</span></p>
+<p class="caption"><span class="caption-text">MSLP contours from the first ensemble member of 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated. (<a class="reference internal" href="../analyses/simple_map/simple_map.html"><span class="doc">Figure source</span></a>).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <p>This map is a representation of the weather at this point in time, but it is not exactly correct, it is uncertain. And for times and places where there are few observations to constrain the reanalysis, the uncertainty is large.</p>
 <p>Because 20CR is an ensemble product it contains information about the uncertainty in the spread of its ensemble. So we can make a map that shows both the best-estimate MSLP, and the uncertainty in that estimate:</p>
 <div class="figure align-center" id="id2" style="width: 95%">
 <a class="reference internal image-reference" href="../_images/spaghetti_example_19031022181.png"><img alt="../_images/spaghetti_example_19031022181.png" src="../_images/spaghetti_example_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">A spaghetti plot, of MSLP contours from 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated (yellow dots). The blue lines are contours of MSLP for each of the 80 ensemble menbers in 20CRv3. Where the uncertainty is low these will cluster together (around the corresponding black contour) - where the blue contours diverge the uncertainty in the field is large. (<a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Figure source</span></a>).</span></p>
+<p class="caption"><span class="caption-text">A spaghetti plot, of MSLP contours from 20CRv3 for October 22nd, 1903 (at 6pm), and observations assimilated (yellow dots). The blue lines are contours of MSLP for each of the 80 ensemble menbers in 20CRv3. Where the uncertainty is low these will cluster together (around the corresponding black contour) - where the blue contours diverge the uncertainty in the field is large. (<a class="reference internal" href="../analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Figure source</span></a>).</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <p>A <a class="reference external" href="https://oldweather.github.io/DWR/">recent digitisation project</a> has provided new observations - not assimilated by 20CR - which we can use to validate the reanalysis:</p>
 <div class="figure align-center" id="id3" style="width: 95%">
 <a class="reference internal image-reference" href="../_images/Scatter+contour_19031022181.png"><img alt="../_images/Scatter+contour_19031022181.png" src="../_images/Scatter+contour_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">On the left, a spaghetti-contour plot as above, of 20CRv3 MSLP for October 22nd, 1903 (at 6pm). On the right, comparison of the ensemble values (blue dots), with independent observations from the Daily Weather Reports (black lines). (<a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Figure source</span></a>).</span></p>
+<p class="caption"><span class="caption-text">On the left, a spaghetti-contour plot as above, of 20CRv3 MSLP for October 22nd, 1903 (at 6pm). On the right, comparison of the ensemble values (blue dots), with independent observations from the Daily Weather Reports (black lines). (<a class="reference internal" href="../analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Figure source</span></a>).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>The observations are within the spread of the reanalysis, so the reanalysis at this time and place is accurate - but it isn’t very precise, the spread is substantial at the locations of the observations. We would like to use the observations to improve the reanalysis - to make a revised version with the same accuracy, but increased precision.</p>
 </div>
@@ -109,9 +104,6 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="../da_for_ds.html" title="Meteorological Data Assimilation for Data Scientists"
              >next</a> |</li>

@@ -1,7 +1,7 @@
 How to replicate or extend this
 ===============================
 
-This document is kept under version control in a `git repository <https://en.wikipedia.org/wiki/Git>`_. The repository is hosted on `GitHub <https://github.com/>`_ (and the documentation made with `GitHub Pages <https://pages.github.com/>`_). The repository is `<https://github.com/philip-brohan/offline_assimilation>`_. This repository contains everything you need to reproduce or extend this work, but note that the 20CRv3 data is still preliminary, and access to it is currently restricted.
+This document is kept under version control in a `git repository <https://en.wikipedia.org/wiki/Git>`_. The repository is hosted on `GitHub <https://github.com/>`_ (and the documentation made with `GitHub Pages <https://pages.github.com/>`_). The repository is `<https://github.com/philip-brohan/offline_assimilation>`_. This repository contains everything you need to reproduce or extend this work.
 
 If you are familiar with GitHub, you already know `what to do <https://github.com/philip-brohan/offline_assimilation>`_: If you'd prefer not to bother with that, you can download the whole dataset as `a zip file <https://github.com/philip-brohan/offline_assimilation/archive/master.zip>`_.
 

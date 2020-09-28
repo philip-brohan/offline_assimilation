@@ -1,19 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Meteorological Data Assimilation for Data Scientists &#8212; Improving reanalysis with offline assimilation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="DIYA: A module for do-it-yourself data assimilation" href="modules/module_DIYA.html" />
@@ -25,9 +23,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="modules/module_DIYA.html" title="DIYA: A module for do-it-yourself data assimilation"
              accesskey="N">next</a> |</li>
@@ -86,9 +81,10 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 </div>
 <div class="figure align-center" id="id1" style="width: 95%">
 <a class="reference internal image-reference" href="_images/With_FW_19031022181.png"><img alt="_images/With_FW_19031022181.png" src="_images/With_FW_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">MSLP Contours for 20CR2c for October 22nd, 1903 (at 6pm).</span></p>
+<p class="caption"><span class="caption-text">MSLP Contours for 20CR2c for October 22nd, 1903 (at 6pm).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 <div class="legend">
-<a class="reference internal" href="analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of mean-sea-level pressure, and the location of the Fort William station (red dot), where we have <a class="reference external" href="https://oldweather.github.io/DWR">new observational data</a> (<a class="reference internal" href="analyses/DA_exposition/one_station.html"><span class="doc">Figure source</span></a>).</div>
+<p><a class="reference internal" href="analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of mean-sea-level pressure, and the location of the Fort William station (red dot), where we have <a class="reference external" href="https://oldweather.github.io/DWR">new observational data</a> (<a class="reference internal" href="analyses/DA_exposition/one_station.html"><span class="doc">Figure source</span></a>).</p>
+</div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -102,23 +98,25 @@ Please <a href="https://github.com/philip-brohan/offline_assimilation/issues/new
 </div>
 <div class="figure align-center" id="id2" style="width: 95%">
 <a class="reference internal image-reference" href="_images/lr+contour_19031022181.png"><img alt="_images/lr+contour_19031022181.png" src="_images/lr+contour_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">MSLP at Fort William, Stornoway, and London (October 22nd, 1903 at 6pm).</span></p>
+<p class="caption"><span class="caption-text">MSLP at Fort William, Stornoway, and London (October 22nd, 1903 at 6pm).</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 <div class="legend">
-The red dot marks Fort William, the blue Stornoway, and the black London. Scatter plots show relationship between the mslp at the three locations, across the 20CRv3 ensemble, at this particular point in time. (<a class="reference internal" href="analyses/DA_exposition/lr_contour.html"><span class="doc">Figure source</span></a>).</div>
+<p>The red dot marks Fort William, the blue Stornoway, and the black London. Scatter plots show relationship between the mslp at the three locations, across the 20CRv3 ensemble, at this particular point in time. (<a class="reference internal" href="analyses/DA_exposition/lr_contour.html"><span class="doc">Figure source</span></a>).</p>
+</div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>In the 20CRv3 ensemble, at this point in time, the mslp at Stornoway is highly correlated with that at Fort William, so an observation at Fort William is telling us a lot about the mslp at Stornoway, and we should move the mslp estimates at Stornoway in response to the observation in much the same way as we move the estimates at Fort William. At London, on the other hand, the mslp is almost uncorrelated with that at Fort William, so an observation at Fort William is telling us little about the mslp at London, and we should leave the ensemble at London almost unchanged whatever the observation at Fort William is.</p>
-<p>We can formalise this by fitting a model (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression" title="(in scikit-learn v0.21.3)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code></a>):</p>
+<p>We can formalise this by fitting a model (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression" title="(in scikit-learn v0.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code></a>):</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="figure align-center" id="id3" style="width: 95%">
 <a class="reference internal image-reference" href="_images/before+after_19031022181.png"><img alt="_images/before+after_19031022181.png" src="_images/before+after_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">MSLP at Stornoway, before and after assimilating the Fort William observation.</span></p>
+<p class="caption"><span class="caption-text">MSLP at Stornoway, before and after assimilating the Fort William observation.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 <div class="legend">
-Scatter plots of 20CRv3 ensemble pressures at Stornoway against ensemble pressures at Fort William, at 6pm on 22nd October 1903. The Stornoway pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot). We can do <a class="reference internal" href="analyses/DA_exposition/before+after_london.html"><span class="doc">the same for the London pressures</span></a>, but in that case the adjustment will make much less difference, as the fit line has a smaller slope. (<a class="reference internal" href="analyses/DA_exposition/before+after_stornoway.html"><span class="doc">Figure source</span></a>).</div>
+<p>Scatter plots of 20CRv3 ensemble pressures at Stornoway against ensemble pressures at Fort William, at 6pm on 22nd October 1903. The Stornoway pressures are adjusted by fitting a linear regression (left plot) and then removing the fit from each value (right plot). We can do <a class="reference internal" href="analyses/DA_exposition/before+after_london.html"><span class="doc">the same for the London pressures</span></a>, but in that case the adjustment will make much less difference, as the fit line has a smaller slope. (<a class="reference internal" href="analyses/DA_exposition/before+after_stornoway.html"><span class="doc">Figure source</span></a>).</p>
+</div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -129,9 +127,10 @@ Scatter plots of 20CRv3 ensemble pressures at Stornoway against ensemble pressur
 </div>
 <div class="figure align-center" id="id4" style="width: 95%">
 <a class="reference internal image-reference" href="_images/before+after_map_19031022181.png"><img alt="_images/before+after_map_19031022181.png" src="_images/before+after_map_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text"><a class="reference internal" href="analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plots</span></a> showing 20CRv3 MSLP fields before (left) and after (right) assimilating Fort William observation (October 22nd, 1903 at 6pm).</span></p>
+<p class="caption"><span class="caption-text"><a class="reference internal" href="analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plots</span></a> showing 20CRv3 MSLP fields before (left) and after (right) assimilating Fort William observation (October 22nd, 1903 at 6pm).</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 <div class="legend">
-The observation has pulled nearby pressures towards its value, both changing the ensemble mean and reducing the spread, while having little effect further away. (<a class="reference internal" href="analyses/DA_exposition/before+after_map.html"><span class="doc">Figure source</span></a>).</div>
+<p>The observation has pulled nearby pressures towards its value, both changing the ensemble mean and reducing the spread, while having little effect further away. (<a class="reference internal" href="analyses/DA_exposition/before+after_map.html"><span class="doc">Figure source</span></a>).</p>
+</div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -142,7 +141,7 @@ The observation has pulled nearby pressures towards its value, both changing the
 <p>If it has worked well this will have improved the accuracy of the reanalysis ensemble, as well as reducing its spread. To test this, we need more observations, and fortunately the <a class="reference external" href="https://oldweather.github.io/DWR/">Daily Weather Reports dataset</a> provides 22 other new obsrvations at this time, and we can compare them to the original 20CRv3 field, and to the field after assimilating the Fort William observation.</p>
 <div class="figure align-center" id="id5" style="width: 95%">
 <a class="reference internal image-reference" href="_images/Subset_FW_only_19031022181.png"><img alt="_images/Subset_FW_only_19031022181.png" src="_images/Subset_FW_only_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP. Centre and right, <a class="reference internal" href="analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating the Fort William observation, with all the other (independent) observations in the  <a class="reference external" href="https://oldweather.github.io/DWR/">Daily Weather Reports</a>. The centre panel shows the 20CRv3 ensemble after assimilating the Fort William observation (red dot) and the locations of all other new stations with observations at the same time (black dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating the Fort William observation. (<a class="reference internal" href="analyses/DA_exposition/subset_FW.html"><span class="doc">Figure source</span></a>).</span></p>
+<p class="caption"><span class="caption-text">On the left, a <a class="reference internal" href="analyses/spaghetti_contour/spaghetti_contour.html"><span class="doc">Spaghetti-contour plot</span></a> of 20CRv3 MSLP. Centre and right, <a class="reference internal" href="analyses/scatter+contour/scatter_and_contour.html"><span class="doc">Scatter-contour plot</span></a> comparing the same field, after assimilating the Fort William observation, with all the other (independent) observations in the  <a class="reference external" href="https://oldweather.github.io/DWR/">Daily Weather Reports</a>. The centre panel shows the 20CRv3 ensemble after assimilating the Fort William observation (red dot) and the locations of all other new stations with observations at the same time (black dots). The right panel compares the two ensembles with the new observations: Black lines show the observed pressures, blue dots the original 20CRv3 ensemble at the station locations, and red dots the 20CR ensemble after assimilating the Fort William observation. (<a class="reference internal" href="analyses/DA_exposition/subset_FW.html"><span class="doc">Figure source</span></a>).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <p>After assimilating the Fort William observation, the ensemble remains well calibrated to the new observations, and the ensemble spread is reduced for stations near to Fort William. So this is a success, assimilating the new observation has improved the ensemble.</p>
 </div>
@@ -151,12 +150,12 @@ The observation has pulled nearby pressures towards its value, both changing the
 <p>We can extend this same method to assimilate multiple observations, by adding an extra variable into each linear regression for each new observation.; So if we use three observations, at Fort William, Liverpool and London, we update the pressure at Stornoway by modelling the pressure at Stornoway as a multivariate linear regression on the Fort William, Liverpool and London pressures. (And validate against the remaining 20 stations):</p>
 <div class="figure align-center" id="id6" style="width: 95%">
 <a class="reference internal image-reference" href="_images/Subset_FWLL_19031022181.png"><img alt="_images/Subset_FWLL_19031022181.png" src="_images/Subset_FWLL_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">Same as the figure above, except observations from three stations (Fort William, Liverpool, and London) have been assimilated. (<a class="reference internal" href="analyses/DA_exposition/subset_FWLL.html"><span class="doc">Figure source</span></a>)</span></p>
+<p class="caption"><span class="caption-text">Same as the figure above, except observations from three stations (Fort William, Liverpool, and London) have been assimilated. (<a class="reference internal" href="analyses/DA_exposition/subset_FWLL.html"><span class="doc">Figure source</span></a>)</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <p>To get the best MSLP field we should assimilate all the observations, but that would leave us with nothing to validate against. A good compromise is leave-one-out validation: we do 22 assimilations, in each case assimilating all but one of the stations, and using the one left out for validation:</p>
 <div class="figure align-center" id="id7" style="width: 95%">
 <a class="reference internal image-reference" href="_images/Jacknife_19031022181.png"><img alt="_images/Jacknife_19031022181.png" src="_images/Jacknife_19031022181.png" style="width: 95%;" /></a>
-<p class="caption"><span class="caption-text">Same as the figure above, except that the centre panel shows the effect of assimilating all 22 station observations, and the right panel shows the effect, at each station, of assimilating the other 21 stations. (<a class="reference internal" href="analyses/DA_exposition/jacknife.html"><span class="doc">Figure source</span></a>)</span></p>
+<p class="caption"><span class="caption-text">Same as the figure above, except that the centre panel shows the effect of assimilating all 22 station observations, and the right panel shows the effect, at each station, of assimilating the other 21 stations. (<a class="reference internal" href="analyses/DA_exposition/jacknife.html"><span class="doc">Figure source</span></a>)</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -173,9 +172,6 @@ The observation has pulled nearby pressures towards its value, both changing the
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="modules/module_DIYA.html" title="DIYA: A module for do-it-yourself data assimilation"
              >next</a> |</li>
