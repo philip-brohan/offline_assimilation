@@ -8,7 +8,7 @@ Effect of assimilating observation at Fort William
    :align: center
    :figwidth: 95%
 
-   :doc:`Spaghetti-contour plots <analyses/spaghetti_contour/spaghetti_contour>` showing 20CRv3 MSLP fields before (left) and after (right) assimilating one Fort William observation (October 22nd, 1903 at 6pm).
+   :doc:`Spaghetti-contour plots <../spaghetti_contour/spaghetti_contour>` showing 20CRv3 MSLP fields before (left) and after (right) assimilating one Fort William observation (October 22nd, 1903 at 6pm).
 
 
 |

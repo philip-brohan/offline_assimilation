@@ -63,7 +63,7 @@ while i<len(jobs):
     max_new_jobs=args.maxjobs-queued_jobs
     for j in range(i,min(len(jobs),i+max_new_jobs)):
         f=open("run.slm","w+")
-        f.write('#!/bin/ksh -l\n')
+        f.write('#!/bin/bash -l\n')
         f.write('#SBATCH --output=%s/%d.out\n' % 
                                          (slopdir,j))
         f.write('#SBATCH --qos=%s\n' % args.qos)
